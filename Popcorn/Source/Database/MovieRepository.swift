@@ -1,27 +1,27 @@
 //
-//  RealmRepository.swift
+//  MovieRepository.swift
 //  Popcorn
 //
 //  Created by 김성민 on 10/8/24.
 //
 
-import Foundation
+import UIKit
 import RealmSwift
 
 final class MovieRepository {
     
-    private var realm: Realm?
+    private let realm: Realm
     
     init() {
         do {
             realm = try Realm()
         } catch {
-            print("Realm 초기화 실패")
+            fatalError("Realm 초기화 실패: \(error.localizedDescription)")
         }
     }
     
     var fileURL: URL? {
-        return realm?.configuration.fileURL
+        return realm.configuration.fileURL
     }
     
     var schemaVersion: UInt64? {
@@ -29,11 +29,19 @@ final class MovieRepository {
         return try? schemaVersionAtURL(fileURL)
     }
     
+    // MARK: - Read
+    func fetchAll() -> [RealmMovie] {
+        return realm.objects(RealmMovie.self)
+            .sorted(byKeyPath: "savedDate", ascending: false)
+            .map { $0 }
+    }
+    
     // MARK: - Create
-    func addItem(_ item: RealmMovie) {
+    func addItem(item: RealmMovie, image: UIImage?) {
         do {
-            try realm?.write {
-                realm?.add(item)
+            try realm.write {
+                realm.add(item)
+                saveImageForItem(item, image: image)
                 print("Realm 추가 성공!")
             }
         } catch {
@@ -41,49 +49,41 @@ final class MovieRepository {
         }
     }
     
-//    // MARK: - Read
-    func fetchAll() -> [RealmMovie] {
-        var value = realm.objects(LikedPhoto.self)
-            .sorted(byKeyPath: "date", ascending: order == .ascending)
-        return Array(value)
+    // MARK: - Update
+//    func updateItem(_ item: RealmMovie) {}
+    
+    // MARK: - Delete
+    func deleteItem(_ item: RealmMovie) {
+        do {
+            try realm.write {
+                deleteImageForItem(item)
+                realm.delete(item)
+                print("Realm 삭제 성공!")
+            }
+        } catch {
+            print("Realm 삭제 실패!")
+        }
     }
-//    
-//    func fetchItem(_ id: String) -> LikedPhoto? {
-//        return realm.object(ofType: LikedPhoto.self, forPrimaryKey: id)
-//    }
-//    
-//    // MARK: - Update
-//    func updateItem(_ item: LikedPhoto) {
-//        //
-//    }
-//    
-//    // MARK: - Delete
-//    func deleteItem(_ id: String) {
-//        if let item = fetchItem(id) {
-//            do {
-//                try realm.write {
-//                    realm.delete(item)
-//                    print("Realm Delete!")
-//                }
-//            } catch {
-//                print("Realm Delete Failed")
-//            }
-//        }
-//    }
-//    
-//    func deleteAll() {
-//        do {
-//            try realm.write {
-//                let photos = realm.objects(LikedPhoto.self)
-//                for item in photos {
-//                    ImageFileManager.shared.deleteImageFile(filename: item.id)
-//                    ImageFileManager.shared.deleteImageFile(filename: item.id + "user")
-//                }
-//                realm.delete(photos)
-//                print("Realm Delete All!")
-//            }
-//        } catch {
-//            print("Realm Delete All Failed")
-//        }
-//    }
+    
+    func deleteAll() {
+        do {
+            try realm.write {
+                let movies = realm.objects(RealmMovie.self)
+                movies.forEach { deleteImageForItem($0) }
+                realm.delete(movies)
+                print("Realm 전체 삭제 성공!")
+            }
+        } catch {
+            print("Realm 전체 삭제 실패!")
+        }
+    }
+    
+    private func saveImageForItem(_ item: RealmMovie, image: UIImage?) {
+        guard let image = image else { return }
+        ImageFileManager.shared.saveImageFile(image: image, filename: "\(item.id)")
+    }
+    
+    private func deleteImageForItem(_ item: RealmMovie) {
+        ImageFileManager.shared.deleteImageFile(filename: "\(item.id)")
+    }
 }
