@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24EFE9B32CB547AE007A813C /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B22CB547AE007A813C /* RealmRepository.swift */; };
+		24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B22CB547AE007A813C /* MovieRepository.swift */; };
+		24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B42CB54D01007A813C /* RealmMovie.swift */; };
+		24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B62CB55518007A813C /* ImageFileManager.swift */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA602CB5159900BAC95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5F2CB5159900BAC95A /* ViewController.swift */; };
@@ -24,7 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		24EFE9B22CB547AE007A813C /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		24EFE9B22CB547AE007A813C /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
+		24EFE9B42CB54D01007A813C /* RealmMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMovie.swift; sourceTree = "<group>"; };
+		24EFE9B62CB55518007A813C /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		8832DA582CB5159900BAC95A /* Popcorn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popcorn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8832DA5B2CB5159900BAC95A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,7 +40,6 @@
 		8832DA952CB5268800BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA972CB526A600BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA992CB526AE00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DA9B2CB526B900BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA9D2CB526D200BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA9F2CB526F300BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA12CB5270D00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
@@ -193,7 +196,8 @@
 		8832DA902CB51E3C00BAC95A /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				24EFE9B22CB547AE007A813C /* RealmRepository.swift */,
+				24EFE9B62CB55518007A813C /* ImageFileManager.swift */,
+				24EFE9B22CB547AE007A813C /* MovieRepository.swift */,
 				8832DA912CB51E4000BAC95A /* Model */,
 			);
 			path = Database;
@@ -202,7 +206,7 @@
 		8832DA912CB51E4000BAC95A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8832DA9B2CB526B900BAC95A /* .gitkeep */,
+				24EFE9B42CB54D01007A813C /* RealmMovie.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -320,8 +324,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */,
+				24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */,
 				8832DA602CB5159900BAC95A /* ViewController.swift in Sources */,
-				24EFE9B32CB547AE007A813C /* RealmRepository.swift in Sources */,
+				24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */,
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
 			);
