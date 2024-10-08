@@ -19,6 +19,16 @@
 		8832DA7F2CB5197000BAC95A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA7E2CB5197000BAC95A /* RealmSwift */; };
 		8832DA822CB5199200BAC95A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA812CB5199200BAC95A /* RxCocoa */; };
 		8832DA842CB5199200BAC95A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA832CB5199200BAC95A /* RxSwift */; };
+		8832DA962CB5268800BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA952CB5268800BAC95A /* .gitkeep */; };
+		8832DA982CB526A600BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA972CB526A600BAC95A /* .gitkeep */; };
+		8832DA9A2CB526AE00BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA992CB526AE00BAC95A /* .gitkeep */; };
+		8832DA9C2CB526B900BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA9B2CB526B900BAC95A /* .gitkeep */; };
+		8832DA9E2CB526D200BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA9D2CB526D200BAC95A /* .gitkeep */; };
+		8832DAA02CB526F300BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA9F2CB526F300BAC95A /* .gitkeep */; };
+		8832DAA22CB5270D00BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA12CB5270D00BAC95A /* .gitkeep */; };
+		8832DAA42CB5271500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA32CB5271500BAC95A /* .gitkeep */; };
+		8832DAA62CB5271E00BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA52CB5271E00BAC95A /* .gitkeep */; };
+		8832DAA82CB5272500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA72CB5272500BAC95A /* .gitkeep */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +40,16 @@
 		8832DA672CB5159A00BAC95A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8832DA692CB5159A00BAC95A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8832DA6F2CB5169300BAC95A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		8832DA952CB5268800BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DA972CB526A600BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DA992CB526AE00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DA9B2CB526B900BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DA9D2CB526D200BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DA9F2CB526F300BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DAA12CB5270D00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DAA32CB5271500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DAA52CB5271E00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8832DAA72CB5272500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +135,7 @@
 		8832DA882CB51ACE00BAC95A /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA9F2CB526F300BAC95A /* .gitkeep */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -122,6 +143,7 @@
 		8832DA892CB51B1200BAC95A /* Trending */ = {
 			isa = PBXGroup;
 			children = (
+				8832DAA72CB5272500BAC95A /* .gitkeep */,
 			);
 			path = Trending;
 			sourceTree = "<group>";
@@ -129,6 +151,7 @@
 		8832DA8A2CB51B1700BAC95A /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				8832DAA52CB5271E00BAC95A /* .gitkeep */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -136,6 +159,7 @@
 		8832DA8B2CB51B1C00BAC95A /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
+				8832DAA32CB5271500BAC95A /* .gitkeep */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -143,6 +167,7 @@
 		8832DA8C2CB51B2600BAC95A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				8832DAA12CB5270D00BAC95A /* .gitkeep */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -159,6 +184,7 @@
 		8832DA8E2CB51DFD00BAC95A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA9D2CB526D200BAC95A /* .gitkeep */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,6 +208,7 @@
 		8832DA912CB51E4000BAC95A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA9B2CB526B900BAC95A /* .gitkeep */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -189,6 +216,7 @@
 		8832DA922CB51E7900BAC95A /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA992CB526AE00BAC95A /* .gitkeep */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -196,6 +224,7 @@
 		8832DA932CB51EC500BAC95A /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA972CB526A600BAC95A /* .gitkeep */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -203,6 +232,7 @@
 		8832DA942CB51ED700BAC95A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8832DA952CB5268800BAC95A /* .gitkeep */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -284,7 +314,17 @@
 			files = (
 				8832DA652CB5159A00BAC95A /* Assets.xcassets in Resources */,
 				8832DA702CB5169300BAC95A /* .gitignore in Resources */,
+				8832DAA42CB5271500BAC95A /* .gitkeep in Resources */,
+				8832DAA62CB5271E00BAC95A /* .gitkeep in Resources */,
+				8832DA982CB526A600BAC95A /* .gitkeep in Resources */,
+				8832DAA02CB526F300BAC95A /* .gitkeep in Resources */,
+				8832DA9A2CB526AE00BAC95A /* .gitkeep in Resources */,
 				8832DA682CB5159A00BAC95A /* Base in Resources */,
+				8832DAA82CB5272500BAC95A /* .gitkeep in Resources */,
+				8832DA962CB5268800BAC95A /* .gitkeep in Resources */,
+				8832DAA22CB5270D00BAC95A /* .gitkeep in Resources */,
+				8832DA9C2CB526B900BAC95A /* .gitkeep in Resources */,
+				8832DA9E2CB526D200BAC95A /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
