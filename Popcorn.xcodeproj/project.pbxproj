@@ -29,6 +29,8 @@
 		8832DAA42CB5271500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA32CB5271500BAC95A /* .gitkeep */; };
 		8832DAA62CB5271E00BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA52CB5271E00BAC95A /* .gitkeep */; };
 		8832DAA82CB5272500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA72CB5272500BAC95A /* .gitkeep */; };
+		88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */; };
+		88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D572CB54F66003EEFE0 /* BaseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		8832DAA32CB5271500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA52CB5271E00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA72CB5272500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		88FB0D572CB54F66003EEFE0 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				8832DA972CB526A600BAC95A /* .gitkeep */,
+				88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */,
+				88FB0D572CB54F66003EEFE0 /* BaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -336,6 +342,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8832DA602CB5159900BAC95A /* ViewController.swift in Sources */,
+				88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */,
+				88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */,
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
 			);
