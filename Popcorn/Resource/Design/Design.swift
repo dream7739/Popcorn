@@ -16,7 +16,7 @@ enum Design {
         static let home = UIImage(systemName: "house")
         static let playCircle = UIImage(systemName: "play.circle")
         static let download = UIImage(systemName: "square.and.arrow.down")
-        static let faceSmile = UIImage(systemName: "face.smiling")
+        static let faceSmile = UIImage(systemName: "face.smiling.inverse")
         static let plus = UIImage(systemName: "plus")
     }
     
