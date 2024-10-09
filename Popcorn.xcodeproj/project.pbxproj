@@ -33,6 +33,7 @@
 		88EB2D9D2CB6347300F98058 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9C2CB6347300F98058 /* SearchViewController.swift */; };
 		88EB2D9F2CB6348800F98058 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */; };
 		88EB2DA12CB634AB00F98058 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2DA02CB634AB00F98058 /* DetailViewController.swift */; };
+		88EB2DA32CB65FEF00F98058 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2DA22CB65FEF00F98058 /* UIButton+.swift */; };
 		88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */; };
 		88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D572CB54F66003EEFE0 /* BaseView.swift */; };
 		88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */; };
@@ -63,6 +64,7 @@
 		88EB2D9C2CB6347300F98058 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		88EB2DA02CB634AB00F98058 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		88EB2DA22CB65FEF00F98058 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		88FB0D572CB54F66003EEFE0 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				88FB0D5B2CB55F5F003EEFE0 /* UIColor+.swift */,
+				88EB2DA22CB65FEF00F98058 /* UIButton+.swift */,
 				24EFE9C12CB66375007A813C /* UICollectionViewLayout+.swift */,
 			);
 			path = Extension;
@@ -372,6 +375,7 @@
 				88FB0D5E2CB561EC003EEFE0 /* Design.swift in Sources */,
 				88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */,
 				88EB2DA12CB634AB00F98058 /* DetailViewController.swift in Sources */,
+				88EB2DA32CB65FEF00F98058 /* UIButton+.swift in Sources */,
 				88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */,
 				24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */,
 				24EFE9C52CB66837007A813C /* ReuseIdentifierProtocol.swift in Sources */,
