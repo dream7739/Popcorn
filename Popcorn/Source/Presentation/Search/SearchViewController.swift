@@ -6,12 +6,59 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 final class SearchViewController: BaseViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .searchLayout()
+    ).then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(
+            SearchCollectionViewCell.self,
+            forCellWithReuseIdentifier: SearchCollectionViewCell.identifier
+        )
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func configureHierarchy() {
+        view.addSubview(collectionView)
+    }
+    
+    override func configureLayout() {
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    override func configureUI() {
+        
+    }
+}
+
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 30
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SearchCollectionViewCell.identifier,
+            for: indexPath
+        ) as? SearchCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configureCell(.checkmark)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("셀 탭", indexPath)
+    }
 }
