@@ -11,6 +11,7 @@
 		24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B42CB54D01007A813C /* RealmMovie.swift */; };
 		24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B62CB55518007A813C /* ImageFileManager.swift */; };
 		24EFE9BA2CB64CB8007A813C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 24EFE9B92CB64CB8007A813C /* Kingfisher */; };
+		24EFE9BE2CB6559D007A813C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 24EFE9BD2CB6559D007A813C /* .swiftlint.yml */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA602CB5159900BAC95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5F2CB5159900BAC95A /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 		24EFE9B22CB547AE007A813C /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
 		24EFE9B42CB54D01007A813C /* RealmMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMovie.swift; sourceTree = "<group>"; };
 		24EFE9B62CB55518007A813C /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
+		24EFE9BD2CB6559D007A813C /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8832DA582CB5159900BAC95A /* Popcorn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popcorn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8832DA5B2CB5159900BAC95A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		8832DA4F2CB5159900BAC95A = {
 			isa = PBXGroup;
 			children = (
+				24EFE9BD2CB6559D007A813C /* .swiftlint.yml */,
 				8832DA6F2CB5169300BAC95A /* .gitignore */,
 				8832DA5A2CB5159900BAC95A /* Popcorn */,
 				8832DA592CB5159900BAC95A /* Products */,
@@ -329,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24EFE9BE2CB6559D007A813C /* .swiftlint.yml in Resources */,
 				8832DA652CB5159A00BAC95A /* Assets.xcassets in Resources */,
 				8832DA702CB5169300BAC95A /* .gitignore in Resources */,
 				8832DA682CB5159A00BAC95A /* Base in Resources */,

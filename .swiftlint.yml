@@ -1,0 +1,50 @@
+# 기본 제공 규칙에서 비활성화할 규칙들
+disabled_rules:
+    - colon                 # : 뒤에 공백 관련 규칙, 비활성화 결정이 필요
+    - comma                 # , 뒤에 공백 관련 규칙, 비활성화 결정이 필요
+    - control_statement      # if, while, for 등 괄호 관련 규칙
+    - trailing_whitespace    # 코드 끝에 공백 방지 규칙, 비활성화에 주의
+
+# 선택적으로 활성화할 규칙들 (기본 설정에 없으나 유용한 규칙들)
+opt_in_rules:
+    - empty_count         # .count == 0 대신 .isEmpty 권장하는 규칙
+    - redundant_nil_coalescing  # 기본값으로 nil 설정된 경우 불필요한 ?? 사용 방지
+
+# analyzer 명령에서만 실행되는 규칙들
+analyzer_rules:
+    - explicit_self          # self 명시적으로 사용하도록 하는 규칙
+
+# 규칙 설정 (각각의 규칙에 대해 경고와 에러 기준 설정)
+force_cast: warning         # 강제 캐스팅 사용 시 경고
+force_try:
+    severity: warning       # 강제 try 사용 시 경고
+
+# 한 줄의 최대 길이 제한
+line_length:
+    - 180                   # 180자로 설정 (중복 제거)
+
+# 타입의 바디 길이 제한 (경고와 에러 기준)
+type_body_length:
+    - 300                   # 경고: 300줄
+    - 400                   # 에러: 400줄
+
+# 파일 길이 제한
+file_length:
+    warning: 500            # 500줄 이상이면 경고
+    error: 1200             # 1200줄 이상이면 에러
+
+# 타입 네이밍 규칙 (최소, 최대 길이 설정 및 예외 이름)
+type_name:
+    min_length: 4           # 경고: 최소 4자
+    max_length:
+        warning: 40         # 경고: 최대 40자
+        error: 50           # 에러: 최대 50자
+    excluded:               # 제외할 이름
+        - iPhone
+
+# 변수 및 상수 이름 규칙 (최소 길이 설정 및 예외 이름)
+identifier_name:
+    min_length: 2
+
+# 리포팅 형식 설정 (Xcode 스타일로 설정)
+reporter: "xcode"
