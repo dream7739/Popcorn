@@ -23,6 +23,11 @@
 		8832DA822CB5199200BAC95A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA812CB5199200BAC95A /* RxCocoa */; };
 		8832DA842CB5199200BAC95A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA832CB5199200BAC95A /* RxSwift */; };
 		8832DAA82CB5272500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA72CB5272500BAC95A /* .gitkeep */; };
+		88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */; };
+		88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D572CB54F66003EEFE0 /* BaseView.swift */; };
+		88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */; };
+		88FB0D5C2CB55F5F003EEFE0 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D5B2CB55F5F003EEFE0 /* UIColor+.swift */; };
+		88FB0D5E2CB561EC003EEFE0 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D5D2CB561EC003EEFE0 /* Design.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,15 +42,17 @@
 		8832DA672CB5159A00BAC95A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8832DA692CB5159A00BAC95A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8832DA6F2CB5169300BAC95A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		8832DA952CB5268800BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DA972CB526A600BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA992CB526AE00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA9D2CB526D200BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DA9F2CB526F300BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA12CB5270D00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA32CB5271500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA52CB5271E00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DAA72CB5272500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		88FB0D572CB54F66003EEFE0 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		88FB0D5B2CB55F5F003EEFE0 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		88FB0D5D2CB561EC003EEFE0 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +138,7 @@
 		8832DA882CB51ACE00BAC95A /* Design */ = {
 			isa = PBXGroup;
 			children = (
-				8832DA9F2CB526F300BAC95A /* .gitkeep */,
+				88FB0D5D2CB561EC003EEFE0 /* Design.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -222,7 +229,9 @@
 		8832DA932CB51EC500BAC95A /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				8832DA972CB526A600BAC95A /* .gitkeep */,
+				88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */,
+				88FB0D572CB54F66003EEFE0 /* BaseView.swift */,
+				88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -230,7 +239,7 @@
 		8832DA942CB51ED700BAC95A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				8832DA952CB5268800BAC95A /* .gitkeep */,
+				88FB0D5B2CB55F5F003EEFE0 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -327,9 +336,14 @@
 				24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */,
 				24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */,
 				8832DA602CB5159900BAC95A /* ViewController.swift in Sources */,
+				88FB0D5E2CB561EC003EEFE0 /* Design.swift in Sources */,
+				88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */,
+				88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */,
 				24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */,
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
+				88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */,
+				88FB0D5C2CB55F5F003EEFE0 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
