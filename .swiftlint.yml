@@ -47,6 +47,7 @@ type_name:
 # 변수 및 상수 이름 규칙 (최소 길이 설정 및 예외 이름)
 identifier_name:
     min_length: 2
+    allowed_symbols: ["_"]  # 언더스코어(_) 허용
 
 # 리포팅 형식 설정 (Xcode 스타일로 설정)
 reporter: "xcode"
