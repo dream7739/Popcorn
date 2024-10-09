@@ -10,6 +10,7 @@
 		24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B22CB547AE007A813C /* MovieRepository.swift */; };
 		24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B42CB54D01007A813C /* RealmMovie.swift */; };
 		24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9B62CB55518007A813C /* ImageFileManager.swift */; };
+		24EFE9BA2CB64CB8007A813C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 24EFE9B92CB64CB8007A813C /* Kingfisher */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA602CB5159900BAC95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5F2CB5159900BAC95A /* ViewController.swift */; };
@@ -67,6 +68,7 @@
 			files = (
 				8832DA842CB5199200BAC95A /* RxSwift in Frameworks */,
 				8832DA7F2CB5197000BAC95A /* RealmSwift in Frameworks */,
+				24EFE9BA2CB64CB8007A813C /* Kingfisher in Frameworks */,
 				8832DA762CB5192D00BAC95A /* Alamofire in Frameworks */,
 				8832DA822CB5199200BAC95A /* RxCocoa in Frameworks */,
 				8832DA7C2CB5194F00BAC95A /* Then in Frameworks */,
@@ -274,6 +276,7 @@
 				8832DA7E2CB5197000BAC95A /* RealmSwift */,
 				8832DA812CB5199200BAC95A /* RxCocoa */,
 				8832DA832CB5199200BAC95A /* RxSwift */,
+				24EFE9B92CB64CB8007A813C /* Kingfisher */,
 			);
 			productName = Popcorn;
 			productReference = 8832DA582CB5159900BAC95A /* Popcorn.app */;
@@ -310,6 +313,7 @@
 				8832DA7A2CB5194F00BAC95A /* XCRemoteSwiftPackageReference "Then" */,
 				8832DA7D2CB5197000BAC95A /* XCRemoteSwiftPackageReference "realm-swift" */,
 				8832DA802CB5199200BAC95A /* XCRemoteSwiftPackageReference "RxSwift" */,
+				24EFE9B82CB64CB8007A813C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 8832DA592CB5159900BAC95A /* Products */;
 			projectDirPath = "";
@@ -583,6 +587,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		24EFE9B82CB64CB8007A813C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.3;
+			};
+		};
 		8832DA712CB5186500BAC95A /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint.git";
@@ -634,6 +646,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		24EFE9B92CB64CB8007A813C /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24EFE9B82CB64CB8007A813C /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		8832DA722CB5187900BAC95A /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8832DA712CB5186500BAC95A /* XCRemoteSwiftPackageReference "SwiftLint" */;
