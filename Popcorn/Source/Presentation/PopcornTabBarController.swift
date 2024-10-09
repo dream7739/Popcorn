@@ -45,7 +45,7 @@ final class PopcornTabBarController: UITabBarController {
         setViewControllers([trendingNav, searchNav, favoriteNav], animated: true)
     }
     
-    private func setUpTabBarAppearence(){
+    private func setUpTabBarAppearence() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .darkGray

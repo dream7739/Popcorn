@@ -8,7 +8,7 @@
 import UIKit
 
 enum Design {
-    //시스템 이미지 아이콘
+    // 시스템 이미지 아이콘
     enum Image {
         static let play = UIImage(systemName: "play")
         static let search = UIImage(systemName: "magnifyingglass")
@@ -20,7 +20,7 @@ enum Design {
         static let plus = UIImage(systemName: "plus")
     }
     
-    //폰트
+    // 폰트
     enum Font {
         static let title = UIFont.boldSystemFont(ofSize: 18)
         static let subtitle = UIFont.boldSystemFont(ofSize: 16)
