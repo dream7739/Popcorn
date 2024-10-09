@@ -75,6 +75,19 @@ final class DetailViewController: BaseViewController {
         $0.font = Design.Font.primary
     }
     
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .searchLayout()
+    ).then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(
+            SearchCollectionViewCell.self,
+            forCellWithReuseIdentifier: SearchCollectionViewCell.identifier
+        )
+        $0.isScrollEnabled = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -93,6 +106,7 @@ final class DetailViewController: BaseViewController {
         contentView.addSubview(castStackView)
         castStackView.addArrangedSubview(castLabel)
         castStackView.addArrangedSubview(creatorLabel)
+        contentView.addSubview(collectionView)
     }
     
     override func configureLayout() {
@@ -125,7 +139,7 @@ final class DetailViewController: BaseViewController {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
         
         rateLabel.snp.makeConstraints { make in
@@ -153,6 +167,13 @@ final class DetailViewController: BaseViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
         
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(castStackView.snp.bottom).offset(12)
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
+            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 80)
+            make.bottom.equalTo(contentView).offset(-10)
+        }
+        
     }
     
     override func configureUI() {
@@ -164,6 +185,23 @@ final class DetailViewController: BaseViewController {
         creatorLabel.text = "크리에이터: " + mock.creator
     }
     
+}
+
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SearchCollectionViewCell.identifier,
+            for: indexPath
+        ) as? SearchCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configureCell(.checkmark)
+        return cell
+    }
 }
 
 struct DetailMock {
