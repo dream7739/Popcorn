@@ -133,13 +133,12 @@ final class DetailViewController: BaseViewController {
         }
         
         contentView.snp.makeConstraints { make in
-            make.width.equalTo(scrollView)
-            make.verticalEdges.equalTo(scrollView)
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(view.safeAreaLayoutGuide)
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(10)
+            make.top.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
         
         rateLabel.snp.makeConstraints { make in
@@ -153,7 +152,7 @@ final class DetailViewController: BaseViewController {
         }
         
         saveButton.snp.makeConstraints { make in
-            make.top.equalTo(playButton.snp.bottom).offset(4)
+            make.top.equalTo(playButton.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(titleLabel)
         }
         
@@ -171,9 +170,8 @@ final class DetailViewController: BaseViewController {
             make.top.equalTo(castStackView.snp.bottom).offset(12)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
             make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 80)
-            make.bottom.equalTo(contentView).offset(-10)
+            make.bottom.equalTo(contentView).inset(10)
         }
-        
     }
     
     override func configureUI() {
@@ -215,7 +213,12 @@ struct DetailMock {
 let mock = DetailMock(
     title: "스파이더맨: 홈커밍",
     rating: 7.3,
-    description: "외톨이 학생 피터 파커는 유전자가 조작된 거미에 물려 초인적인 거미의 능력을 가지게 된다. 자신의 초능력을 즐기던 어느 날, 피터의 삼촌 벤 아저씨가 총에 맞아 죽는다. 피터는 자신의 초능력에 책임감을 느끼기 시작하고, 시민들의 안전을 위해 악당들과 싸우는 히어로 스파이더맨으로 거듭난다.",
+    description: """
+                 외톨이 학생 피터 파커는 유전자가 조작된 거미에 물려 초인적인 거미의 능력을 가지게 된다.
+                 자신의 초능력을 즐기던 어느 날, 피터의 삼촌 벤 아저씨가 총에 맞아 죽는다.
+                 피터는 자신의 초능력에 책임감을 느끼기 시작하고,
+                 시민들의 안전을 위해 악당들과 싸우는 히어로 스파이더맨으로 거듭난다.
+                 """,
     cast: "톰 홀랜드 마이클 키튼 로버트 다우니 주니어",
     creator: "Kirk R. Thatcher"
 )
