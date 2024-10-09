@@ -22,7 +22,11 @@
 		8832DA7F2CB5197000BAC95A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA7E2CB5197000BAC95A /* RealmSwift */; };
 		8832DA822CB5199200BAC95A /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA812CB5199200BAC95A /* RxCocoa */; };
 		8832DA842CB5199200BAC95A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA832CB5199200BAC95A /* RxSwift */; };
-		8832DAA82CB5272500BAC95A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8832DAA72CB5272500BAC95A /* .gitkeep */; };
+		88EB2D992CB6333400F98058 /* PopcornTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D982CB6333400F98058 /* PopcornTabBarController.swift */; };
+		88EB2D9B2CB6344000F98058 /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */; };
+		88EB2D9D2CB6347300F98058 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9C2CB6347300F98058 /* SearchViewController.swift */; };
+		88EB2D9F2CB6348800F98058 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */; };
+		88EB2DA12CB634AB00F98058 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2DA02CB634AB00F98058 /* DetailViewController.swift */; };
 		88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */; };
 		88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D572CB54F66003EEFE0 /* BaseView.swift */; };
 		88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */; };
@@ -44,10 +48,11 @@
 		8832DA6F2CB5169300BAC95A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8832DA992CB526AE00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8832DA9D2CB526D200BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DAA12CB5270D00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DAA32CB5271500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DAA52CB5271E00BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		8832DAA72CB5272500BAC95A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		88EB2D982CB6333400F98058 /* PopcornTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopcornTabBarController.swift; sourceTree = "<group>"; };
+		88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
+		88EB2D9C2CB6347300F98058 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		88EB2DA02CB634AB00F98058 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		88FB0D552CB54F63003EEFE0 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		88FB0D572CB54F66003EEFE0 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		88FB0D592CB55EF5003EEFE0 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -131,6 +136,7 @@
 				8832DA8B2CB51B1C00BAC95A /* Favorite */,
 				8832DA8A2CB51B1700BAC95A /* Search */,
 				8832DA892CB51B1200BAC95A /* Trending */,
+				88EB2D982CB6333400F98058 /* PopcornTabBarController.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -146,7 +152,7 @@
 		8832DA892CB51B1200BAC95A /* Trending */ = {
 			isa = PBXGroup;
 			children = (
-				8832DAA72CB5272500BAC95A /* .gitkeep */,
+				88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */,
 			);
 			path = Trending;
 			sourceTree = "<group>";
@@ -154,7 +160,7 @@
 		8832DA8A2CB51B1700BAC95A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				8832DAA52CB5271E00BAC95A /* .gitkeep */,
+				88EB2D9C2CB6347300F98058 /* SearchViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -162,7 +168,7 @@
 		8832DA8B2CB51B1C00BAC95A /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				8832DAA32CB5271500BAC95A /* .gitkeep */,
+				88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
@@ -170,7 +176,7 @@
 		8832DA8C2CB51B2600BAC95A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				8832DAA12CB5270D00BAC95A /* .gitkeep */,
+				88EB2DA02CB634AB00F98058 /* DetailViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -322,7 +328,6 @@
 				8832DA652CB5159A00BAC95A /* Assets.xcassets in Resources */,
 				8832DA702CB5169300BAC95A /* .gitignore in Resources */,
 				8832DA682CB5159A00BAC95A /* Base in Resources */,
-				8832DAA82CB5272500BAC95A /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,12 +341,17 @@
 				24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */,
 				24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */,
 				8832DA602CB5159900BAC95A /* ViewController.swift in Sources */,
+				88EB2D9B2CB6344000F98058 /* TrendingViewController.swift in Sources */,
+				88EB2D9F2CB6348800F98058 /* FavoriteViewController.swift in Sources */,
 				88FB0D5E2CB561EC003EEFE0 /* Design.swift in Sources */,
 				88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */,
+				88EB2DA12CB634AB00F98058 /* DetailViewController.swift in Sources */,
 				88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */,
 				24EFE9B32CB547AE007A813C /* MovieRepository.swift in Sources */,
+				88EB2D9D2CB6347300F98058 /* SearchViewController.swift in Sources */,
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
+				88EB2D992CB6333400F98058 /* PopcornTabBarController.swift in Sources */,
 				88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */,
 				88FB0D5C2CB55F5F003EEFE0 /* UIColor+.swift in Sources */,
 			);
