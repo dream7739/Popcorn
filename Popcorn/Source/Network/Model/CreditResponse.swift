@@ -1,5 +1,5 @@
 //
-//  CastResponse.swift
+//  CreditResponse.swift
 //  Popcorn
 //
 //  Created by 김성민 on 10/9/24.

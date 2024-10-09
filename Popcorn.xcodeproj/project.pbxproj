@@ -18,7 +18,7 @@
 		24EFE9C72CB66901007A813C /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9C62CB66901007A813C /* SearchCollectionViewCell.swift */; };
 		24EFE9C92CB69701007A813C /* VideoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9C82CB69701007A813C /* VideoResponse.swift */; };
 		24EFE9CB2CB6977A007A813C /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CA2CB6977A007A813C /* MovieResponse.swift */; };
-		24EFE9CD2CB69C61007A813C /* CastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CC2CB69C61007A813C /* CastResponse.swift */; };
+		24EFE9CD2CB69C61007A813C /* CreditResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CC2CB69C61007A813C /* CreditResponse.swift */; };
 		24EFE9CF2CB6A1DE007A813C /* GenreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */; };
 		24EFE9D12CB6A1F6007A813C /* TVResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9D02CB6A1F6007A813C /* TVResponse.swift */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
@@ -57,7 +57,7 @@
 		24EFE9C62CB66901007A813C /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EFE9C82CB69701007A813C /* VideoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoResponse.swift; sourceTree = "<group>"; };
 		24EFE9CA2CB6977A007A813C /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
-		24EFE9CC2CB69C61007A813C /* CastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastResponse.swift; sourceTree = "<group>"; };
+		24EFE9CC2CB69C61007A813C /* CreditResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditResponse.swift; sourceTree = "<group>"; };
 		24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreResponse.swift; sourceTree = "<group>"; };
 		24EFE9D02CB6A1F6007A813C /* TVResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVResponse.swift; sourceTree = "<group>"; };
 		8832DA582CB5159900BAC95A /* Popcorn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popcorn.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,7 +228,7 @@
 			children = (
 				24EFE9CA2CB6977A007A813C /* MovieResponse.swift */,
 				24EFE9D02CB6A1F6007A813C /* TVResponse.swift */,
-				24EFE9CC2CB69C61007A813C /* CastResponse.swift */,
+				24EFE9CC2CB69C61007A813C /* CreditResponse.swift */,
 				24EFE9C82CB69701007A813C /* VideoResponse.swift */,
 				24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */,
 			);
@@ -396,7 +396,7 @@
 				24EFE9C52CB66837007A813C /* ReuseIdentifierProtocol.swift in Sources */,
 				88EB2D9D2CB6347300F98058 /* SearchViewController.swift in Sources */,
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
-				24EFE9CD2CB69C61007A813C /* CastResponse.swift in Sources */,
+				24EFE9CD2CB69C61007A813C /* CreditResponse.swift in Sources */,
 				24EFE9C22CB66375007A813C /* UICollectionViewLayout+.swift in Sources */,
 				24EFE9C72CB66901007A813C /* SearchCollectionViewCell.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,

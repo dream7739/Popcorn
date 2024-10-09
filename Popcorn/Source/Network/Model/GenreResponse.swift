@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Video 모델 (Movie + TV)
+// MARK: - Genre 모델 (Movie + TV)
 struct GenreResponse: Decodable {
     let genres: [Genre]
 }
