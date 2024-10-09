@@ -4,6 +4,7 @@ disabled_rules:
     - comma                 # , 뒤에 공백 관련 규칙, 비활성화 결정이 필요
     - control_statement      # if, while, for 등 괄호 관련 규칙
     - trailing_whitespace    # 코드 끝에 공백 방지 규칙, 비활성화에 주의
+    - unneeded_override     # 필요없는 오버라이드 메서드 관련 규칙
 
 # 선택적으로 활성화할 규칙들 (기본 설정에 없으나 유용한 규칙들)
 opt_in_rules:
