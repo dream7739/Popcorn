@@ -10,7 +10,7 @@ import UIKit
 enum Design {
     // 시스템 이미지 아이콘
     enum Image {
-        static let play = UIImage(systemName: "play")
+        static let play = UIImage(systemName: "play.fill")
         static let search = UIImage(systemName: "magnifyingglass")
         static let tv = UIImage(systemName: "sparkles.tv")
         static let home = UIImage(systemName: "house")
@@ -18,6 +18,7 @@ enum Design {
         static let download = UIImage(systemName: "square.and.arrow.down")
         static let faceSmile = UIImage(systemName: "face.smiling.inverse")
         static let plus = UIImage(systemName: "plus")
+        static let close = UIImage(systemName: "xmark")
     }
     
     // 폰트
