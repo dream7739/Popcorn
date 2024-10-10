@@ -28,6 +28,14 @@ extension UIButton {
         self.configuration = configuration
     }
     
+    func imageBackground(_ image: UIImage?) {
+        var configuration = UIButton.Configuration.plain()
+        configuration.background.backgroundColor = .black
+        configuration.baseForegroundColor = .white
+        configuration.image = image?.applyingSymbolConfiguration(.init(pointSize: 25))
+        self.configuration = configuration
+    }
+    
 }
 
 extension UIButton.Configuration {

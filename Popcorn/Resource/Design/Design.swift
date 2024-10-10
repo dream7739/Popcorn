@@ -19,6 +19,7 @@ enum Design {
         static let faceSmile = UIImage(systemName: "face.smiling.inverse")
         static let plus = UIImage(systemName: "plus")
         static let close = UIImage(systemName: "xmark")
+        static let trash = UIImage(systemName: "trash.fill")
     }
     
     // 폰트
