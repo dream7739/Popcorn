@@ -70,15 +70,15 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-let mockFavoriteList = [RealmMovie(id: 0, name: "블링크 트와이스", videoURL: ""),
-                        RealmMovie(id: 1, name: "인사이드아웃 2", videoURL: ""),
-                        RealmMovie(id: 2, name: "서브스턴스", videoURL: ""),
-                        RealmMovie(id: 3, name: "더 크로우", videoURL: ""),
-                        RealmMovie(id: 4, name: "원피스", videoURL: ""),
-                        RealmMovie(id: 5, name: "긴팔원숭이황금두더지정민", videoURL: ""),
-                        RealmMovie(id: 6, name: "블링크 트와이스", videoURL: ""),
-                        RealmMovie(id: 7, name: "인사이드아웃 2", videoURL: ""),
-                        RealmMovie(id: 8, name: "서브스턴스", videoURL: ""),
-                        RealmMovie(id: 9, name: "더 크로우", videoURL: ""),
-                        RealmMovie(id: 10, name: "원피스", videoURL: ""),
-                        RealmMovie(id: 11, name: "긴팔원숭이황금두더지정민", videoURL: "")]
+let mockFavoriteList = [RealmMovie(id: 0, name: "블링크 트와이스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 1, name: "인사이드아웃 2", videoURL: "", isMovie: false),
+                        RealmMovie(id: 2, name: "서브스턴스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 3, name: "더 크로우", videoURL: "", isMovie: false),
+                        RealmMovie(id: 4, name: "원피스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 5, name: "긴팔원숭이황금두더지정민", videoURL: "", isMovie: false),
+                        RealmMovie(id: 6, name: "블링크 트와이스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 7, name: "인사이드아웃 2", videoURL: "", isMovie: false),
+                        RealmMovie(id: 8, name: "서브스턴스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 9, name: "더 크로우", videoURL: "", isMovie: false),
+                        RealmMovie(id: 10, name: "원피스", videoURL: "", isMovie: false),
+                        RealmMovie(id: 11, name: "긴팔원숭이황금두더지정민", videoURL: "", isMovie: false)]

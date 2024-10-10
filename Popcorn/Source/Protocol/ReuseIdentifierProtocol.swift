@@ -11,19 +11,7 @@ protocol ReuseIdentifierProtocol: AnyObject {
     static var identifier: String { get }
 }
 
-extension UICollectionViewCell: ReuseIdentifierProtocol {
-    static var identifier: String {
-        return String(describing: self)
-    }
-}
-
-extension UITableViewCell: ReuseIdentifierProtocol {
-    static var identifier: String {
-        return String(describing: self)
-    }
-}
-
-extension UITableViewHeaderFooterView: ReuseIdentifierProtocol {
+extension UIView: ReuseIdentifierProtocol {
     static var identifier: String {
         return String(describing: self)
     }
