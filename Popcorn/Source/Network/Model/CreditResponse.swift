@@ -42,12 +42,3 @@ struct Crew: Decodable {
     let department: String
     let job: String
 }
-var arr = [""]
-var answer: Bool = false
-
-func findPerson(_ person: String) -> Bool {
-    for i in arr {
-        answer = arr.contains(person)
-    }
-    return answer
-}
