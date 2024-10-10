@@ -43,6 +43,26 @@ final class TrendingViewController: BaseViewController {
         $0.backgroundColor = .black
     }
     
+    private let genreLabel = UILabel().then {
+        $0.font = Design.Font.primary
+        $0.textColor = .white
+        $0.textAlignment = .center
+    }
+    
+    private let playButton = UIButton().then {
+        $0.whiteBlackRadius("재생", Design.Image.play)
+    }
+    
+    private let saveButton = UIButton().then {
+        $0.blackWhiteRadius("내가 찜한 리스트", Design.Image.plus)
+    }
+    
+    private let buttonStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 10
+    }
+    
     private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .trendLayout()
@@ -63,11 +83,23 @@ final class TrendingViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        containerView.addSubview(posterImageView)
-        contentView.addSubview(containerView)
-        contentView.addSubview(collectionView)
+        [playButton, saveButton].forEach {
+            buttonStackView.addArrangedSubview($0)
+        }
+        [posterImageView, genreLabel, buttonStackView].forEach {
+            containerView.addSubview($0)
+        }
+        [containerView, collectionView].forEach {
+            contentView.addSubview($0)
+        }
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
+        
+        contentView.backgroundColor = .blue
+        containerView.backgroundColor = .brown
+        collectionView.backgroundColor = .green
+        posterImageView.backgroundColor = .lightGray
+        genreLabel.text = "jakflsjkdfjsdkalflsk"
     }
     
     override func configureLayout() {
@@ -85,10 +117,26 @@ final class TrendingViewController: BaseViewController {
             make.height.equalTo(500)
         }
         
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.bottom).offset(20)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(400)
+            make.bottom.equalToSuperview().inset(20)
+        }
+        
         posterImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
+        buttonStackView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalToSuperview().inset(16)
+            make.height.equalTo(40)
+        }
+        
+        genreLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(buttonStackView.snp.top).offset(-8)
+            make.horizontalEdges.equalToSuperview().inset(16)
+        }
     }
     
     override func configureUI() {
