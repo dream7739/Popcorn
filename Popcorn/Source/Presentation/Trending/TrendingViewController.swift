@@ -13,14 +13,13 @@ import RxSwift
 import RxCocoa
 
 final class TrendingViewController: BaseViewController {
-
-    private let disposeBag = DisposeBag()
     
-    // 네비게이션 바 버튼
-    // TODO: - tv, search 간격 조절
+    // TODO: - tv, search 버튼 간격 조절
     private lazy var logoBarButton = UIBarButtonItem().then {
         let image = UIImage(resource: .logo).withRenderingMode(.alwaysOriginal)
-        $0.image = image
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        $0.customView = imageView
     }
     private let tvBarButton = UIBarButtonItem(image: Design.Image.tv).then {
         $0.tintColor = .white
@@ -28,41 +27,32 @@ final class TrendingViewController: BaseViewController {
     private let searchBarButton = UIBarButtonItem(image: Design.Image.search).then {
         $0.tintColor = .white
     }
-    
     private let scrollView = UIScrollView()
-    
     private let contentView = UIView()
-    
     private let containerView = UIView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
-    
     private let posterImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .black
     }
-    
     private let genreLabel = UILabel().then {
         $0.font = Design.Font.primary
         $0.textColor = .white
         $0.textAlignment = .center
     }
-    
     private let playButton = UIButton().then {
         $0.whiteBlackRadius("재생", Design.Image.play)
     }
-    
     private let saveButton = UIButton().then {
         $0.blackWhiteRadius("내가 찜한 리스트", Design.Image.plus)
     }
-    
     private let buttonStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
         $0.spacing = 10
     }
-    
     private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .trendLayout()
@@ -73,13 +63,16 @@ final class TrendingViewController: BaseViewController {
         )
     }
     
+    private let viewModel = TrendingViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
     }
     
     private func bind() {
-        
+        let input = TrendingViewModel.Input()
+        let output = viewModel.transform(input: input)
     }
     
     override func configureHierarchy() {
@@ -117,13 +110,6 @@ final class TrendingViewController: BaseViewController {
             make.height.equalTo(500)
         }
         
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(400)
-            make.bottom.equalToSuperview().inset(20)
-        }
-        
         posterImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -137,81 +123,18 @@ final class TrendingViewController: BaseViewController {
             make.bottom.equalTo(buttonStackView.snp.top).offset(-8)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.bottom).offset(20)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(400)
+            make.bottom.equalToSuperview().inset(20)
+        }
     }
     
     override func configureUI() {
         navigationItem.leftBarButtonItem = logoBarButton
         navigationItem.rightBarButtonItems = [searchBarButton, tvBarButton]
-    }
-    
-    private func fetchTrendingMovie() {
-        let router = Router.trending(type: .movie, language: .korean)
-        NetworkManager.shared.fetchData(with: router, as: MovieResponse.self)
-            .subscribe(onSuccess: { result in
-                switch result {
-                case .success(let response):
-                    print("Trending \(response)")
-                case .failure(let error):
-                    print("Error fetching trending  \(error)")
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func fetchTrendingTV() {
-        let router = Router.trending(type: .tv, language: .korean)
-        NetworkManager.shared.fetchData(with: router, as: TVResponse.self)
-            .subscribe(onSuccess: { result in
-                switch result {
-                case .success(let response):
-                    print("Trending \(response)")
-                case .failure(let error):
-                    print("Error fetching trending  \(error)")
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func fetchTrending(type: Router.ContentType) {
-            let router = Router.trending(type: type, language: .korean)
-            
-            switch type {
-            case .movie:
-                NetworkManager.shared.fetchData(with: router, as: MovieResponse.self)
-                    .subscribe(onSuccess: { result in
-                        switch result {
-                        case .success(let response):
-                            print("Trending \(response)")
-                        case .failure(let error):
-                            print("Error fetching trending  \(error)")
-                        }
-                    })
-                    .disposed(by: disposeBag)
-            case .tv:
-                NetworkManager.shared.fetchData(with: router, as: TVResponse.self)
-                    .subscribe(onSuccess: { result in
-                        switch result {
-                        case .success(let response):
-                            print("Trending \(response)")
-                        case .failure(let error):
-                            print("Error fetching trending  \(error)")
-                        }
-                    })
-                    .disposed(by: disposeBag)
-            }
-        }
-        
-    private func fetchData<T: Decodable>(router: Router, responseType: T.Type) {
-        NetworkManager.shared.fetchData(with: router, as: responseType)
-            .subscribe(onSuccess: { result in
-                switch result {
-                case .success(let response):
-                    print("Trending \(response)")
-                case .failure(let error):
-                    print("Error fetching trending  \(error)")
-                }
-            })
-            .disposed(by: disposeBag)
     }
 }
 
