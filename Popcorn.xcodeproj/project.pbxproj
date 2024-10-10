@@ -21,6 +21,9 @@
 		24EFE9CD2CB69C61007A813C /* CreditResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CC2CB69C61007A813C /* CreditResponse.swift */; };
 		24EFE9CF2CB6A1DE007A813C /* GenreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */; };
 		24EFE9D12CB6A1F6007A813C /* TVResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9D02CB6A1F6007A813C /* TVResponse.swift */; };
+		848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D143F2CB6D7670043A660 /* NetworkManager.swift */; };
+		848D14422CB6D7670043A660 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14402CB6D7670043A660 /* Router.swift */; };
+		848D14442CB6D9F50043A660 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14432CB6D9F50043A660 /* APIKey.swift */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA602CB5159900BAC95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5F2CB5159900BAC95A /* ViewController.swift */; };
@@ -60,6 +63,9 @@
 		24EFE9CC2CB69C61007A813C /* CreditResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditResponse.swift; sourceTree = "<group>"; };
 		24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreResponse.swift; sourceTree = "<group>"; };
 		24EFE9D02CB6A1F6007A813C /* TVResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVResponse.swift; sourceTree = "<group>"; };
+		848D143F2CB6D7670043A660 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Popcorn/Source/Network/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
+		848D14402CB6D7670043A660 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Popcorn/Source/Network/Router.swift; sourceTree = SOURCE_ROOT; };
+		848D14432CB6D9F50043A660 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		8832DA582CB5159900BAC95A /* Popcorn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popcorn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8832DA5B2CB5159900BAC95A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -238,6 +244,9 @@
 		8832DA8F2CB51E0A00BAC95A /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				848D143F2CB6D7670043A660 /* NetworkManager.swift */,
+				848D14402CB6D7670043A660 /* Router.swift */,
+				848D14432CB6D9F50043A660 /* APIKey.swift */,
 				8832DA8E2CB51DFD00BAC95A /* Model */,
 			);
 			path = Network;
@@ -380,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */,
 				24EFE9B52CB54D01007A813C /* RealmMovie.swift in Sources */,
 				24EFE9B72CB55518007A813C /* ImageFileManager.swift in Sources */,
 				8832DA602CB5159900BAC95A /* ViewController.swift in Sources */,
@@ -398,11 +408,13 @@
 				8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */,
 				24EFE9CD2CB69C61007A813C /* CreditResponse.swift in Sources */,
 				24EFE9C22CB66375007A813C /* UICollectionViewLayout+.swift in Sources */,
+				848D14442CB6D9F50043A660 /* APIKey.swift in Sources */,
 				24EFE9C72CB66901007A813C /* SearchCollectionViewCell.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
 				24EFE9C02CB65D98007A813C /* PosterImageView.swift in Sources */,
 				88EB2D992CB6333400F98058 /* PopcornTabBarController.swift in Sources */,
 				24EFE9D12CB6A1F6007A813C /* TVResponse.swift in Sources */,
+				848D14422CB6D7670043A660 /* Router.swift in Sources */,
 				88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */,
 				24EFE9CB2CB6977A007A813C /* MovieResponse.swift in Sources */,
 				88FB0D5C2CB55F5F003EEFE0 /* UIColor+.swift in Sources */,
