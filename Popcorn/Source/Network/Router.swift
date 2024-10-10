@@ -10,12 +10,12 @@ import Foundation
 
 enum Router: URLRequestConvertible {
     
-    case search(type: ContentType, query: String, language: Language?)
-    case trending(type: ContentType, language: Language?)
-    case credits(type: ContentType, contentId: Int, language: Language?)
-    case similar(type: ContentType, contentId: Int, language: Language?)
-    case genre(type: ContentType, language: Language?)
-    case video(type: ContentType, contentId: Int, language: Language?)
+    case search(type: ContentType, query: String, language: Language? = nil)
+    case trending(type: ContentType, language: Language? = nil)
+    case credits(type: ContentType, contentId: Int, language: Language? = nil)
+    case similar(type: ContentType, contentId: Int, language: Language? = nil)
+    case genre(type: ContentType, language: Language? = nil)
+    case video(type: ContentType, contentId: Int, language: Language? = nil)
     
     enum ContentType: String {
         case tv = "tv"
