@@ -13,7 +13,7 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func request<T: Decodable>(api: Router) -> Single<Result<T, AFError>> {
+    private func request<T: Decodable>(api: Router) -> Single<Result<T, AFError>> {
         return Single.create { [weak self] observer in
             guard let self else { return Disposables.create() }
             
@@ -56,4 +56,29 @@ final class NetworkManager {
             observer(.success(.failure(errorCode)))
         }
     }
+    
 }
+
+extension NetworkManager {
+    func fetchData<T: Decodable>(with router: Router, as type: T.Type) -> Single<Result<T, AFError>> {
+        return request(api: router)
+    }
+    //
+    func fetchMovie(with router: Router) -> Single<Result<MovieResponse, AFError>> {
+        return request(api: router)
+    }
+    func fetchTV(query: Router) -> Single<Result<TVResponse, AFError>> {
+        return request(api: query)
+    }
+//    func (query: Router) -> Single<Result<MovieResponse, AFError>> {
+//        return request(api: query)
+//    }
+//    func trending(query: Router) -> Single<Result<MovieResponse, AFError>> {
+//        return request(api: query)
+//    }
+//    func trending(query: Router) -> Single<Result<MovieResponse, AFError>> {
+//        return request(api: query)
+//    }
+
+}
+
