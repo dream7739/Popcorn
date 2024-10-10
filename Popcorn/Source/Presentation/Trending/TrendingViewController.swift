@@ -5,12 +5,13 @@
 //  Created by 홍정민 on 10/9/24.
 //
 
-import Alamofire
 import UIKit
+import Alamofire
 import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 final class TrendingViewController: BaseViewController {
     
@@ -58,8 +59,15 @@ final class TrendingViewController: BaseViewController {
         collectionViewLayout: .trendLayout()
     ).then {
         $0.register(
-            SearchCollectionViewCell.self,
-            forCellWithReuseIdentifier: SearchCollectionViewCell.identifier
+            MovieCollectionViewCell.self,
+            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
+        )
+        $0.register(
+            TrendCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "TrendCollectionHeaderView"
+            // MARK: - ReuseIdentifier 프로토콜 수정 후 변경 예정
+//            withReuseIdentifier: TrendCollectionHeaderView.identifier
         )
     }
     
@@ -73,6 +81,33 @@ final class TrendingViewController: BaseViewController {
     private func bind() {
         let input = TrendingViewModel.Input()
         let output = viewModel.transform(input: input)
+        
+//        let dataSource = RxCollectionViewSectionedAnimatedDataSource<TrendSection> { dataSource, collectionView, indexPath, item in
+//            guard let cell = collectionView.dequeueReusableCell(
+//                withReuseIdentifier: MovieCollectionViewCell.identifier,
+//                for: indexPath
+//            ) as? MovieCollectionViewCell else {
+//                return UICollectionViewCell()
+//            }
+//            cell.configureCell(item)
+//            return cell
+//            
+//        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+//            guard let header = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: kind,
+//                withReuseIdentifier: SettingCollectionHeaderView.identifier,
+//                for: indexPath
+//            ) as? SettingCollectionHeaderView else {
+//                return UICollectionReusableView()
+//            }
+//            let section = dataSource.sectionModels[indexPath.section]
+//            header.configureHeader(section.model)
+//            return header
+//        }
+//        
+//        output.sections
+//            .bind(to: collectionView.rx.items(dataSource: dataSource))
+//            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -145,9 +180,9 @@ extension TrendingViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SearchCollectionViewCell.identifier,
+            withReuseIdentifier: MovieCollectionViewCell.identifier,
             for: indexPath
-        ) as? SearchCollectionViewCell else {
+        ) as? MovieCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.configureCell(.checkmark)

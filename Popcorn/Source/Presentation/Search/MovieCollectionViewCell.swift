@@ -1,5 +1,5 @@
 //
-//  SearchCollectionViewCell.swift
+//  MovieCollectionViewCell.swift
 //  Popcorn
 //
 //  Created by 김성민 on 10/9/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SearchCollectionViewCell: BaseCollectionViewCell {
+final class MovieCollectionViewCell: BaseCollectionViewCell {
     
     private let imageView = PosterImageView()
     
