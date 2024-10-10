@@ -39,15 +39,12 @@ final class FavoriteViewController: BaseViewController {
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 30
-//        return mockFavoriteList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
         }
-//        let data = mockFavoriteList[indexPath.row]
-//        cell.configureData(data)
         return cell
     }
     
@@ -70,16 +67,3 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [delete])
     }
 }
-
-//let mockFavoriteList = [RealmMovie(id: 0, name: "블링크 트와이스", videoURL: ""),
-//                        RealmMovie(id: 1, name: "인사이드아웃 2", videoURL: ""),
-//                        RealmMovie(id: 2, name: "서브스턴스", videoURL: ""),
-//                        RealmMovie(id: 3, name: "더 크로우", videoURL: ""),
-//                        RealmMovie(id: 4, name: "원피스", videoURL: ""),
-//                        RealmMovie(id: 5, name: "긴팔원숭이황금두더지정민", videoURL: ""),
-//                        RealmMovie(id: 6, name: "블링크 트와이스", videoURL: ""),
-//                        RealmMovie(id: 7, name: "인사이드아웃 2", videoURL: ""),
-//                        RealmMovie(id: 8, name: "서브스턴스", videoURL: ""),
-//                        RealmMovie(id: 9, name: "더 크로우", videoURL: ""),
-//                        RealmMovie(id: 10, name: "원피스", videoURL: ""),
-//                        RealmMovie(id: 11, name: "긴팔원숭이황금두더지정민", videoURL: "")]
