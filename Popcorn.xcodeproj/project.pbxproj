@@ -21,6 +21,7 @@
 		24EFE9CD2CB69C61007A813C /* CreditResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CC2CB69C61007A813C /* CreditResponse.swift */; };
 		24EFE9CF2CB6A1DE007A813C /* GenreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */; };
 		24EFE9D12CB6A1F6007A813C /* TVResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9D02CB6A1F6007A813C /* TVResponse.swift */; };
+		24EFE9FB2CB7B343007A813C /* TrendingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFE9FA2CB7B343007A813C /* TrendingViewModel.swift */; };
 		848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D143F2CB6D7670043A660 /* NetworkManager.swift */; };
 		848D14422CB6D7670043A660 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14402CB6D7670043A660 /* Router.swift */; };
 		848D14442CB6D9F50043A660 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14432CB6D9F50043A660 /* APIKey.swift */; };
@@ -65,6 +66,7 @@
 		24EFE9CC2CB69C61007A813C /* CreditResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditResponse.swift; sourceTree = "<group>"; };
 		24EFE9CE2CB6A1DE007A813C /* GenreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreResponse.swift; sourceTree = "<group>"; };
 		24EFE9D02CB6A1F6007A813C /* TVResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVResponse.swift; sourceTree = "<group>"; };
+		24EFE9FA2CB7B343007A813C /* TrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewModel.swift; sourceTree = "<group>"; };
 		848D143F2CB6D7670043A660 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Popcorn/Source/Network/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
 		848D14402CB6D7670043A660 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Popcorn/Source/Network/Router.swift; sourceTree = SOURCE_ROOT; };
 		848D14432CB6D9F50043A660 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */,
+				24EFE9FA2CB7B343007A813C /* TrendingViewModel.swift */,
 			);
 			path = Trending;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				24EFE9C72CB66901007A813C /* SearchCollectionViewCell.swift in Sources */,
 				8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */,
 				24EFE9C02CB65D98007A813C /* PosterImageView.swift in Sources */,
+				24EFE9FB2CB7B343007A813C /* TrendingViewModel.swift in Sources */,
 				88EB2D992CB6333400F98058 /* PopcornTabBarController.swift in Sources */,
 				24EFE9D12CB6A1F6007A813C /* TVResponse.swift in Sources */,
 				848D14422CB6D7670043A660 /* Router.swift in Sources */,
