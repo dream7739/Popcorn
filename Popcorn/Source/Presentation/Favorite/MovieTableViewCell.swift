@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 final class MovieTableViewCell: UITableViewCell {
     private let thumbImage = UIImageView().then {
@@ -63,9 +64,14 @@ final class MovieTableViewCell: UITableViewCell {
         }
     }
     
-    func configureData(_ data: RealmMovie) {
-        titleLabel.text = data.name
-        thumbImage.backgroundColor = .gray
+    func configureData(_ data: Movie) {
+        titleLabel.text = data.title
+        if let posterPath = data.poster_path {
+            let posterURL = APIURL.imageURL(posterPath)
+            thumbImage.kf.setImage(with: posterURL)
+        } else {
+            thumbImage.backgroundColor = .lightGray
+        }
     }
     
 }

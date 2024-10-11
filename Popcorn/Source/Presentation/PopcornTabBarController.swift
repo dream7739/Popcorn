@@ -18,7 +18,7 @@ final class PopcornTabBarController: UITabBarController {
         let trendingVC = TrendingViewController()
         let trendingNav = UINavigationController(rootViewController: trendingVC)
         
-        let searchVC = SearchViewController()
+        let searchVC = SearchViewController(viewModel: SearchViewModel())
         let searchNav = UINavigationController(rootViewController: searchVC)
         
         let favoriteVC = FavoriteViewController()
