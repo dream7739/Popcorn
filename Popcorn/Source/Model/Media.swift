@@ -28,3 +28,16 @@ extension Media: IdentifiableType, Equatable {
         return UUID()
     }
 }
+
+extension Media {
+    func toRealmMedia() -> RealmMedia {
+        return RealmMedia(
+            id: self.id,
+            title: self.title,
+            isMovie: self.isMovie,
+            backdropPath: self.backdropPath,
+            voteAverage: self.voteAverage,
+            overview: self.overview
+        )
+    }
+}

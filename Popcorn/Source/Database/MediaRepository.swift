@@ -29,6 +29,10 @@ final class MediaRepository {
         return try? schemaVersionAtURL(fileURL)
     }
     
+    func contains(_ id: Int) -> Bool {
+        return realm.object(ofType: RealmMedia.self, forPrimaryKey: id) != nil
+    }
+    
     // MARK: - Read
     func fetchAll() -> [RealmMedia] {
         return realm.objects(RealmMedia.self)

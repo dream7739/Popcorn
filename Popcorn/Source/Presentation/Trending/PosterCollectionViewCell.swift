@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 import Then
+import RxSwift
 
 final class PosterCollectionHeaderView: UICollectionReusableView {
     
@@ -16,17 +17,17 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
-    private let posterImageView = PosterImageView()
+    let posterImageView = PosterImageView()
     private let genreLabel = UILabel().then {
         $0.font = Design.Font.primary
         $0.textColor = .white
         $0.textAlignment = .center
         $0.numberOfLines = 2
     }
-    private let playButton = UIButton().then {
+    let playButton = UIButton().then {
         $0.whiteBlackRadius("재생", Design.Image.play)
     }
-    private let saveButton = UIButton().then {
+    let saveButton = UIButton().then {
         $0.blackWhiteRadius("내가 찜한 리스트", Design.Image.plus)
     }
     private let buttonStackView = UIStackView().then {
@@ -34,6 +35,8 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         $0.distribution = .fillEqually
         $0.spacing = 10
     }
+    
+    var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,6 +46,11 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     func configureHierarchy() {

@@ -12,7 +12,7 @@ import Then
 
 final class PosterImageView: BaseView {
     
-    private let imageView = UIImageView().then {
+    let imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .systemGray2
         $0.clipsToBounds = true

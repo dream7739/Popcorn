@@ -61,7 +61,12 @@ final class TrendingViewController: BaseViewController {
     }
     
     private func bind() {
+        let playButtonTap = PublishSubject<Void>()
+        let saveButtonTap = PublishSubject<UIImage?>()
+        
         let input = TrendingViewModel.Input(
+            playButtonTap: playButtonTap,
+            saveButtonTap: saveButtonTap,
             cellTap: collectionView.rx.itemSelected
         )
         let output = viewModel.transform(input: input)
@@ -88,6 +93,15 @@ final class TrendingViewController: BaseViewController {
                 let section = dataSource.sectionModels[indexPath.section]
                 let media = section.items.first
                 header.configureHeader(media, section.model)
+                header.playButton.rx.tap
+                    .bind(to: playButtonTap)
+                    .disposed(by: header.disposeBag)
+                header.saveButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        saveButtonTap.onNext(header.posterImageView.imageView.image)
+                    }
+                    .disposed(by: header.disposeBag)
+                
                 return header
                 
             case 1, 2: // 지금 뜨는 영화 / 지금 뜨는 TV
@@ -111,17 +125,24 @@ final class TrendingViewController: BaseViewController {
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-//        output.toDetailTrigger
-//            .subscribe(with: self) { owner, media in
-//                let vc = DetailViewController()
-//                owner.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
+        output.toDetailTrigger
+            .subscribe(with: self) { owner, media in
+                let vc = DetailViewController(media: media, realmMedia: nil)
+                owner.present(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
         
         output.toTrailerTrigger
             .subscribe(with: self) { owner, movie in
                 let vc = TrailerViewController(media: movie, realmMedia: nil)
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.popUpViewTrigger
+            .subscribe(with: self) { owner, message in
+                // TODO: - 팝업 뷰 띄우기
+                print(message)
             }
             .disposed(by: disposeBag)
     }
