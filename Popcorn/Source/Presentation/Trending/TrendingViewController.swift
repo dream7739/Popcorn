@@ -15,6 +15,8 @@ import RxDataSources
 
 final class TrendingViewController: BaseViewController {
     
+    // TODO: - 메인 포스터 '재생', '내가 찜한 리스트 추가' 기능 구현
+    
     // TODO: - tv, search 버튼 간격 조절
     private lazy var logoBarButton = UIBarButtonItem().then {
         let image = UIImage(resource: .logo).withRenderingMode(.alwaysOriginal)
@@ -59,7 +61,9 @@ final class TrendingViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = TrendingViewModel.Input()
+        let input = TrendingViewModel.Input(
+            cellTap: collectionView.rx.itemSelected
+        )
         let output = viewModel.transform(input: input)
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<TrendSection> { dataSource, collectionView, indexPath, item in
@@ -105,6 +109,20 @@ final class TrendingViewController: BaseViewController {
         
         output.sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+//        output.toDetailTrigger
+//            .subscribe(with: self) { owner, movie in
+//                let vc = DetailViewController()
+//                owner.navigationController?.pushViewController(vc, animated: true)
+//            }
+//            .disposed(by: disposeBag)
+        
+        output.toTrailerTrigger
+            .subscribe(with: self) { owner, movie in
+                let vc = TrailerViewController(movie: movie, realmMovie: nil)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
     }
     
