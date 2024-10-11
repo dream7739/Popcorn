@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import RxDataSources
 
 typealias TrendSection = AnimatableSectionModel<String, Movie>
@@ -22,11 +23,13 @@ final class TrendingViewModel: BaseViewModel {
     var disposeBag = DisposeBag()
     
     struct Input {
-        
+        let cellTap: ControlEvent<IndexPath>
     }
     
     struct Output {
         let sections: PublishSubject<[TrendSection]>
+        let toDetailTrigger: PublishSubject<Movie>
+        let toTrailerTrigger: PublishSubject<Movie>
     }
     
     func transform(input: Input) -> Output {
@@ -35,6 +38,9 @@ final class TrendingViewModel: BaseViewModel {
         let trendMovies = PublishSubject<[Movie]>()
         let trendTVs = PublishSubject<[Movie]>()
         let genres = PublishSubject<[Genre]>()
+        let toDetailTrigger = PublishSubject<Movie>()
+        let toTrailerTrigger = PublishSubject<Movie>()
+        
         
         // 트렌드 영화 통신
         fetchTrendingMovies(trendMovies)
@@ -81,7 +87,24 @@ final class TrendingViewModel: BaseViewModel {
             .bind(to: sections)
             .disposed(by: disposeBag)
         
-        return Output(sections: sections)
+        input.cellTap
+            .withLatestFrom(sections) { indexPath, sections in
+                (indexPath, sections)
+            }
+            .subscribe(with: self) { owner, value in
+                // TODO: - 디테일뷰로 이동
+                let (indexPath, sections) = value
+                let section = sections[indexPath.section]
+                let movie = section.items[indexPath.item]
+                toDetailTrigger.onNext(movie)
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            sections: sections, 
+            toDetailTrigger: toDetailTrigger,
+            toTrailerTrigger: toTrailerTrigger
+        )
     }
 }
 
@@ -102,7 +125,7 @@ extension TrendingViewModel {
         }
         .disposed(by: disposeBag)
     }
-
+    
     private func fetchTrendingTVs(_ subject: PublishSubject<[Movie]>) {
         NetworkManager.shared.fetchData(
             with: .trending(type: .tv, language: .korean),
@@ -126,7 +149,7 @@ extension TrendingViewModel {
             genreDict[genre.id] = genre.name
         }
         let genreText = main.first?.genre_ids.map { genreDict[$0] ?? "" }.joined(separator: " ")
-
+        
         return [
             TrendSection(model: genreText ?? "", items: main),
             TrendSection(model: Section.movie.rawValue, items: movies),

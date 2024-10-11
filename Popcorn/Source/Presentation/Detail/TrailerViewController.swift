@@ -9,6 +9,7 @@ import UIKit
 import WebKit
 import SnapKit
 import Then
+import RxSwift
 
 final class TrailerViewController: BaseViewController {
     
@@ -20,10 +21,17 @@ final class TrailerViewController: BaseViewController {
         $0.hidesWhenStopped = true
     }
     
-    private let urlString: String
+    // MARK: - 둘 중에 한 값만 사용
+    // 트렌드나 서치에서 들어올 경우 movie 값 사용
+    // 내가 찜한 리스트에서 들어올 경우 realmMovie 값 사용
+    let movie: Movie?
+    let realmMovie: RealmMovie?
     
-    init(urlString: String) {
-        self.urlString = urlString
+    private let disposeBag = DisposeBag()
+    
+    init(movie: Movie?, realmMovie: RealmMovie?) {
+        self.movie = movie
+        self.realmMovie = realmMovie
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,12 +41,23 @@ final class TrailerViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let url = URL(string: urlString) else {
+        
+        if let movie {
+            if movie.isMovie {
+                fetchVideo(type: .movie, contentId: movie.id)
+            } else {
+                fetchVideo(type: .tv, contentId: movie.id)
+            }
+        } else if let realmMovie {
+            if realmMovie.isMovie {
+                fetchVideo(type: .movie, contentId: realmMovie.id)
+            } else {
+                fetchVideo(type: .tv, contentId: realmMovie.id)
+            }
+        } else {
             showErrorAlert(nil)
             return
         }
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
     
     override func configureHierarchy() {
@@ -62,8 +81,35 @@ final class TrailerViewController: BaseViewController {
     private func showErrorAlert(_ error: Error?) {
         let message = error?.localizedDescription ?? "URL 변경 실패"
         let alert = UIAlertController(title: "에러", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(alertAction)
         present(alert, animated: true)
+    }
+    
+    private func fetchVideo(type: Router.ContentType, contentId: Int) {
+        NetworkManager.shared.fetchData(
+            with: .video(type: type, contentId: contentId, language: .korean),
+            as: VideoResponse.self
+        )
+        .subscribe(with: self) { owner, result in
+            switch result {
+            case .success(let value):
+                guard let key = value.results.first?.key,
+                      let url = URL(string: APIURL.videoURL(key)) else {
+                    owner.showErrorAlert(nil)
+                    return
+                }
+                let request = URLRequest(url: url)
+                owner.webView.load(request)
+                
+            case .failure(let error):
+                print("영화 비디오 통신 실패", error)
+                owner.showErrorAlert(nil)
+            }
+        }
+        .disposed(by: disposeBag)
     }
 }
 
