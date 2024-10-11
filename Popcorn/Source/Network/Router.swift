@@ -10,7 +10,7 @@ import Foundation
 
 enum Router: URLRequestConvertible {
     
-    case search(type: ContentType, query: String, language: Language? = nil)
+    case search(type: ContentType, query: String, page: Int)
     case trending(type: ContentType, language: Language? = nil)
     case credits(type: ContentType, contentId: Int, language: Language? = nil)
     case similar(type: ContentType, contentId: Int, language: Language? = nil)
@@ -21,7 +21,7 @@ enum Router: URLRequestConvertible {
         case tv = "tv"
         case movie = "movie"
     }
-
+    
     enum Language: String {
         case korean = "ko-KR"
         case english = "en-US" // default
@@ -44,7 +44,7 @@ enum Router: URLRequestConvertible {
     private var path: String {
         switch self {
         case .search(let type, _, _):
-            return "search/\(type.rawValue)/"
+            return "search/\(type.rawValue)"
         case .trending(let type, _):
             return "trending/\(type.rawValue)/day"
         case .credits(let type, let id, _):
@@ -58,17 +58,30 @@ enum Router: URLRequestConvertible {
         }
     }
     
+    var queryItems: [URLQueryItem]? {
+        switch self {
+        case .search(let type, let query, let page):
+            return [
+                URLQueryItem(name: "query", value: query),
+                URLQueryItem(name: "language", value: "ko-KR"),
+                URLQueryItem(name: "page", value: "\(page)")
+            ]
+        default:
+            return nil
+        }
+    }
+    
     private var parameter: Parameters? {
         switch self {
-        case .search(_, let query, let language):
-            return ["query": query, "language": "ko-KR"]
+        case .search:
+            return nil
         case .trending(_, let language),
                 .credits(_, _, let language),
                 .genre(_, let language),
                 .video(_, _, let language),
                 .similar(_, _, let language):
             return ["language": "ko-KR"]
-//            return ["language": language?.rawValue ?? ""]
+            //            return ["language": language?.rawValue ?? ""]
         }
     }
 }
@@ -79,6 +92,14 @@ extension Router {
         var request = URLRequest(url: url)
         request.method = method
         request.headers = header
+        if let queryItems {
+            if #available(iOS 16.0, *) {
+                request.url?.append(queryItems: queryItems)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        print(request)
         return try URLEncoding.default.encode(request, with: parameter)
     }
 }

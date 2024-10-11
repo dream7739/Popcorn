@@ -10,7 +10,6 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 final class SearchViewController: BaseViewController {
     
@@ -23,7 +22,7 @@ final class SearchViewController: BaseViewController {
         $0.font = Design.Font.primary
         $0.attributedPlaceholder = NSAttributedString(string: "게임, 시리즈, 영화를 검색하세요..", attributes: [.foregroundColor: UIColor.lightGray])
         $0.backgroundColor = .darkGray
-
+        
     }
     
     private lazy var trendTableView = UITableView(
@@ -32,21 +31,40 @@ final class SearchViewController: BaseViewController {
     ).then {
         $0.delegate = self
         $0.dataSource = self
-        $0.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
-        $0.register(MovieTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MovieTableHeaderView.identifier)
+        $0.register(
+            MovieTableViewCell.self,
+            forCellReuseIdentifier: MovieTableViewCell.identifier
+        )
+        $0.register(
+            MovieTableHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MovieTableHeaderView.identifier
+        )
+        $0.keyboardDismissMode = .onDrag
         $0.rowHeight = 90
-        $0.backgroundColor = .black  
+        $0.backgroundColor = .black
     }
     
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .searchLayout()
     ).then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.prefetchDataSource = self
+        $0.keyboardDismissMode = .onDrag
         $0.register(
             MovieCollectionViewCell.self,
             forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
         )
+        $0.register(
+            TrendCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TrendCollectionHeaderView.identifier
+        )
+        $0.backgroundColor = .black
     }
+    
+    private let emptyView = SearchEmpyView()
     
     private let viewModel: SearchViewModel
     private let disposeBag = DisposeBag()
@@ -69,6 +87,7 @@ final class SearchViewController: BaseViewController {
         view.addSubview(searchTextField)
         view.addSubview(trendTableView)
         view.addSubview(collectionView)
+        view.addSubview(emptyView)
     }
     
     override func configureLayout() {
@@ -87,13 +106,20 @@ final class SearchViewController: BaseViewController {
             make.top.equalTo(searchTextField.snp.bottom).offset(10)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.top.equalTo(searchTextField.snp.bottom).offset(10)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
     }
     
     override func configureUI() {
-        collectionView.isHidden = true
         searchTextField.layer.cornerRadius = 5
     }
-    
+}
+
+extension SearchViewController {
     private func bind() {
         let input = SearchViewModel.Input(
             searchText: searchTextField.rx.text.orEmpty
@@ -102,8 +128,53 @@ final class SearchViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.trendMovieList
-            .bind(with: self) { owner, _ in
+            .bind(with: self) { owner, value in
+                owner.emptyView.isHidden = true
+                owner.collectionView.isHidden = true
                 owner.trendTableView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
+        output.showTableView
+            .bind(with: self) { owner, value in
+                owner.collectionView.isHidden = true
+                owner.emptyView.isHidden = true
+                owner.trendTableView.isHidden = false
+                
+                if !owner.viewModel.trendMovieList.isEmpty {
+                    owner.trendTableView.scrollToRow(
+                        at: IndexPath(row: 0, section: 0),
+                        at: .bottom,
+                        animated: true
+                    )
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.searchMovieList
+            .bind(with: self) { owner, value in
+                let searchText = owner.searchTextField.text ?? ""
+                
+                if searchText.isEmpty {
+                    output.showTableView.accept(())
+                    return
+                }
+                
+                if !value.isEmpty {
+                    owner.emptyView.isHidden = true
+                    owner.collectionView.isHidden = false
+                    owner.collectionView.reloadData()
+                    
+                    if owner.viewModel.searchPage == 1 {
+                        owner.collectionView.scrollToItem(
+                            at: IndexPath(item: 0, section: 0),
+                            at: .bottom,
+                            animated: true)
+                    }
+                } else {
+                    owner.emptyView.isHidden = false
+                    owner.collectionView.isHidden = true
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -136,9 +207,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for index in indexPaths where index.item == viewModel.searchMovieList.count - 4 &&
+        viewModel.searchPage + 1 <= viewModel.searchMovieResponse?.total_pages ?? 0 {
+            viewModel.searchPage += 1
+            viewModel.callSearchMovieMore.accept(())
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return viewModel.searchMovieList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,11 +227,22 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         ) as? MovieCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configureCell(.checkmark)
+        let posterPath = viewModel.searchMovieList[indexPath.item].poster_path
+        cell.configureCell(posterPath)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("셀 탭", indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendCollectionHeaderView.identifier, for: indexPath) as? TrendCollectionHeaderView else {
+            return UICollectionReusableView()
+        }
+        header.configureHeader("영화 & 시리즈")
+        header.configureLeftPadding()
+        return header
+    }
+    
 }

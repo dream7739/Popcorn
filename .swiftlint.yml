@@ -24,11 +24,11 @@ force_try:
 
 # 한 줄의 최대 길이 제한
 line_length:
-    - 180                   # 180자로 설정
+    - 200                   # 200자로 설정
     
 # 함수의 바디 길이 제한
 function_body_length:
-    warning: 60
+    warning: 80
     
 # 타입의 바디 길이 제한 (경고와 에러 기준)
 type_body_length:

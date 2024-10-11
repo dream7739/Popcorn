@@ -16,41 +16,29 @@ final class SearchViewModel: BaseViewModel {
     
     struct Output {
         let trendMovieList: BehaviorRelay<[Movie]>
+        let searchMovieList: BehaviorRelay<[Movie]>
+        let showTableView: BehaviorRelay<Void>
     }
     
     var trendMovieResponse: MovieResponse?
     var trendMovieList: [Movie] = []
+    var searchMovieResponse: MovieResponse?
+    var searchMovieList: [Movie] = []
+    var searchPage = 1
+    let callSearchMovieMore = PublishRelay<Void>()
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         let trendMovieList = BehaviorRelay<[Movie]>(value: [])
+        let searchMovieList = BehaviorRelay<[Movie]>(value: [])
+        let showTableView = BehaviorRelay<Void>(value: ())
         
-        let callTrendMovie = input.searchText
-            .withUnretained(self)
-            .filter { owner, value in
-                value.trimmingCharacters(in: .whitespaces).isEmpty && owner.trendMovieResponse == nil
-            }
-        
-        callTrendMovie
-            .flatMap { _ in
-                NetworkManager.shared.fetchMovie(with: Router.trending(type: .movie))
-            }
-            .bind(with: self) { owner, result in
+        NetworkManager.shared.fetchMovie(with: Router.trending(type: .movie))
+            .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let value):
                     owner.trendMovieResponse = value
-                    let data = value.results.map {
-                        Movie(
-                            id: $0.id,
-                            poster_path: $0.poster_path,
-                            genre_ids: $0.genre_ids,
-                            isMovie: true,
-                            backdrop_path: $0.backdrop_path,
-                            title: $0.title,
-                            vote_average: $0.vote_average,
-                            overview: $0.overview
-                        )
-                    }
+                    let data = value.results.map { $0.toMovie() }
                     owner.trendMovieList = data
                     trendMovieList.accept(data)
                 case .failure(let error):
@@ -59,9 +47,66 @@ final class SearchViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        input.searchText
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { $0.isEmpty }
+            .bind(with: self) { owner, value in
+                showTableView.accept(())
+            }
+            .disposed(by: disposeBag)
+        
+        input.searchText
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+            .distinctUntilChanged()
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .map {
+                self.searchPage = 1
+                return $1
+            }
+            .flatMap { value in
+                NetworkManager.shared.fetchMovie(
+                    with: Router.search(type: .movie, query: value, page: self.searchPage)
+                )
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let value):
+                    owner.searchMovieResponse = value
+                    let data = value.results.map { $0.toMovie() }
+                    owner.searchMovieList = data
+                    searchMovieList.accept(data)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        callSearchMovieMore
+            .withLatestFrom(input.searchText)
+            .withUnretained(self)
+            .flatMap { owner, value in
+                NetworkManager.shared.fetchMovie(
+                    with: Router.search(type: .movie, query: value, page: owner.searchPage)
+                )
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let value):
+                    let data = value.results.map { $0.toMovie() }
+                    owner.searchMovieList.append(contentsOf: data)
+                    searchMovieList.accept(data)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
-            trendMovieList: trendMovieList
+            trendMovieList: trendMovieList,
+            searchMovieList: searchMovieList,
+            showTableView: showTableView
         )
     }
-    
 }
