@@ -32,6 +32,7 @@
 		848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D143F2CB6D7670043A660 /* NetworkManager.swift */; };
 		848D14422CB6D7670043A660 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14402CB6D7670043A660 /* Router.swift */; };
 		848D14442CB6D9F50043A660 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14432CB6D9F50043A660 /* APIKey.swift */; };
+		848D146A2CB91D9E0043A660 /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14692CB91D9D0043A660 /* FavoriteViewModel.swift */; };
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA602CB5159900BAC95A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5F2CB5159900BAC95A /* ViewController.swift */; };
@@ -84,6 +85,7 @@
 		848D143F2CB6D7670043A660 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Popcorn/Source/Network/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
 		848D14402CB6D7670043A660 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Popcorn/Source/Network/Router.swift; sourceTree = SOURCE_ROOT; };
 		848D14432CB6D9F50043A660 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		848D14692CB91D9D0043A660 /* FavoriteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		8832DA582CB5159900BAC95A /* Popcorn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Popcorn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8832DA5B2CB5159900BAC95A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				88EB2D9E2CB6348800F98058 /* FavoriteViewController.swift */,
+				848D14692CB91D9D0043A660 /* FavoriteViewModel.swift */,
 				88EB2DA42CB6B72500F98058 /* MovieTableViewCell.swift */,
 				88EB2DA62CB6BE6E00F98058 /* MovieTableHeaderView.swift */,
 			);
@@ -446,6 +449,7 @@
 				88FB0D5E2CB561EC003EEFE0 /* Design.swift in Sources */,
 				88FB0D562CB54F63003EEFE0 /* BaseViewController.swift in Sources */,
 				24EFEA042CB7D060007A813C /* APIURL.swift in Sources */,
+				848D146A2CB91D9E0043A660 /* FavoriteViewModel.swift in Sources */,
 				24EFE9CF2CB6A1DE007A813C /* GenreResponse.swift in Sources */,
 				88EB2DA12CB634AB00F98058 /* DetailViewController.swift in Sources */,
 				24EFE9C92CB69701007A813C /* VideoResponse.swift in Sources */,

@@ -66,12 +66,15 @@ final class MovieTableViewCell: UITableViewCell {
     
     func configureData(_ data: Movie) {
         titleLabel.text = data.title
-        if let posterPath = data.poster_path {
-            let posterURL = APIURL.imageURL(posterPath)
-            thumbImage.kf.setImage(with: posterURL)
-        } else {
-            thumbImage.backgroundColor = .lightGray
-        }
+        titleLabel.textColor = .white
+        let image = ImageFileManager.shared.loadImageFile(filename: String(data.id))
+        thumbImage.image = image
     }
     
+    func configureData(_ data: RealmMovie) {
+        titleLabel.text = data.name
+        titleLabel.textColor = .white
+        let image = ImageFileManager.shared.loadImageFile(filename: String(data.id))
+        thumbImage.image = image
+    }
 }
