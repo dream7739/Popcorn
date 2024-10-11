@@ -16,7 +16,6 @@ final class NetworkManager {
     private func request<T: Decodable>(api: Router) -> Single<Result<T, AFError>> {
         return Single.create { [weak self] observer in
             guard let self else { return Disposables.create() }
-            
             let request: DataRequest
             request = AF.request(api)
             request.validate(statusCode: 200..<300)

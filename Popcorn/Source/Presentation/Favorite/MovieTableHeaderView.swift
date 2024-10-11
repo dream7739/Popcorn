@@ -11,14 +11,13 @@ import Then
 
 final class MovieTableHeaderView: UITableViewHeaderFooterView {
     private let titleLabel = UILabel().then {
-        $0.font = Design.Font.title
+        $0.font = Design.Font.subtitle
         $0.textColor = .white
     }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .black
         contentView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { make in
