@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class DetailViewController: BaseViewController {
     private let playImage = UIImageView().then {
@@ -88,8 +90,28 @@ final class DetailViewController: BaseViewController {
         $0.isScrollEnabled = false
     }
     
+    // MARK: - 둘 중에 한 값만 사용
+    // 트렌드나 서치에서 들어올 경우 media 값 사용
+    // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
+    let media: Media?
+    let realmMedia: RealmMedia?
+    
+    private let disposeBag = DisposeBag()
+    
+    init(media: Media?, realmMedia: RealmMedia?) {
+        self.media = media
+        self.realmMedia = realmMedia
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(media ?? "미디어 없음")
+        print(realmMedia ?? "렘미디어 없음")
     }
     
     override func configureHierarchy() {

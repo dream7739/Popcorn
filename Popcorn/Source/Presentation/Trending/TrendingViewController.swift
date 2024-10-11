@@ -125,12 +125,12 @@ final class TrendingViewController: BaseViewController {
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-//        output.toDetailTrigger
-//            .subscribe(with: self) { owner, media in
-//                let vc = DetailViewController()
-//                owner.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
+        output.toDetailTrigger
+            .subscribe(with: self) { owner, media in
+                let vc = DetailViewController(media: media, realmMedia: nil)
+                owner.present(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
         
         output.toTrailerTrigger
             .subscribe(with: self) { owner, movie in
