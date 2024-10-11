@@ -6,6 +6,7 @@ disabled_rules:
     - trailing_whitespace    # 코드 끝에 공백 방지 규칙, 비활성화에 주의
     - unneeded_override      # 필요없는 오버라이드 메서드 관련 규칙
     - todo                   # todo 작성 시 워닝 규칙
+    - unused_closure_parameter # 클로저 파라미터 관련 규칙
 
 # 선택적으로 활성화할 규칙들 (기본 설정에 없으나 유용한 규칙들)
 opt_in_rules:
