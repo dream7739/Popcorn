@@ -32,21 +32,60 @@ extension UICollectionViewLayout {
     }
     
     // MARK: - 트렌드 화면 - 지금 뜨는 영화, 지금 뜨는 TV 시리즈
-    static func trendLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let cellSpacing: CGFloat = 10
-        
-        // 셀 사이즈
-        let width = 100
-        let height = 150
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = cellSpacing
-        layout.minimumLineSpacing = cellSpacing
-        
-        return layout
+    static func trendLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
+            switch sectionIndex {
+            case 0:
+                return UICollectionViewLayout.posterLayoutSection()
+            default:
+                return UICollectionViewLayout.trendLayoutSection()
+            }
+        }
     }
     
+    // 첫 번째 섹션 - 헤더뷰만 사용
+    static func posterLayoutSection() -> NSCollectionLayoutSection {
+        // 헤더 크기
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(500))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        // 섹션 레이아웃 (그룹 없이 헤더만 설정)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(0.01))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(0.01))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.boundarySupplementaryItems = [headerItem]
+        return section
+    }
+    
+    // 두 번째, 세 번째 섹션
+    static func trendLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(100), heightDimension: .absolute(150))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(100), heightDimension: .absolute(150))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // 섹션 레이아웃
+        let section = NSCollectionLayoutSection(group: group)
+        // 가로 스크롤
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0)
+        
+        // 헤더 크기
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        return section
+    }
 }

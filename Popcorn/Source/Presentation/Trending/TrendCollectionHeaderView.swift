@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 final class TrendCollectionHeaderView: UICollectionReusableView {
     
@@ -18,8 +20,9 @@ final class TrendCollectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.edges.equalToSuperview()
+//            $0.verticalEdges.equalToSuperview()
+//            $0.horizontalEdges.equalToSuperview().inset(16)
         }
     }
     

@@ -33,6 +33,8 @@ final class TrendingViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .trendLayout()
     ).then {
+        $0.backgroundColor = .black
+        
         $0.register(
             PosterCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -70,7 +72,7 @@ final class TrendingViewController: BaseViewController {
             cell.configureCell(item.poster_path)
             return cell
         } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-            switch indexPath.item {
+            switch indexPath.section {
             case 0: // 메인 포스터
                 guard let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,

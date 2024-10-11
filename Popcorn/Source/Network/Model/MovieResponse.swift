@@ -32,4 +32,17 @@ struct MovieResponse: Decodable {
     }
 }
 
-
+extension MovieResponse.MovieResult {
+    func toMovie() -> Movie {
+        return Movie(
+            id: self.id,
+            poster_path: self.poster_path,
+            genre_ids: self.genre_ids,
+            isMovie: true,
+            backdrop_path: self.backdrop_path,
+            title: self.title,
+            vote_average: self.vote_average,
+            overview: self.overview
+        )
+    }
+}
