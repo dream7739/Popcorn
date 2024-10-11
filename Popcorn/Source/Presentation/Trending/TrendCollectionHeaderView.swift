@@ -12,7 +12,7 @@ import Then
 final class TrendCollectionHeaderView: UICollectionReusableView {
     
     private let titleLabel = UILabel().then {
-        $0.font = Design.Font.title
+        $0.font = Design.Font.subtitle
         $0.textColor = .white
     }
     
@@ -30,5 +30,13 @@ final class TrendCollectionHeaderView: UICollectionReusableView {
     
     func configureHeader(_ text: String) {
         titleLabel.text = text
+    }
+    
+    func configureLeftPadding() {
+        titleLabel.snp.removeConstraints()
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.centerY.equalToSuperview()
+        }
     }
 }

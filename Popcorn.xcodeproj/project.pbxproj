@@ -47,6 +47,7 @@
 		8832DA842CB5199200BAC95A /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA832CB5199200BAC95A /* RxSwift */; };
 		884590DE2CB7C6550078F1F6 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884590DD2CB7C6550078F1F6 /* BaseViewModel.swift */; };
 		884590E02CB7EDCC0078F1F6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884590DF2CB7EDCC0078F1F6 /* SearchViewModel.swift */; };
+		889C4E032CB9105500EDBE7E /* SearchEmpyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889C4E022CB9105500EDBE7E /* SearchEmpyView.swift */; };
 		88EB2D992CB6333400F98058 /* PopcornTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D982CB6333400F98058 /* PopcornTabBarController.swift */; };
 		88EB2D9B2CB6344000F98058 /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */; };
 		88EB2D9D2CB6347300F98058 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB2D9C2CB6347300F98058 /* SearchViewController.swift */; };
@@ -96,6 +97,7 @@
 		8832DA6F2CB5169300BAC95A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		884590DD2CB7C6550078F1F6 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		884590DF2CB7EDCC0078F1F6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		889C4E022CB9105500EDBE7E /* SearchEmpyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmpyView.swift; sourceTree = "<group>"; };
 		88EB2D982CB6333400F98058 /* PopcornTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopcornTabBarController.swift; sourceTree = "<group>"; };
 		88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		88EB2D9C2CB6347300F98058 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				88EB2D9C2CB6347300F98058 /* SearchViewController.swift */,
 				24EFE9C62CB66901007A813C /* MediaCollectionViewCell.swift */,
 				884590DF2CB7EDCC0078F1F6 /* SearchViewModel.swift */,
+				889C4E022CB9105500EDBE7E /* SearchEmpyView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				24EFE9C92CB69701007A813C /* VideoResponse.swift in Sources */,
 				24EFEA072CB7E4C9007A813C /* Media.swift in Sources */,
 				88EB2DA32CB65FEF00F98058 /* UIButton+.swift in Sources */,
+				889C4E032CB9105500EDBE7E /* SearchEmpyView.swift in Sources */,
 				88FB0D582CB54F66003EEFE0 /* BaseView.swift in Sources */,
 				24EFE9B32CB547AE007A813C /* MediaRepository.swift in Sources */,
 				24EFE9C52CB66837007A813C /* ReuseIdentifierProtocol.swift in Sources */,

@@ -26,6 +26,7 @@ extension UICollectionViewLayout {
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = cellSpacing
         layout.minimumLineSpacing = cellSpacing
+        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 30)
         layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
         
         return layout
