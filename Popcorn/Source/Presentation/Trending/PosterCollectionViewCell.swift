@@ -17,7 +17,7 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
-    private let posterImageView = PosterImageView()
+    let posterImageView = PosterImageView()
     private let genreLabel = UILabel().then {
         $0.font = Design.Font.primary
         $0.textColor = .white

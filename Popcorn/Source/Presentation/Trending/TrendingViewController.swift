@@ -62,7 +62,7 @@ final class TrendingViewController: BaseViewController {
     
     private func bind() {
         let playButtonTap = PublishSubject<Void>()
-        let saveButtonTap = PublishSubject<Void>()
+        let saveButtonTap = PublishSubject<UIImage?>()
         
         let input = TrendingViewModel.Input(
             playButtonTap: playButtonTap,
@@ -97,7 +97,9 @@ final class TrendingViewController: BaseViewController {
                     .bind(to: playButtonTap)
                     .disposed(by: header.disposeBag)
                 header.saveButton.rx.tap
-                    .bind(to: saveButtonTap)
+                    .bind(with: self) { owner, _ in
+                        saveButtonTap.onNext(header.posterImageView.imageView.image)
+                    }
                     .disposed(by: header.disposeBag)
                 
                 return header
@@ -134,6 +136,13 @@ final class TrendingViewController: BaseViewController {
             .subscribe(with: self) { owner, movie in
                 let vc = TrailerViewController(media: movie, realmMedia: nil)
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.popUpViewTrigger
+            .subscribe(with: self) { owner, message in
+                // TODO: - 팝업 뷰 띄우기
+                print(message)
             }
             .disposed(by: disposeBag)
     }

@@ -5,7 +5,7 @@
 //  Created by 김성민 on 10/10/24.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -20,11 +20,12 @@ final class TrendingViewModel: BaseViewModel {
         case tv = "지금 뜨는 TV 시리즈"
     }
     
+    private let repository = MediaRepository()
     var disposeBag = DisposeBag()
     
     struct Input {
         let playButtonTap: PublishSubject<Void>
-        let saveButtonTap: PublishSubject<Void>
+        let saveButtonTap: PublishSubject<UIImage?>
         let cellTap: ControlEvent<IndexPath>
     }
     
@@ -32,6 +33,7 @@ final class TrendingViewModel: BaseViewModel {
         let sections: PublishSubject<[TrendSection]>
         let toDetailTrigger: PublishSubject<Media>
         let toTrailerTrigger: PublishSubject<Media>
+        let popUpViewTrigger: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -42,6 +44,7 @@ final class TrendingViewModel: BaseViewModel {
         let genres = PublishSubject<[Genre]>()
         let toDetailTrigger = PublishSubject<Media>()
         let toTrailerTrigger = PublishSubject<Media>()
+        let popUpViewTrigger = PublishSubject<String>()
         
         // 트렌드 영화 통신
         fetchTrendingMovies(trendMovies)
@@ -100,24 +103,45 @@ final class TrendingViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - 재생 버튼 탭 -> 웹뷰
-        input.playButtonTap
-            .subscribe(with: self) { owner, _ in
-                print("재생 버튼 탭")
+        // 재생 버튼 탭 -> 웹뷰
+        input.playButtonTap.withLatestFrom(sections)
+            .subscribe(with: self) { owner, section in
+                if let media = section[0].items.first {
+                    toTrailerTrigger.onNext(media)
+                } else {
+                    print("메인 포스터 데이터 없음")
+                }
             }
             .disposed(by: disposeBag)
         
         // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
-            .subscribe(with: self) { owner, _ in
-                print("저장 버튼 탭")
+            .withLatestFrom(sections) { image, sections in
+                (image, sections)
+            }
+            .subscribe(with: self) { owner, value in
+                let (image, sections) = value
+                if let media = sections[0].items.first {
+                    let realmMedia = media.toRealmMedia()
+                    // 이미 있으면 저장된 미디어에요 팝업뷰 띄우기
+                    if owner.repository.contains(media.id) {
+                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
+                    } else {
+                        // 없으면 미디어를 저장했어요 팝업뷰 띄우기 + Realm 저장하기
+                        owner.repository.addItem(item: realmMedia, image: image)
+                        popUpViewTrigger.onNext("미디어를 저장했어요 :)")
+                    }
+                } else {
+                    print("메인 포스터 데이터 없음")
+                }
             }
             .disposed(by: disposeBag)
         
         return Output(
             sections: sections, 
             toDetailTrigger: toDetailTrigger,
-            toTrailerTrigger: toTrailerTrigger
+            toTrailerTrigger: toTrailerTrigger, 
+            popUpViewTrigger: popUpViewTrigger
         )
     }
 }
