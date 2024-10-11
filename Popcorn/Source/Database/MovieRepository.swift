@@ -50,36 +50,36 @@ final class MovieRepository {
     }
     
     // MARK: - Update
-//    func updateItem(_ item: RealmMovie) {}
+    //    func updateItem(_ item: RealmMovie) {}
     
     // MARK: - Delete
-    func deleteItem(_ item: RealmMovie) {
+    func deleteItem(withId id: Int) {
         do {
             try realm.write {
-                deleteImageForItem(item)
-                realm.delete(item)
-                print("Realm 삭제 성공!")
+                if let itemToDelete = realm.object(ofType: RealmMovie.self, forPrimaryKey: id) {
+                    deleteImageForItem(itemToDelete)
+                    realm.delete(itemToDelete)
+                    print("Realm 삭제 성공!")
+                } else {
+                    print("삭제할 항목을 찾을 수 없습니다.")
+                }
             }
         } catch {
-            print("Realm 삭제 실패!")
+            print("Realm 삭제 실패: \(error.localizedDescription)")
         }
     }
-    
-    func deleteItem(withId id: Int) {
-            do {
-                try realm.write {
-                    if let itemToDelete = realm.object(ofType: RealmMovie.self, forPrimaryKey: id) {
-                        deleteImageForItem(itemToDelete)
-                        realm.delete(itemToDelete)
-                        print("Realm 삭제 성공!")
-                    } else {
-                        print("삭제할 항목을 찾을 수 없습니다.")
-                    }
-                }
-            } catch {
-                print("Realm 삭제 실패: \(error.localizedDescription)")
+    func deleteAll() {
+        do {
+            try realm.write {
+                let movies = realm.objects(RealmMovie.self)
+                movies.forEach { deleteImageForItem($0) }
+                realm.delete(movies)
+                print("Realm 전체 삭제 성공!")
             }
+        } catch {
+            print("Realm 전체 삭제 실패!")
         }
+    }
     
     private func saveImageForItem(_ item: RealmMovie, image: UIImage?) {
         guard let image = image else { return }
