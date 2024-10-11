@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 import SnapKit
 import Then
 
@@ -32,5 +33,10 @@ final class PosterImageView: BaseView {
     
     func setImageView(_ image: UIImage?) {
         imageView.image = image
+    }
+    
+    func setImageView(_ urlString: String?) {
+        let url = APIURL.imageURL(urlString)
+        imageView.kf.setImage(with: url)
     }
 }

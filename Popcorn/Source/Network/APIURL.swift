@@ -21,7 +21,6 @@ enum APIURL {
         return URL(string: APIURL.imageBaseURL + str)
     }
     
-    
     static func videoURL(_ str: String) -> String {
         return APIURL.videoBaseURL + str
     }

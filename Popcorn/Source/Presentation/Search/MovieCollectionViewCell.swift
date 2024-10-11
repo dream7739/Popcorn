@@ -25,4 +25,8 @@ final class MovieCollectionViewCell: BaseCollectionViewCell {
     func configureCell(_ image: UIImage?) {
         imageView.setImageView(image)
     }
+    
+    func configureCell(_ urlString: String?) {
+        imageView.setImageView(urlString)
+    }
 }
