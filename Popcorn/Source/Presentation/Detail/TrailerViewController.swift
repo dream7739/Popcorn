@@ -22,16 +22,16 @@ final class TrailerViewController: BaseViewController {
     }
     
     // MARK: - 둘 중에 한 값만 사용
-    // 트렌드나 서치에서 들어올 경우 movie 값 사용
-    // 내가 찜한 리스트에서 들어올 경우 realmMovie 값 사용
-    let movie: Movie?
-    let realmMovie: RealmMovie?
+    // 트렌드나 서치에서 들어올 경우 media 값 사용
+    // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
+    let media: Media?
+    let realmMedia: RealmMedia?
     
     private let disposeBag = DisposeBag()
     
-    init(movie: Movie?, realmMovie: RealmMovie?) {
-        self.movie = movie
-        self.realmMovie = realmMovie
+    init(media: Media?, realmMedia: RealmMedia?) {
+        self.media = media
+        self.realmMedia = realmMedia
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,17 +42,17 @@ final class TrailerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let movie {
-            if movie.isMovie {
-                fetchVideo(type: .movie, contentId: movie.id)
+        if let media {
+            if media.isMovie {
+                fetchVideo(type: .movie, contentId: media.id)
             } else {
-                fetchVideo(type: .tv, contentId: movie.id)
+                fetchVideo(type: .tv, contentId: media.id)
             }
-        } else if let realmMovie {
-            if realmMovie.isMovie {
-                fetchVideo(type: .movie, contentId: realmMovie.id)
+        } else if let realmMedia {
+            if realmMedia.isMovie {
+                fetchVideo(type: .movie, contentId: realmMedia.id)
             } else {
-                fetchVideo(type: .tv, contentId: realmMovie.id)
+                fetchVideo(type: .tv, contentId: realmMedia.id)
             }
         } else {
             showErrorAlert(nil)

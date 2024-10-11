@@ -48,8 +48,8 @@ final class TrendingViewController: BaseViewController {
             withReuseIdentifier: TrendCollectionHeaderView.identifier
         )
         $0.register(
-            MovieCollectionViewCell.self,
-            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
     }
     
@@ -68,12 +68,12 @@ final class TrendingViewController: BaseViewController {
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<TrendSection> { dataSource, collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: MovieCollectionViewCell.identifier,
+                withReuseIdentifier: MediaCollectionViewCell.identifier,
                 for: indexPath
-            ) as? MovieCollectionViewCell else {
+            ) as? MediaCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configureCell(item.poster_path)
+            cell.configureCell(item.posterPath)
             return cell
         } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
             switch indexPath.section {
@@ -86,8 +86,8 @@ final class TrendingViewController: BaseViewController {
                     return UICollectionReusableView()
                 }
                 let section = dataSource.sectionModels[indexPath.section]
-                let movie = section.items.first
-                header.configureHeader(movie, section.model)
+                let media = section.items.first
+                header.configureHeader(media, section.model)
                 return header
                 
             case 1, 2: // 지금 뜨는 영화 / 지금 뜨는 TV
@@ -112,7 +112,7 @@ final class TrendingViewController: BaseViewController {
             .disposed(by: disposeBag)
         
 //        output.toDetailTrigger
-//            .subscribe(with: self) { owner, movie in
+//            .subscribe(with: self) { owner, media in
 //                let vc = DetailViewController()
 //                owner.navigationController?.pushViewController(vc, animated: true)
 //            }
@@ -120,7 +120,7 @@ final class TrendingViewController: BaseViewController {
         
         output.toTrailerTrigger
             .subscribe(with: self) { owner, movie in
-                let vc = TrailerViewController(movie: movie, realmMovie: nil)
+                let vc = TrailerViewController(media: movie, realmMedia: nil)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

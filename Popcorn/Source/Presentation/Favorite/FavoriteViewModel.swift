@@ -12,10 +12,10 @@ import RealmSwift
 
 final class FavoriteViewModel {
     private let disposeBag = DisposeBag()
-    let repository: MovieRepository
-    private var favoriteList = BehaviorRelay<[RealmMovie]>(value: [])
+    let repository: MediaRepository
+    private var favoriteList = BehaviorRelay<[RealmMedia]>(value: [])
     
-    init(repository: MovieRepository = MovieRepository()) {
+    init(repository: MediaRepository = MediaRepository()) {
         self.repository = repository
         setupNotificationObserver()
     }
@@ -36,18 +36,18 @@ final class FavoriteViewModel {
     
     struct Input {
         let viewWillAppear: Observable<Void>
-        let itemDeleted: ControlEvent<RealmMovie>
+        let itemDeleted: ControlEvent<RealmMedia>
     }
     
     struct Output {
-        let favoriteList: Observable<[RealmMovie]>
+        let favoriteList: Observable<[RealmMedia]>
     }
     
     func transform(input: Input) -> Output {
-            var list: Observable<[RealmMovie]>
+            var list: Observable<[RealmMedia]>
             
             list = input.viewWillAppear
-                .flatMapLatest { [weak self] _ -> Driver<[RealmMovie]> in
+                .flatMapLatest { [weak self] _ -> Driver<[RealmMedia]> in
                     guard let self else { return Driver.just([]) }
                     self.updateFavoriteList()
                     return self.favoriteList.asDriver()

@@ -33,15 +33,15 @@ struct TVResponse: Decodable {
 }
 
 extension TVResponse.TVResult {
-    func toMovie() -> Movie {
-        return Movie(
+    func toMedia() -> Media {
+        return Media(
             id: self.id,
-            poster_path: self.poster_path,
-            genre_ids: self.genre_ids,
+            posterPath: self.poster_path,
+            genreIDs: self.genre_ids,
             isMovie: false,
-            backdrop_path: self.backdrop_path,
+            backdropPath: self.backdrop_path,
             title: self.name,
-            vote_average: self.vote_average,
+            voteAverage: self.vote_average,
             overview: self.overview
         )
     }

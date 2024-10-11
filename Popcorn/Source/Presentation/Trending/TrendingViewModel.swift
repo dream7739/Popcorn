@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-typealias TrendSection = AnimatableSectionModel<String, Movie>
+typealias TrendSection = AnimatableSectionModel<String, Media>
 
 final class TrendingViewModel: BaseViewModel {
     
@@ -28,19 +28,18 @@ final class TrendingViewModel: BaseViewModel {
     
     struct Output {
         let sections: PublishSubject<[TrendSection]>
-        let toDetailTrigger: PublishSubject<Movie>
-        let toTrailerTrigger: PublishSubject<Movie>
+        let toDetailTrigger: PublishSubject<Media>
+        let toTrailerTrigger: PublishSubject<Media>
     }
     
     func transform(input: Input) -> Output {
         let sections = PublishSubject<[TrendSection]>()
-        let mainPoster = PublishSubject<[Movie]>()
-        let trendMovies = PublishSubject<[Movie]>()
-        let trendTVs = PublishSubject<[Movie]>()
+        let mainPoster = PublishSubject<[Media]>()
+        let trendMovies = PublishSubject<[Media]>()
+        let trendTVs = PublishSubject<[Media]>()
         let genres = PublishSubject<[Genre]>()
-        let toDetailTrigger = PublishSubject<Movie>()
-        let toTrailerTrigger = PublishSubject<Movie>()
-        
+        let toDetailTrigger = PublishSubject<Media>()
+        let toTrailerTrigger = PublishSubject<Media>()
         
         // 트렌드 영화 통신
         fetchTrendingMovies(trendMovies)
@@ -64,9 +63,9 @@ final class TrendingViewModel: BaseViewModel {
         // 랜덤 아이템 뽑혔을 때 장르 API 통신
         mainPoster
             .compactMap { $0.first }
-            .flatMap { movie in
+            .flatMap { media in
                 NetworkManager.shared.fetchData(
-                    with: .genre(type: movie.isMovie ? .movie : .tv, language: .korean),
+                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
                     as: GenreResponse.self
                 )
             }
@@ -95,8 +94,8 @@ final class TrendingViewModel: BaseViewModel {
                 // TODO: - 디테일뷰로 이동
                 let (indexPath, sections) = value
                 let section = sections[indexPath.section]
-                let movie = section.items[indexPath.item]
-                toDetailTrigger.onNext(movie)
+                let media = section.items[indexPath.item]
+                toDetailTrigger.onNext(media)
             }
             .disposed(by: disposeBag)
         
@@ -109,7 +108,7 @@ final class TrendingViewModel: BaseViewModel {
 }
 
 extension TrendingViewModel {
-    private func fetchTrendingMovies(_ subject: PublishSubject<[Movie]>) {
+    private func fetchTrendingMovies(_ subject: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
             with: .trending(type: .movie, language: .korean),
             as: MovieResponse.self
@@ -118,7 +117,7 @@ extension TrendingViewModel {
             switch result {
             case .success(let response):
                 print("트렌드 - 영화 통신 성공")
-                subject.onNext(response.results.map { $0.toMovie() })
+                subject.onNext(response.results.map { $0.toMedia() })
             case .failure(let error):
                 print("트렌드 - 영화 통신 실패", error)
             }
@@ -126,7 +125,7 @@ extension TrendingViewModel {
         .disposed(by: disposeBag)
     }
     
-    private func fetchTrendingTVs(_ subject: PublishSubject<[Movie]>) {
+    private func fetchTrendingTVs(_ subject: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
             with: .trending(type: .tv, language: .korean),
             as: TVResponse.self
@@ -135,7 +134,7 @@ extension TrendingViewModel {
             switch result {
             case .success(let response):
                 print("트렌드 - TV 통신 성공")
-                subject.onNext(response.results.map { $0.toMovie() })
+                subject.onNext(response.results.map { $0.toMedia() })
             case .failure(let error):
                 print("트렌드 - TV 통신 실패", error)
             }
@@ -143,12 +142,12 @@ extension TrendingViewModel {
         .disposed(by: disposeBag)
     }
     
-    private func createSections(movies: [Movie], tvShows: [Movie], main: [Movie], genres: [Genre]) -> [TrendSection] {
+    private func createSections(movies: [Media], tvShows: [Media], main: [Media], genres: [Genre]) -> [TrendSection] {
         var genreDict = [Int: String]()
         for genre in genres {
             genreDict[genre.id] = genre.name
         }
-        let genreText = main.first?.genre_ids.map { genreDict[$0] ?? "" }.joined(separator: " ")
+        let genreText = main.first?.genreIDs.map { genreDict[$0] ?? "" }.joined(separator: " ")
         
         return [
             TrendSection(model: genreText ?? "", items: main),

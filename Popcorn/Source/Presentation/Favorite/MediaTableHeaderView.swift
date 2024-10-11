@@ -1,5 +1,5 @@
 //
-//  MovieTableHeaderView.swift
+//  MediaTableHeaderView.swift
 //  Popcorn
 //
 //  Created by 홍정민 on 10/9/24.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class MovieTableHeaderView: UITableViewHeaderFooterView {
+final class MediaTableHeaderView: UITableViewHeaderFooterView {
     private let titleLabel = UILabel().then {
         $0.font = Design.Font.subtitle
         $0.textColor = .white

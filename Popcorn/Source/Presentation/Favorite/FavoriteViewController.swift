@@ -17,8 +17,8 @@ final class FavoriteViewController: BaseViewController {
     let viewModel = FavoriteViewModel()
     
     private lazy var favoriteTableView = UITableView().then {
-        $0.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
-        $0.register(MovieTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MovieTableHeaderView.identifier)
+        $0.register(MediaTableViewCell.self, forCellReuseIdentifier: MediaTableViewCell.identifier)
+        $0.register(MediaTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MediaTableHeaderView.identifier)
         $0.rowHeight = 90
         $0.backgroundColor = .black
     }
@@ -45,7 +45,7 @@ final class FavoriteViewController: BaseViewController {
         
         let input = FavoriteViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asObservable().map { _ in }, 
-            itemDeleted: favoriteTableView.rx.modelDeleted(RealmMovie.self)
+            itemDeleted: favoriteTableView.rx.modelDeleted(RealmMedia.self)
         )
         
         let output = viewModel.transform(input: input)
@@ -53,9 +53,9 @@ final class FavoriteViewController: BaseViewController {
         
         
         output.favoriteList
-            .bind(to: favoriteTableView.rx.items(cellIdentifier: MovieTableViewCell.identifier,
-                                              cellType: MovieTableViewCell.self)) { (row, movie, cell) in
-                cell.configureData(movie)
+            .bind(to: favoriteTableView.rx.items(cellIdentifier: MediaTableViewCell.identifier,
+                                              cellType: MediaTableViewCell.self)) { (row, media, cell) in
+                cell.configureData(media)
             }
                                               .disposed(by: disposeBag)
     }
