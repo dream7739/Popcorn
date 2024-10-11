@@ -8,22 +8,26 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class FavoriteViewController: BaseViewController {
+    
+    let disposeBag = DisposeBag()
+    let viewModel = FavoriteViewModel()
+    
     private lazy var favoriteTableView = UITableView().then {
-        $0.delegate = self
-        $0.dataSource = self
-        $0.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
-        $0.register(MovieTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MovieTableHeaderView.identifier)
+        $0.register(MediaTableViewCell.self, forCellReuseIdentifier: MediaTableViewCell.identifier)
+        $0.register(MediaTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MediaTableHeaderView.identifier)
         $0.rowHeight = 90
         $0.backgroundColor = .black
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "내가 찜한 리스트"
+        bindViewModel()
+ 
     }
-    
     override func configureHierarchy() {
         view.addSubview(favoriteTableView)
     }
@@ -33,37 +37,51 @@ final class FavoriteViewController: BaseViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    override func configureUI() {
+        navigationItem.title = "내가 찜한 리스트"
+    }
     
+    func bindViewModel() {
+        
+        let input = FavoriteViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.asObservable().map { _ in }, 
+            itemDeleted: favoriteTableView.rx.modelDeleted(RealmMedia.self)
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        
+        
+        output.favoriteList
+            .bind(to: favoriteTableView.rx.items(cellIdentifier: MediaTableViewCell.identifier,
+                                              cellType: MediaTableViewCell.self)) { (row, media, cell) in
+                cell.configureData(media)
+            }
+                                              .disposed(by: disposeBag)
+    }
 }
 
-extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+extension Reactive where Base: UIViewController {
+    var viewDidLoad: ControlEvent<Void> {
+        let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: source)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else {
-            return UITableViewCell()
-        }
-        return cell
+    var viewWillAppear: ControlEvent<Bool> {
+        let source = self.methodInvoked(#selector(Base.viewWillAppear)).map { $0.first as? Bool ?? false }
+        return ControlEvent(events: source)
+    }
+    var viewDidAppear: ControlEvent<Bool> {
+        let source = self.methodInvoked(#selector(Base.viewDidAppear)).map { $0.first as? Bool ?? false }
+        return ControlEvent(events: source)
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MovieTableHeaderView.identifier) as? MovieTableHeaderView else {
-            return UITableViewHeaderFooterView()
-        }
-        headerView.setHeaderTitle("영화 시리즈")
-        return headerView
+    var viewWillDisappear: ControlEvent<Bool> {
+        let source = self.methodInvoked(#selector(Base.viewWillDisappear)).map { $0.first as? Bool ?? false }
+        return ControlEvent(events: source)
     }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .normal, title: "") { _, _, success in
-            // 액션 정의
-            success(true)
-        }
-        delete.backgroundColor = .pointRed
-        delete.image = Design.Image.trash
-        
-        return UISwipeActionsConfiguration(actions: [delete])
+    var viewDidDisappear: ControlEvent<Bool> {
+        let source = self.methodInvoked(#selector(Base.viewDidDisappear)).map { $0.first as? Bool ?? false }
+        return ControlEvent(events: source)
     }
 }

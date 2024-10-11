@@ -32,12 +32,12 @@ final class SearchViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.register(
-            MovieTableViewCell.self,
-            forCellReuseIdentifier: MovieTableViewCell.identifier
+            MediaTableViewCell.self,
+            forCellReuseIdentifier: MediaTableViewCell.identifier
         )
         $0.register(
-            MovieTableHeaderView.self,
-            forHeaderFooterViewReuseIdentifier: MovieTableHeaderView.identifier
+            MediaTableHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MediaTableHeaderView.identifier
         )
         $0.keyboardDismissMode = .onDrag
         $0.rowHeight = 90
@@ -53,8 +53,8 @@ final class SearchViewController: BaseViewController {
         $0.prefetchDataSource = self
         $0.keyboardDismissMode = .onDrag
         $0.register(
-            MovieCollectionViewCell.self,
-            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.register(
             TrendCollectionHeaderView.self,
@@ -186,7 +186,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MediaTableViewCell.identifier, for: indexPath) as? MediaTableViewCell else {
             return UITableViewCell()
         }
         let data = viewModel.trendMovieList[indexPath.row]
@@ -195,7 +195,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MovieTableHeaderView.identifier) as? MovieTableHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MediaTableHeaderView.identifier) as? MediaTableHeaderView else {
             return UITableViewHeaderFooterView()
         }
         headerView.setHeaderTitle("추천 시리즈 & 영화")
@@ -222,12 +222,12 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCollectionViewCell.identifier,
+            withReuseIdentifier: MediaCollectionViewCell.identifier,
             for: indexPath
-        ) as? MovieCollectionViewCell else {
+        ) as? MediaCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let posterPath = viewModel.searchMovieList[indexPath.item].poster_path
+        let posterPath = viewModel.searchMovieList[indexPath.item].posterPath
         cell.configureCell(posterPath)
         return cell
     }

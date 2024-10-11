@@ -75,9 +75,9 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         }
     }
     
-    func configureHeader(_ movie: Movie?, _ genreText: String) {
-        guard let movie else { return }
-        posterImageView.setImageView(movie.poster_path)
+    func configureHeader(_ media: Media?, _ genreText: String) {
+        guard let media else { return }
+        posterImageView.setImageView(media.posterPath)
         genreLabel.text = genreText
     }
 }

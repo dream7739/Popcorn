@@ -15,30 +15,30 @@ final class SearchViewModel: BaseViewModel {
     }
     
     struct Output {
-        let trendMovieList: BehaviorRelay<[Movie]>
-        let searchMovieList: BehaviorRelay<[Movie]>
+        let trendMovieList: BehaviorRelay<[Media]>
+        let searchMovieList: BehaviorRelay<[Media]>
         let showTableView: BehaviorRelay<Void>
     }
     
     var trendMovieResponse: MovieResponse?
-    var trendMovieList: [Movie] = []
+    var trendMovieList: [Media] = []
     var searchMovieResponse: MovieResponse?
-    var searchMovieList: [Movie] = []
+    var searchMovieList: [Media] = []
     var searchPage = 1
     let callSearchMovieMore = PublishRelay<Void>()
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let trendMovieList = BehaviorRelay<[Movie]>(value: [])
-        let searchMovieList = BehaviorRelay<[Movie]>(value: [])
+        let trendMovieList = BehaviorRelay<[Media]>(value: [])
+        let searchMovieList = BehaviorRelay<[Media]>(value: [])
         let showTableView = BehaviorRelay<Void>(value: ())
         
-        NetworkManager.shared.fetchMovie(with: Router.trending(type: .movie))
+        NetworkManager.shared.fetchData(with: Router.trending(type: .movie), as: MovieResponse.self)
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let value):
                     owner.trendMovieResponse = value
-                    let data = value.results.map { $0.toMovie() }
+                    let data = value.results.map { $0.toMedia() }
                     owner.trendMovieList = data
                     trendMovieList.accept(data)
                 case .failure(let error):
@@ -66,15 +66,16 @@ final class SearchViewModel: BaseViewModel {
                 return $1
             }
             .flatMap { value in
-                NetworkManager.shared.fetchMovie(
-                    with: Router.search(type: .movie, query: value, page: self.searchPage)
+                NetworkManager.shared.fetchData(
+                    with: Router.search(type: .movie, query: value, page: self.searchPage),
+                    as: MovieResponse.self
                 )
             }
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let value):
                     owner.searchMovieResponse = value
-                    let data = value.results.map { $0.toMovie() }
+                    let data = value.results.map { $0.toMedia() }
                     owner.searchMovieList = data
                     searchMovieList.accept(data)
                 case .failure(let error):
@@ -87,14 +88,15 @@ final class SearchViewModel: BaseViewModel {
             .withLatestFrom(input.searchText)
             .withUnretained(self)
             .flatMap { owner, value in
-                NetworkManager.shared.fetchMovie(
-                    with: Router.search(type: .movie, query: value, page: owner.searchPage)
+                NetworkManager.shared.fetchData(
+                    with: Router.search(type: .movie, query: value, page: owner.searchPage),
+                    as: MovieResponse.self
                 )
             }
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let value):
-                    let data = value.results.map { $0.toMovie() }
+                    let data = value.results.map { $0.toMedia() }
                     owner.searchMovieList.append(contentsOf: data)
                     searchMovieList.accept(data)
                 case .failure(let error):
