@@ -61,7 +61,12 @@ final class TrendingViewController: BaseViewController {
     }
     
     private func bind() {
+        let playButtonTap = PublishSubject<Void>()
+        let saveButtonTap = PublishSubject<Void>()
+        
         let input = TrendingViewModel.Input(
+            playButtonTap: playButtonTap,
+            saveButtonTap: saveButtonTap,
             cellTap: collectionView.rx.itemSelected
         )
         let output = viewModel.transform(input: input)
@@ -88,6 +93,13 @@ final class TrendingViewController: BaseViewController {
                 let section = dataSource.sectionModels[indexPath.section]
                 let media = section.items.first
                 header.configureHeader(media, section.model)
+                header.playButton.rx.tap
+                    .bind(to: playButtonTap)
+                    .disposed(by: header.disposeBag)
+                header.saveButton.rx.tap
+                    .bind(to: saveButtonTap)
+                    .disposed(by: header.disposeBag)
+                
                 return header
                 
             case 1, 2: // 지금 뜨는 영화 / 지금 뜨는 TV

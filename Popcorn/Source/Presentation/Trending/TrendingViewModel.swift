@@ -23,6 +23,8 @@ final class TrendingViewModel: BaseViewModel {
     var disposeBag = DisposeBag()
     
     struct Input {
+        let playButtonTap: PublishSubject<Void>
+        let saveButtonTap: PublishSubject<Void>
         let cellTap: ControlEvent<IndexPath>
     }
     
@@ -91,11 +93,24 @@ final class TrendingViewModel: BaseViewModel {
                 (indexPath, sections)
             }
             .subscribe(with: self) { owner, value in
-                // TODO: - 디테일뷰로 이동
                 let (indexPath, sections) = value
                 let section = sections[indexPath.section]
                 let media = section.items[indexPath.item]
                 toDetailTrigger.onNext(media)
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: - 재생 버튼 탭 -> 웹뷰
+        input.playButtonTap
+            .subscribe(with: self) { owner, _ in
+                print("재생 버튼 탭")
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
+        input.saveButtonTap
+            .subscribe(with: self) { owner, _ in
+                print("저장 버튼 탭")
             }
             .disposed(by: disposeBag)
         
