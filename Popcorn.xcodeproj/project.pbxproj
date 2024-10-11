@@ -27,6 +27,7 @@
 		24EFEA022CB7C725007A813C /* TrendCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA012CB7C725007A813C /* TrendCollectionHeaderView.swift */; };
 		24EFEA042CB7D060007A813C /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA032CB7D060007A813C /* APIURL.swift */; };
 		24EFEA072CB7E4C9007A813C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA062CB7E4C9007A813C /* Movie.swift */; };
+		24EFEA092CB7E7ED007A813C /* PosterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA082CB7E7ED007A813C /* PosterCollectionViewCell.swift */; };
 		848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D143F2CB6D7670043A660 /* NetworkManager.swift */; };
 		848D14422CB6D7670043A660 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14402CB6D7670043A660 /* Router.swift */; };
 		848D14442CB6D9F50043A660 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14432CB6D9F50043A660 /* APIKey.swift */; };
@@ -77,6 +78,7 @@
 		24EFEA012CB7C725007A813C /* TrendCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionHeaderView.swift; sourceTree = "<group>"; };
 		24EFEA032CB7D060007A813C /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		24EFEA062CB7E4C9007A813C /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		24EFEA082CB7E7ED007A813C /* PosterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionViewCell.swift; sourceTree = "<group>"; };
 		848D143F2CB6D7670043A660 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Popcorn/Source/Network/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
 		848D14402CB6D7670043A660 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Popcorn/Source/Network/Router.swift; sourceTree = SOURCE_ROOT; };
 		848D14432CB6D9F50043A660 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				88EB2D9A2CB6344000F98058 /* TrendingViewController.swift */,
 				24EFE9FA2CB7B343007A813C /* TrendingViewModel.swift */,
+				24EFEA082CB7E7ED007A813C /* PosterCollectionViewCell.swift */,
 				24EFEA012CB7C725007A813C /* TrendCollectionHeaderView.swift */,
 			);
 			path = Trending;
@@ -464,6 +467,7 @@
 				848D14422CB6D7670043A660 /* Router.swift in Sources */,
 				88FB0D5A2CB55EF5003EEFE0 /* BaseCollectionViewCell.swift in Sources */,
 				24EFE9CB2CB6977A007A813C /* MovieResponse.swift in Sources */,
+				24EFEA092CB7E7ED007A813C /* PosterCollectionViewCell.swift in Sources */,
 				88FB0D5C2CB55F5F003EEFE0 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

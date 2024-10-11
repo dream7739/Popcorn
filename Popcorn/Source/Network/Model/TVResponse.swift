@@ -31,3 +31,18 @@ struct TVResponse: Decodable {
         let vote_count: Int
     }
 }
+
+extension TVResponse.TVResult {
+    func toMovie() -> Movie {
+        return Movie(
+            id: self.id,
+            poster_path: self.poster_path,
+            genre_ids: self.genre_ids,
+            isMovie: false,
+            backdrop_path: self.backdrop_path,
+            title: self.name,
+            vote_average: self.vote_average,
+            overview: self.overview
+        )
+    }
+}

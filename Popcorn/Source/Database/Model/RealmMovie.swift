@@ -8,6 +8,7 @@
 import Foundation
 import RealmSwift
 
+// TODO: - 회의 후 추가 필요 - 배경, 별점, 줄거리
 class RealmMovie: Object {
     @Persisted(primaryKey: true) var id: Int
     @Persisted var savedDate: Date
