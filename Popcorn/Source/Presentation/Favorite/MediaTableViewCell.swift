@@ -1,5 +1,5 @@
 //
-//  MovieTableViewCell.swift
+//  MediaTableViewCell.swift
 //  Popcorn
 //
 //  Created by 홍정민 on 10/9/24.
@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-final class MovieTableViewCell: UITableViewCell {
+final class MediaTableViewCell: UITableViewCell {
     private let thumbImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
@@ -64,15 +64,15 @@ final class MovieTableViewCell: UITableViewCell {
         }
     }
     
-    func configureData(_ data: Movie) {
+    func configureData(_ data: Media) {
         titleLabel.text = data.title
         titleLabel.textColor = .white
-        let image = ImageFileManager.shared.loadImageFile(filename: String(data.id))
-        thumbImage.image = image
+        let url = APIURL.imageURL(data.posterPath)
+        thumbImage.kf.setImage(with: url)
     }
     
-    func configureData(_ data: RealmMovie) {
-        titleLabel.text = data.name
+    func configureData(_ data: RealmMedia) {
+        titleLabel.text = data.title
         titleLabel.textColor = .white
         let image = ImageFileManager.shared.loadImageFile(filename: String(data.id))
         thumbImage.image = image
