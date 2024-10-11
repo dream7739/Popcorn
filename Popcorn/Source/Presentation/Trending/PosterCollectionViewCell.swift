@@ -21,6 +21,7 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         $0.font = Design.Font.primary
         $0.textColor = .white
         $0.textAlignment = .center
+        $0.numberOfLines = 2
     }
     private let playButton = UIButton().then {
         $0.whiteBlackRadius("재생", Design.Image.play)
@@ -74,9 +75,9 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         }
     }
     
-    func configureHeader(_ movie: Movie?) {
+    func configureHeader(_ movie: Movie?, _ genreText: String) {
         guard let movie else { return }
         posterImageView.setImageView(movie.poster_path)
-        genreLabel.text = movie.genreText
+        genreLabel.text = genreText
     }
 }

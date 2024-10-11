@@ -82,10 +82,11 @@ final class TrendingViewController: BaseViewController {
                     return UICollectionReusableView()
                 }
                 let section = dataSource.sectionModels[indexPath.section]
-                header.configureHeader(section.items.first)
+                let movie = section.items.first
+                header.configureHeader(movie, section.model)
                 return header
                 
-            case 1,2: // 지금 뜨는 영화 / 지금 뜨는 TV
+            case 1, 2: // 지금 뜨는 영화 / 지금 뜨는 TV
                 guard let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: TrendCollectionHeaderView.identifier,

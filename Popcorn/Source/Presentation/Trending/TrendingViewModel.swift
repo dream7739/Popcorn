@@ -31,75 +31,106 @@ final class TrendingViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         let sections = PublishSubject<[TrendSection]>()
-        
         let mainPoster = PublishSubject<[Movie]>()
-        var trendMovies = PublishSubject<[Movie]>()
+        let trendMovies = PublishSubject<[Movie]>()
         let trendTVs = PublishSubject<[Movie]>()
+        let genres = PublishSubject<[Genre]>()
         
         // 트렌드 영화 통신
-        NetworkManager.shared.fetchData(
-            with: .trending(type: .movie, language: .korean),
-            as: MovieResponse.self
-        )
-        .subscribe(with: self) { owner, result in
-            switch result {
-            case .success(let response):
-//                print("Trending \(response)")
-                let movies = response.results.map { $0.toMovie() }
-                print("영화 통신 완료!")
-                trendMovies.onNext(movies)
-            case .failure(let error):
-                print("Error fetching trending  \(error)")
-            }
-        }
-        .disposed(by: disposeBag)
-        
+        fetchTrendingMovies(trendMovies)
         // 트렌드 TV 통신
-        NetworkManager.shared.fetchData(
-            with: .trending(type: .tv, language: .korean),
-            as: TVResponse.self
-        )
-        .subscribe(with: self) { owner, result in
-            switch result {
-            case .success(let response):
-//                print("Trending \(response)")
-                let movies = response.results.map { $0.toMovie() }
-                print("TV 통신 완료!")
-                trendTVs.onNext(movies)
-            case .failure(let error):
-                print("Error fetching trending \(error)")
-            }
-        }
-        .disposed(by: disposeBag)
+        fetchTrendingTVs(trendTVs)
         
         // 영화와 TV 중 랜덤으로 하나의 요소를 선택
         Observable.combineLatest(trendMovies.asObservable(), trendTVs.asObservable())
             .subscribe { movies, tvShows in
                 let allItems = movies + tvShows
                 if let randomItem = allItems.randomElement() {
-                    print("✅ 메인 있음!")
+                    print("랜덤 영화, TV 성공")
                     mainPoster.onNext([randomItem])
                 } else {
-                    print("❌ 메인 없음!")
+                    print("랜덤 영화, TV 실패")
                     mainPoster.onNext([])
                 }
             }
             .disposed(by: disposeBag)
         
-        // 섹션 설정
-        Observable.combineLatest(trendMovies.asObservable(), trendTVs.asObservable(), mainPoster.asObservable())
-            .subscribe(with: self) { owner, value in
-                let (movies, tvShows, main) = value
-                let newSections = [
-                    TrendSection(model: Section.poster.rawValue, items: main),
-                    TrendSection(model: Section.movie.rawValue, items: movies),
-                    TrendSection(model: Section.tv.rawValue, items: tvShows)
-                ]
-                print("섹션 생성!")
-                sections.onNext(newSections)
+        // 랜덤 아이템 뽑혔을 때 장르 API 통신
+        mainPoster
+            .compactMap { $0.first }
+            .flatMap { movie in
+                NetworkManager.shared.fetchData(
+                    with: .genre(type: movie.isMovie ? .movie : .tv, language: .korean),
+                    as: GenreResponse.self
+                )
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let response):
+                    print("장르 통신 성공")
+                    genres.onNext(response.genres)
+                case .failure(let error):
+                    print("장르 통신 실패", error)
+                }
             }
             .disposed(by: disposeBag)
         
+        // 섹션 설정
+        Observable.combineLatest(trendMovies.asObservable(), trendTVs.asObservable(), mainPoster.asObservable(), genres.asObservable())
+            .map(createSections)
+            .bind(to: sections)
+            .disposed(by: disposeBag)
+        
         return Output(sections: sections)
+    }
+}
+
+extension TrendingViewModel {
+    private func fetchTrendingMovies(_ subject: PublishSubject<[Movie]>) {
+        NetworkManager.shared.fetchData(
+            with: .trending(type: .movie, language: .korean),
+            as: MovieResponse.self
+        )
+        .subscribe { result in
+            switch result {
+            case .success(let response):
+                print("트렌드 - 영화 통신 성공")
+                subject.onNext(response.results.map { $0.toMovie() })
+            case .failure(let error):
+                print("트렌드 - 영화 통신 실패", error)
+            }
+        }
+        .disposed(by: disposeBag)
+    }
+
+    private func fetchTrendingTVs(_ subject: PublishSubject<[Movie]>) {
+        NetworkManager.shared.fetchData(
+            with: .trending(type: .tv, language: .korean),
+            as: TVResponse.self
+        )
+        .subscribe { result in
+            switch result {
+            case .success(let response):
+                print("트렌드 - TV 통신 성공")
+                subject.onNext(response.results.map { $0.toMovie() })
+            case .failure(let error):
+                print("트렌드 - TV 통신 실패", error)
+            }
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    private func createSections(movies: [Movie], tvShows: [Movie], main: [Movie], genres: [Genre]) -> [TrendSection] {
+        var genreDict = [Int: String]()
+        for genre in genres {
+            genreDict[genre.id] = genre.name
+        }
+        let genreText = main.first?.genre_ids.map { genreDict[$0] ?? "" }.joined(separator: " ")
+
+        return [
+            TrendSection(model: genreText ?? "", items: main),
+            TrendSection(model: Section.movie.rawValue, items: movies),
+            TrendSection(model: Section.tv.rawValue, items: tvShows)
+        ]
     }
 }
