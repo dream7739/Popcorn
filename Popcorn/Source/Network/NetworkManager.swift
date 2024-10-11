@@ -62,21 +62,4 @@ extension NetworkManager {
     func fetchData<T: Decodable>(with router: Router, as type: T.Type) -> Single<Result<T, AFError>> {
         return request(api: router)
     }
-    //
-    func fetchMovie(with router: Router) -> Single<Result<MovieResponse, AFError>> {
-        return request(api: router)
-    }
-    func fetchTV(query: Router) -> Single<Result<TVResponse, AFError>> {
-        return request(api: query)
-    }
-//    func (query: Router) -> Single<Result<MovieResponse, AFError>> {
-//        return request(api: query)
-//    }
-//    func trending(query: Router) -> Single<Result<MovieResponse, AFError>> {
-//        return request(api: query)
-//    }
-//    func trending(query: Router) -> Single<Result<MovieResponse, AFError>> {
-//        return request(api: query)
-//    }
-
 }

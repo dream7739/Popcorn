@@ -15,15 +15,15 @@ final class SearchViewModel: BaseViewModel {
     }
     
     struct Output {
-        let trendMovieList: BehaviorRelay<[Movie]>
+        let trendMovieList: BehaviorRelay<[Media]>
     }
     
     var trendMovieResponse: MovieResponse?
-    var trendMovieList: [Movie] = []
+    var trendMovieList: [Media] = []
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let trendMovieList = BehaviorRelay<[Movie]>(value: [])
+        let trendMovieList = BehaviorRelay<[Media]>(value: [])
         
         let callTrendMovie = input.searchText
             .withUnretained(self)
@@ -33,21 +33,21 @@ final class SearchViewModel: BaseViewModel {
         
         callTrendMovie
             .flatMap { _ in
-                NetworkManager.shared.fetchMovie(with: Router.trending(type: .movie))
+                NetworkManager.shared.fetchData(with: .trending(type: .movie), as: MovieResponse.self)
             }
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let value):
                     owner.trendMovieResponse = value
                     let data = value.results.map {
-                        Movie(
+                        Media(
                             id: $0.id,
-                            poster_path: $0.poster_path,
-                            genre_ids: $0.genre_ids,
+                            posterPath: $0.poster_path,
+                            genreIDs: $0.genre_ids,
                             isMovie: true,
-                            backdrop_path: $0.backdrop_path,
+                            backdropPath: $0.backdrop_path,
                             title: $0.title,
-                            vote_average: $0.vote_average,
+                            voteAverage: $0.vote_average,
                             overview: $0.overview
                         )
                     }

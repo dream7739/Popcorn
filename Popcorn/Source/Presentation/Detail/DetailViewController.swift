@@ -82,8 +82,8 @@ final class DetailViewController: BaseViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.register(
-            MovieCollectionViewCell.self,
-            forCellWithReuseIdentifier: MovieCollectionViewCell.identifier
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.isScrollEnabled = false
     }
@@ -192,9 +192,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MovieCollectionViewCell.identifier,
+            withReuseIdentifier: MediaCollectionViewCell.identifier,
             for: indexPath
-        ) as? MovieCollectionViewCell else {
+        ) as? MediaCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.configureCell(.checkmark)
