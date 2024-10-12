@@ -25,7 +25,7 @@ final class FavoriteViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
+        bind()
  
     }
     override func configureHierarchy() {
@@ -41,7 +41,7 @@ final class FavoriteViewController: BaseViewController {
         navigationItem.title = "내가 찜한 리스트"
     }
     
-    func bindViewModel() {
+    func bind() {
         
         let input = FavoriteViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asObservable().map { _ in }, 
@@ -50,14 +50,14 @@ final class FavoriteViewController: BaseViewController {
         
         let output = viewModel.transform(input: input)
         
-        
-        
         output.favoriteList
-            .bind(to: favoriteTableView.rx.items(cellIdentifier: MediaTableViewCell.identifier,
-                                              cellType: MediaTableViewCell.self)) { (row, media, cell) in
+            .bind(to: favoriteTableView.rx.items(
+                cellIdentifier: MediaTableViewCell.identifier,
+                cellType: MediaTableViewCell.self
+            )) { (row, media, cell) in
                 cell.configureData(media)
             }
-                                              .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 

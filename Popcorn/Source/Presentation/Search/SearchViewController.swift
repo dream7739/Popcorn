@@ -205,7 +205,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MediaTableHeaderView.identifier) as? MediaTableHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: MediaTableHeaderView.identifier
+        ) as? MediaTableHeaderView else {
             return UITableViewHeaderFooterView()
         }
         headerView.setHeaderTitle("추천 시리즈 & 영화")
@@ -214,7 +216,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.trendMovieList[indexPath.row]
-        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        let viewModel = DetailViewModel(media: data)
+        let detailVC = DetailViewController(viewModel: viewModel)
         self.present(detailVC, animated: true)
     }
     
@@ -250,17 +253,25 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = viewModel.searchMovieList[indexPath.item]
-        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        let viewModel = DetailViewModel(media: data)
+        let detailVC = DetailViewController(viewModel: viewModel)
         self.present(detailVC, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendCollectionHeaderView.identifier, for: indexPath) as? TrendCollectionHeaderView else {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: TrendCollectionHeaderView.identifier,
+            for: indexPath
+        ) as? TrendCollectionHeaderView else {
             return UICollectionReusableView()
         }
         header.configureHeader("영화 & 시리즈")
         header.configureLeftPadding()
         return header
     }
-    
 }

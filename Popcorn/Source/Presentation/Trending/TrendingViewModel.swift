@@ -66,7 +66,10 @@ final class TrendingViewModel: BaseViewModel {
         fetchGenre(mainPoster, genres)
         
         // 섹션 설정
-        Observable.combineLatest(trendMovies.asObservable(), trendTVs.asObservable(), mainPoster.asObservable(), genres.asObservable())
+        Observable.combineLatest(trendMovies.asObservable(), 
+                                 trendTVs.asObservable(),
+                                 mainPoster.asObservable(),
+                                 genres.asObservable())
             .map(createSections)
             .bind(to: sections)
             .disposed(by: disposeBag)
