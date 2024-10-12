@@ -21,17 +21,11 @@ final class TrailerViewController: BaseViewController {
         $0.hidesWhenStopped = true
     }
     
-    // MARK: - 둘 중에 한 값만 사용
-    // 트렌드나 서치에서 들어올 경우 media 값 사용
-    // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
-    let media: Media?
-    let realmMedia: RealmMedia?
-    
+    let viewModel: TrailerViewModel
     private let disposeBag = DisposeBag()
     
-    init(media: Media?, realmMedia: RealmMedia?) {
-        self.media = media
-        self.realmMedia = realmMedia
+    init(viewModel: TrailerViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,23 +35,24 @@ final class TrailerViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
+    }
+    
+    private func bind() {
+        let input = TrailerViewModel.Input()
+        let output = viewModel.transform(input: input)
         
-        if let media {
-            if media.isMovie {
-                fetchVideo(type: .movie, contentId: media.id)
-            } else {
-                fetchVideo(type: .tv, contentId: media.id)
+        output.errorAlert
+            .subscribe(with: self) { owner, _ in
+                owner.showErrorAlert(nil)
             }
-        } else if let realmMedia {
-            if realmMedia.isMovie {
-                fetchVideo(type: .movie, contentId: realmMedia.id)
-            } else {
-                fetchVideo(type: .tv, contentId: realmMedia.id)
+            .disposed(by: disposeBag)
+        
+        output.loadURL
+            .subscribe(with: self) { owner, request in
+                owner.webView.load(request)
             }
-        } else {
-            showErrorAlert(nil)
-            return
-        }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -79,39 +74,13 @@ final class TrailerViewController: BaseViewController {
     }
     
     private func showErrorAlert(_ error: Error?) {
-        let message = error?.localizedDescription ?? "URL 변경 실패"
+        let message = error?.localizedDescription ?? "예고편 없음"
         let alert = UIAlertController(title: "에러", message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
         alert.addAction(alertAction)
         present(alert, animated: true)
-    }
-    
-    // TODO: - 한국어로 하면 예고편 없는 경우 많음..
-    private func fetchVideo(type: Router.ContentType, contentId: Int) {
-        NetworkManager.shared.fetchData(
-            with: .video(type: type, contentId: contentId, language: .korean),
-            as: VideoResponse.self
-        )
-        .subscribe(with: self) { owner, result in
-            switch result {
-            case .success(let value):
-                guard let key = value.results.first?.key,
-                      let url = URL(string: APIURL.videoURL(key)) else {
-                    owner.showErrorAlert(nil)
-                    return
-                }
-                print("예고편 URL:", url)
-                let request = URLRequest(url: url)
-                owner.webView.load(request)
-                
-            case .failure(let error):
-                print("영화 비디오 통신 실패", error)
-                owner.showErrorAlert(nil)
-            }
-        }
-        .disposed(by: disposeBag)
     }
 }
 
