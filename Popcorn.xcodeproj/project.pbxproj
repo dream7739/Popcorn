@@ -279,6 +279,7 @@
 			children = (
 				88EB2DA02CB634AB00F98058 /* DetailViewController.swift */,
 				848D146F2CB9A8CC0043A660 /* DetailViewModel.swift */,
+
 			);
 			path = Detail;
 			sourceTree = "<group>";

@@ -18,8 +18,8 @@ enum Router: URLRequestConvertible {
     case video(type: ContentType, contentId: Int, language: Language? = nil)
     
     enum ContentType: String {
-        case tv = "tv"
-        case movie = "movie"
+        case tv
+        case movie
     }
     
     enum Language: String {
@@ -81,7 +81,7 @@ enum Router: URLRequestConvertible {
                 .video(_, _, let language),
                 .similar(_, _, let language):
             return ["language": "ko-KR"]
-            //            return ["language": language?.rawValue ?? ""]
+//            return ["language": language?.rawValue ?? ""]
         }
     }
 }

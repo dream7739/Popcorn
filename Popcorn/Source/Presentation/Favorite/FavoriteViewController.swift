@@ -50,14 +50,14 @@ final class FavoriteViewController: BaseViewController {
         
         let output = viewModel.transform(input: input)
         
-        
-        
         output.favoriteList
-            .bind(to: favoriteTableView.rx.items(cellIdentifier: MediaTableViewCell.identifier,
-                                              cellType: MediaTableViewCell.self)) { (row, media, cell) in
+            .bind(to: favoriteTableView.rx.items(
+                cellIdentifier: MediaTableViewCell.identifier,
+                cellType: MediaTableViewCell.self
+            )) { (row, media, cell) in
                 cell.configureData(media)
             }
-                                              .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 
