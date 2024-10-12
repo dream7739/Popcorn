@@ -15,7 +15,7 @@ import RxDataSources
 
 final class TrendingViewController: BaseViewController {
     
-    // TODO: - 메인 포스터 '재생', '내가 찜한 리스트 추가' 기능 구현
+    // TODO: - (옵션) 메인 포스터 탭 했을 시 디테일 화면 이동
     
     // TODO: - tv, search 버튼 간격 조절
     private lazy var logoBarButton = UIBarButtonItem().then {

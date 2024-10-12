@@ -88,6 +88,7 @@ final class TrailerViewController: BaseViewController {
         present(alert, animated: true)
     }
     
+    // TODO: - 한국어로 하면 예고편 없는 경우 많음..
     private func fetchVideo(type: Router.ContentType, contentId: Int) {
         NetworkManager.shared.fetchData(
             with: .video(type: type, contentId: contentId, language: .korean),
@@ -101,6 +102,7 @@ final class TrailerViewController: BaseViewController {
                     owner.showErrorAlert(nil)
                     return
                 }
+                print("예고편 URL:", url)
                 let request = URLRequest(url: url)
                 owner.webView.load(request)
                 
