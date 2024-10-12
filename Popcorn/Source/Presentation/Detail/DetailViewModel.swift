@@ -29,7 +29,7 @@ final class DetailViewModel: BaseViewModel {
     
     struct Input {
         let playButtonTap: PublishSubject<Void>
-        let saveButtonTap: PublishSubject<UIImage?>
+        let saveButtonTap: PublishSubject<(UIImage?, UIImage?)>
 //        let cellTap: ControlEvent<IndexPath>
     }
     
@@ -80,10 +80,10 @@ final class DetailViewModel: BaseViewModel {
         // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
             .withLatestFrom(media) { image, media in
-                (image, media)
+                (image.0, image.1, media)
             }
             .subscribe(with: self) { owner, value in
-                let (image, media) = value
+                let (image, backdrop, media) = value
                 // 미디어가 있으면
                 if let media = media.0 {
                     // 일단 렘미디어로 바꾸고
@@ -93,7 +93,7 @@ final class DetailViewModel: BaseViewModel {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
                         // 없다면 저장
-                        owner.repository.addItem(item: realmMedia, image: image)
+                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                     // 렘미디어가 있다면 (오프라인)
@@ -102,7 +102,7 @@ final class DetailViewModel: BaseViewModel {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
                         // 이거 실행안되긴 함
-                        owner.repository.addItem(item: realmMedia, image: image)
+                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                 } else {

@@ -205,7 +205,7 @@ final class DetailViewController: BaseViewController {
     
     func bind() {
         let playButtonTap = PublishSubject<Void>()
-        let saveButtonTap = PublishSubject<UIImage?>()
+        let saveButtonTap = PublishSubject<(UIImage?, UIImage?)>()
         
         let input = DetailViewModel.Input(
             playButtonTap: playButtonTap,
@@ -213,22 +213,21 @@ final class DetailViewController: BaseViewController {
         let output = viewModel.transform(input: input)
 
         saveButton.rx.tap
-            .bind(with: self) { [weak self] owner, _ in
-                guard let urlString = self?.viewModel.media?.posterPath,
-//                let url = URL(string: APIURL.videoURL(urlString)) else {
-//                    return
-//                }
-                let url = APIURL.imageURL(urlString) else {
-                    return
-                }
-                KingfisherManager.shared.retrieveImage(with: url) { result in
-                    switch result {
-                    case .success(let imageResult):
-                        saveButtonTap.onNext(imageResult.image)
-                    case .failure(let error):
-                        print(error)
-                        saveButtonTap.onNext(nil)
+            .bind(with: self) { owner, _ in
+                var image: UIImage? = nil
+                var backdrop: UIImage? = nil
+                
+                if let media = owner.viewModel.media {
+                    backdrop = owner.playImage.image
+                    guard let posterURL = APIURL.imageURL(media.posterPath) else {
+                        input.saveButtonTap.onNext((image, backdrop))
+                        return
                     }
+                    posterURL.downloadImage { image in
+                        input.saveButtonTap.onNext((image, backdrop))
+                    }
+                } else if let media = owner.viewModel.realmMedia {
+                    input.saveButtonTap.onNext((image, backdrop))
                 }
             }
             .disposed(by: disposeBag)

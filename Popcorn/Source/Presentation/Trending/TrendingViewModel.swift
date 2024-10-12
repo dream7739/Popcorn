@@ -25,7 +25,7 @@ final class TrendingViewModel: BaseViewModel {
     
     struct Input {
         let playButtonTap: PublishSubject<Void>
-        let saveButtonTap: PublishSubject<UIImage?>
+        let saveButtonTap: PublishSubject<(UIImage?, UIImage?)>
         let cellTap: ControlEvent<IndexPath>
     }
     
@@ -98,15 +98,15 @@ final class TrendingViewModel: BaseViewModel {
         
         // 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
-            .withLatestFrom(sections) { ($0, $1) }
+            .withLatestFrom(sections) { ($0.0, $0.1, $1) }
             .subscribe(with: self) { owner, value in
-                let (image, sections) = value
+                let (image, backdrop, sections) = value
                 if let media = sections[0].items.first {
                     let realmMedia = media.toRealmMedia()
                     if owner.repository.contains(media.id) {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
-                        owner.repository.addItem(item: realmMedia, image: image)
+                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                 } else {
