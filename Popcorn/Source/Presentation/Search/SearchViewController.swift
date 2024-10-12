@@ -199,7 +199,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     @objc private func playButtonClicked(_ sender: UIButton) {
         let index = sender.tag
         let data = viewModel.trendMovieList[index]
-        let trailerVC = TrailerViewController(media: data, realmMedia: nil)
+        let trailerVM = TrailerViewModel(media: data)
+        let trailerVC = TrailerViewController(viewModel: trailerVM)
         navigationController?.pushViewController(trailerVC, animated: true)
     }
     
