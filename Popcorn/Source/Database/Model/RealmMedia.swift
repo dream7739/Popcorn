@@ -12,11 +12,8 @@ import RealmSwift
 class RealmMedia: Object {
     @Persisted(primaryKey: true) var id: Int
     @Persisted var savedDate: Date
-    
     @Persisted var title: String
     @Persisted var isMovie: Bool
-    // MARK: - posterPath는 이미지 파일로 저장되어 있음
-    @Persisted var backdropPath: String?
     @Persisted var voteAverage: Double
     @Persisted var overview: String
     
@@ -24,7 +21,6 @@ class RealmMedia: Object {
         id: Int,
         title: String,
         isMovie: Bool,
-        backdropPath: String?,
         voteAverage: Double,
         overview: String
     ) {
@@ -33,7 +29,6 @@ class RealmMedia: Object {
         self.savedDate = Date()
         self.title = title
         self.isMovie = isMovie
-        self.backdropPath = backdropPath
         self.voteAverage = voteAverage
         self.overview = overview
     }
