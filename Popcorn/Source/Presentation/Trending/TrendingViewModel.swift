@@ -46,9 +46,8 @@ final class TrendingViewModel: BaseViewModel {
         let toTrailerTrigger = PublishSubject<Media>()
         let popUpViewTrigger = PublishSubject<String>()
         
-        // 트렌드 영화 통신
+        // 트렌드 영화 / TV 통신
         fetchTrendingMovies(trendMovies)
-        // 트렌드 TV 통신
         fetchTrendingTVs(trendTVs)
         
         // 영화와 TV 중 랜덤으로 하나의 요소를 선택
@@ -56,34 +55,15 @@ final class TrendingViewModel: BaseViewModel {
             .subscribe { movies, tvShows in
                 let allItems = movies + tvShows
                 if let randomItem = allItems.randomElement() {
-                    print("랜덤 영화, TV 성공")
                     mainPoster.onNext([randomItem])
                 } else {
-                    print("랜덤 영화, TV 실패")
                     mainPoster.onNext([])
                 }
             }
             .disposed(by: disposeBag)
         
         // 랜덤 아이템 뽑혔을 때 장르 API 통신
-        mainPoster
-            .compactMap { $0.first }
-            .flatMap { media in
-                NetworkManager.shared.fetchData(
-                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
-                    as: GenreResponse.self
-                )
-            }
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let response):
-                    print("장르 통신 성공")
-                    genres.onNext(response.genres)
-                case .failure(let error):
-                    print("장르 통신 실패", error)
-                }
-            }
-            .disposed(by: disposeBag)
+        fetchGenre(mainPoster, genres)
         
         // 섹션 설정
         Observable.combineLatest(trendMovies.asObservable(), trendTVs.asObservable(), mainPoster.asObservable(), genres.asObservable())
@@ -91,10 +71,9 @@ final class TrendingViewModel: BaseViewModel {
             .bind(to: sections)
             .disposed(by: disposeBag)
         
+        // 셀 탭 -> 디테일뷰
         input.cellTap
-            .withLatestFrom(sections) { indexPath, sections in
-                (indexPath, sections)
-            }
+            .withLatestFrom(sections) { ($0, $1) }
             .subscribe(with: self) { owner, value in
                 let (indexPath, sections) = value
                 let section = sections[indexPath.section]
@@ -114,20 +93,16 @@ final class TrendingViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
+        // 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
-            .withLatestFrom(sections) { image, sections in
-                (image, sections)
-            }
+            .withLatestFrom(sections) { ($0, $1) }
             .subscribe(with: self) { owner, value in
                 let (image, sections) = value
                 if let media = sections[0].items.first {
                     let realmMedia = media.toRealmMedia()
-                    // 이미 있으면 저장된 미디어에요 팝업뷰 띄우기
                     if owner.repository.contains(media.id) {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
-                        // 없으면 미디어를 저장했어요 팝업뷰 띄우기 + Realm 저장하기
                         owner.repository.addItem(item: realmMedia, image: image)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
@@ -138,9 +113,9 @@ final class TrendingViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            sections: sections, 
+            sections: sections,
             toDetailTrigger: toDetailTrigger,
-            toTrailerTrigger: toTrailerTrigger, 
+            toTrailerTrigger: toTrailerTrigger,
             popUpViewTrigger: popUpViewTrigger
         )
     }
@@ -179,6 +154,27 @@ extension TrendingViewModel {
             }
         }
         .disposed(by: disposeBag)
+    }
+    
+    private func fetchGenre(_ mainPoster: PublishSubject<[Media]>, _ genres: PublishSubject<[Genre]>) {
+        mainPoster
+            .compactMap { $0.first }
+            .flatMap { media in
+                NetworkManager.shared.fetchData(
+                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
+                    as: GenreResponse.self
+                )
+            }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let response):
+                    print("장르 통신 성공")
+                    genres.onNext(response.genres)
+                case .failure(let error):
+                    print("장르 통신 실패", error)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func createSections(movies: [Media], tvShows: [Media], main: [Media], genres: [Genre]) -> [TrendSection] {
