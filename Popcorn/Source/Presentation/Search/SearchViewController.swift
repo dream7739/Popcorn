@@ -216,7 +216,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.trendMovieList[indexPath.row]
-        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        let viewModel = DetailViewModel(media: data)
+        let detailVC = DetailViewController(viewModel: viewModel)
         self.present(detailVC, animated: true)
     }
     
@@ -252,7 +253,8 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = viewModel.searchMovieList[indexPath.item]
-        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        let viewModel = DetailViewModel(media: data)
+        let detailVC = DetailViewController(viewModel: viewModel)
         self.present(detailVC, animated: true)
     }
     
