@@ -127,7 +127,8 @@ final class TrendingViewController: BaseViewController {
         
         output.toDetailTrigger
             .subscribe(with: self) { owner, media in
-                let vc = DetailViewController(media: media, realmMedia: nil)
+                let viewModel = DetailViewModel(media: media)
+                let vc = DetailViewController(viewModel: viewModel)
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -142,10 +143,16 @@ final class TrendingViewController: BaseViewController {
         
         output.popUpViewTrigger
             .subscribe(with: self) { owner, message in
-                // TODO: - 팝업 뷰 띄우기
-                print(message)
+                let alert = PopupViewController.create()
+                    .addMessage(message)
+                    .addButton(title: "확인") {
+                        owner.dismiss(animated: true)
+                    }
+                owner.present(alert, animated: true)
             }
             .disposed(by: disposeBag)
+
+        
     }
     
     override func configureHierarchy() {
