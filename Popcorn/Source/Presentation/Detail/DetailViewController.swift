@@ -83,6 +83,12 @@ final class DetailViewController: BaseViewController {
         $0.numberOfLines = 2
     }
     
+    private let similarLabel = UILabel().then {
+        $0.text = "비슷한 콘텐츠"
+        $0.textColor = .white
+        $0.font = Design.Font.title
+    }
+    
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .searchLayout()
@@ -92,7 +98,8 @@ final class DetailViewController: BaseViewController {
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.isScrollEnabled = false
-        $0.backgroundColor = .black
+        // TODO: - 레이아웃 해결 후 black으로 고치기
+        $0.backgroundColor = .blue
     }
     
     private let disposeBag = DisposeBag()
@@ -125,6 +132,7 @@ final class DetailViewController: BaseViewController {
         contentView.addSubview(castStackView)
         castStackView.addArrangedSubview(castLabel)
         castStackView.addArrangedSubview(creatorLabel)
+        contentView.addSubview(similarLabel)
         contentView.addSubview(collectionView)
     }
     
@@ -185,9 +193,14 @@ final class DetailViewController: BaseViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
         
+        similarLabel.snp.makeConstraints { make in
+            make.top.equalTo(castStackView.snp.bottom).offset(16)
+            make.horizontalEdges.equalTo(titleLabel)
+        }
+        
         // TODO: - 높이 동적으로 설정하기
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(castStackView.snp.bottom).offset(12)
+            make.top.equalTo(similarLabel.snp.bottom)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
             make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 80)
             make.bottom.equalTo(contentView).inset(10)
