@@ -62,7 +62,7 @@ final class TrendingViewController: BaseViewController {
     
     private func bind() {
         let playButtonTap = PublishSubject<Void>()
-        let saveButtonTap = PublishSubject<UIImage?>()
+        let saveButtonTap = PublishSubject<(UIImage?, UIImage?)>()
         
         let input = TrendingViewModel.Input(
             playButtonTap: playButtonTap,
@@ -98,7 +98,14 @@ final class TrendingViewController: BaseViewController {
                     .disposed(by: header.disposeBag)
                 header.saveButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        saveButtonTap.onNext(header.posterImageView.imageView.image)
+                        let image = header.posterImageView.imageView.image
+                        guard let backdropPath = media?.backdropPath, let backdropURL = APIURL.imageURL(backdropPath) else {
+                            saveButtonTap.onNext((image, nil))
+                            return
+                        }
+                        backdropURL.downloadImage { backdrop in
+                            saveButtonTap.onNext((image, backdrop))
+                        }
                     }
                     .disposed(by: header.disposeBag)
                 

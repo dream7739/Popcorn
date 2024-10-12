@@ -41,11 +41,12 @@ final class MediaRepository {
     }
     
     // MARK: - Create
-    func addItem(item: RealmMedia, image: UIImage?) {
+    func addItem(item: RealmMedia, image: UIImage?, backdrop: UIImage?) {
         do {
             try realm.write {
                 realm.add(item)
-                saveImageForItem(item, image: image)
+                saveImageForItem(image, "\(item.id)")
+                saveImageForItem(backdrop, "\(item.id)".backdrop)
                 print("Realm 추가 성공!")
             }
         } catch {
@@ -85,12 +86,13 @@ final class MediaRepository {
         }
     }
     
-    private func saveImageForItem(_ item: RealmMedia, image: UIImage?) {
+    private func saveImageForItem(_ image: UIImage?, _ filename: String) {
         guard let image = image else { return }
-        ImageFileManager.shared.saveImageFile(image: image, filename: "\(item.id)")
+        ImageFileManager.shared.saveImageFile(image: image, filename: filename)
     }
     
     private func deleteImageForItem(_ item: RealmMedia) {
         ImageFileManager.shared.deleteImageFile(filename: "\(item.id)")
+        ImageFileManager.shared.deleteImageFile(filename: "\(item.id)".backdrop)
     }
 }

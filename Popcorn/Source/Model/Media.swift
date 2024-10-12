@@ -35,7 +35,6 @@ extension Media {
             id: self.id,
             title: self.title,
             isMovie: self.isMovie,
-            backdropPath: self.backdropPath,
             voteAverage: self.voteAverage,
             overview: self.overview
         )
