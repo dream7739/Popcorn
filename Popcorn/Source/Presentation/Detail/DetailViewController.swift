@@ -10,8 +10,10 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class DetailViewController: BaseViewController {
+    
     private let playImage = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
@@ -93,25 +95,21 @@ final class DetailViewController: BaseViewController {
     // MARK: - 둘 중에 한 값만 사용
     // 트렌드나 서치에서 들어올 경우 media 값 사용
     // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
-    let media: Media?
-    let realmMedia: RealmMedia?
     
     private let disposeBag = DisposeBag()
+    let viewModel: DetailViewModel
     
-    init(media: Media?, realmMedia: RealmMedia?) {
-        self.media = media
-        self.realmMedia = realmMedia
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(media ?? "미디어 없음")
-        print(realmMedia ?? "렘미디어 없음")
+        bind()
     }
     
     override func configureHierarchy() {
@@ -203,6 +201,37 @@ final class DetailViewController: BaseViewController {
         descriptionLabel.text = mock.description
         castLabel.text = "출연: " + mock.cast
         creatorLabel.text = "크리에이터: " + mock.creator
+    }
+    
+    func bind() {
+        let playButtonTap = PublishSubject<Void>()
+        let saveButtonTap = PublishSubject<UIImage?>()
+        
+        let input = DetailViewModel.Input(
+            playButtonTap: playButtonTap,
+            saveButtonTap: saveButtonTap)
+        let output = viewModel.transform(input: input)
+
+        saveButton.rx.tap
+            .bind(with: self) { [weak self] owner, _ in
+                guard let urlString = self?.viewModel.media?.posterPath,
+//                let url = URL(string: APIURL.videoURL(urlString)) else {
+//                    return
+//                }
+                let url = APIURL.imageURL(urlString) else {
+                    return
+                }
+                KingfisherManager.shared.retrieveImage(with: url) { result in
+                    switch result {
+                    case .success(let imageResult):
+                        saveButtonTap.onNext(imageResult.image)
+                    case .failure(let error):
+                        print(error)
+                        saveButtonTap.onNext(nil)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
 }
