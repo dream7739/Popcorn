@@ -191,7 +191,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let data = viewModel.trendMovieList[indexPath.row]
         cell.configureData(data)
+        cell.playButton.tag = indexPath.row
+        cell.playButton.addTarget(self, action: #selector(playButtonClicked), for: .touchUpInside)
         return cell
+    }
+    
+    @objc private func playButtonClicked(_ sender: UIButton) {
+        let index = sender.tag
+        let data = viewModel.trendMovieList[index]
+        let trailerVC = TrailerViewController(media: data, realmMedia: nil)
+        navigationController?.pushViewController(trailerVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -200,6 +209,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         headerView.setHeaderTitle("추천 시리즈 & 영화")
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = viewModel.trendMovieList[indexPath.row]
+        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        self.present(detailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -233,7 +248,9 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("셀 탭", indexPath)
+        let data = viewModel.searchMovieList[indexPath.item]
+        let detailVC = DetailViewController(media: data, realmMedia: nil)
+        self.present(detailVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

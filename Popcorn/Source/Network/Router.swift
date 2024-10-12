@@ -96,7 +96,11 @@ extension Router {
             if #available(iOS 16.0, *) {
                 request.url?.append(queryItems: queryItems)
             } else {
-                // Fallback on earlier versions
+                if let url = request.url {
+                    var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                    urlComponent?.queryItems = queryItems
+                    request.url = urlComponent?.url
+                }
             }
         }
         print(request)

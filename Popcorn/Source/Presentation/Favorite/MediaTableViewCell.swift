@@ -21,7 +21,7 @@ final class MediaTableViewCell: UITableViewCell {
         $0.textColor = .white
     }
     
-    private let playButton = UIButton().then {
+    let playButton = UIButton().then {
         $0.imageBackground(Design.Image.playCircle)
     }
     

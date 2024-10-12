@@ -13,10 +13,16 @@ class BaseViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        configureNav()
         view.backgroundColor = .black
     }
     
     func configureHierarchy() { }
     func configureLayout() { }
     func configureUI() { }
+    func configureNav() {
+        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backButtonItem.tintColor = .white
+        navigationItem.backBarButtonItem = backButtonItem
+    }
 }
