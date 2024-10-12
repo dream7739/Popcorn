@@ -205,7 +205,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: MediaTableHeaderView.identifier) as? MediaTableHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: MediaTableHeaderView.identifier
+        ) as? MediaTableHeaderView else {
             return UITableViewHeaderFooterView()
         }
         headerView.setHeaderTitle("추천 시리즈 & 영화")
@@ -254,13 +256,20 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         self.present(detailVC, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TrendCollectionHeaderView.identifier, for: indexPath) as? TrendCollectionHeaderView else {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: TrendCollectionHeaderView.identifier,
+            for: indexPath
+        ) as? TrendCollectionHeaderView else {
             return UICollectionReusableView()
         }
         header.configureHeader("영화 & 시리즈")
         header.configureLeftPadding()
         return header
     }
-    
 }
