@@ -50,7 +50,7 @@ enum Router: URLRequestConvertible {
         case .credits(let type, let id, _):
             return "\(type.rawValue)/\(id)/credits"
         case .similar(let type, let id, _):
-            return "\(type.rawValue)/\(id)/\(type.rawValue)"
+            return "\(type.rawValue)/\(id)/similar"
         case .genre(let type, _):
             return "genre/\(type.rawValue)/list"
         case .video(let type, let id, _):

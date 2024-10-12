@@ -12,6 +12,8 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
+// TODO: - cast, similar API 통신
+// TODO: - 통신 데이터로 뷰 그리기
 final class DetailViewController: BaseViewController {
     
     private let playImage = UIImageView().then {
@@ -72,29 +74,26 @@ final class DetailViewController: BaseViewController {
     private let castLabel = UILabel().then {
         $0.textColor = .lightGray
         $0.font = Design.Font.primary
+        $0.numberOfLines = 2
     }
     
     private let creatorLabel = UILabel().then {
         $0.textColor = .lightGray
         $0.font = Design.Font.primary
+        $0.numberOfLines = 2
     }
     
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .searchLayout()
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.isScrollEnabled = false
+        $0.backgroundColor = .black
     }
-    
-    // MARK: - 둘 중에 한 값만 사용
-    // 트렌드나 서치에서 들어올 경우 media 값 사용
-    // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
     
     private let disposeBag = DisposeBag()
     let viewModel: DetailViewModel
@@ -186,6 +185,7 @@ final class DetailViewController: BaseViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
         
+        // TODO: - 높이 동적으로 설정하기
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(castStackView.snp.bottom).offset(12)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
@@ -199,8 +199,6 @@ final class DetailViewController: BaseViewController {
         titleLabel.text = mock.title
         rateLabel.text = mock.rating.formatted()
         descriptionLabel.text = mock.description
-        castLabel.text = "출연: " + mock.cast
-        creatorLabel.text = "크리에이터: " + mock.creator
     }
     
     func bind() {
@@ -231,25 +229,27 @@ final class DetailViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        output.list
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: MediaCollectionViewCell.identifier,
+                cellType: MediaCollectionViewCell.self)
+            ) { row, media, cell in
+                cell.configureCell(media.posterPath)
+            }
+            .disposed(by: disposeBag)
+        
+        output.castText
+            .map { "출연: \($0)" }
+            .bind(to: castLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.creatorText
+            .map { "크리에이터: \($0)" }
+            .bind(to: creatorLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
-}
-
-extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MediaCollectionViewCell.identifier,
-            for: indexPath
-        ) as? MediaCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(.checkmark)
-        return cell
-    }
 }
 
 struct DetailMock {

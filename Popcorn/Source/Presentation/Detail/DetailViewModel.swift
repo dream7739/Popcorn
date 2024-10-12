@@ -37,6 +37,9 @@ final class DetailViewModel: BaseViewModel {
 //        let toDetailTrigger: PublishSubject<Media>
 //        let toTrailerTrigger: PublishSubject<Media>
         let popUpViewTrigger: PublishSubject<String>
+        let list: PublishSubject<[Media]>
+        let castText: PublishSubject<String>
+        let creatorText: PublishSubject<String>
     }
     
     func transform(input: Input) -> Output {
@@ -45,26 +48,28 @@ final class DetailViewModel: BaseViewModel {
         let toDetailTrigger = PublishSubject<Media>()
         let toTrailerTrigger = PublishSubject<Media>()
         let popUpViewTrigger = PublishSubject<String>()
-        // 랜덤 아이템 뽑혔을 때 장르 API 통신
-//        mainPoster
-//            .compactMap { $0.first }
-//            .flatMap { media in
-//                NetworkManager.shared.fetchData(
-//                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
-//                    as: GenreResponse.self
-//                )
-//            }
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let response):
-//                    print("장르 통신 성공")
-//                    genres.onNext(response.genres)
-//                case .failure(let error):
-//                    print("장르 통신 실패", error)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        let list = PublishSubject<[Media]>()
+        let castText = PublishSubject<String>()
+        let creatorText = PublishSubject<String>()
 
+        var type = Router.ContentType.movie
+        var contentID = 0
+
+        if let media = self.media {
+            type = media.isMovie ? .movie : .tv
+            contentID = media.id
+        } else if let realmMedia = self.realmMedia {
+            type = realmMedia.isMovie ? .movie : .tv
+            contentID = realmMedia.id
+        }
+
+        fetchCredits(type: type, contentID: contentID, castText: castText, creatorText: creatorText)
+        if type == .movie {
+            fetchSimilarMovies(contentID: contentID, list: list)
+        } else {
+            fetchSimilarTVs(contentID: contentID, list: list)
+        }
+        
         // 재생 버튼 탭 -> 웹뷰
         input.playButtonTap.withLatestFrom(media)
             .subscribe(with: self) { owner, media in
@@ -111,6 +116,68 @@ final class DetailViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(popUpViewTrigger: popUpViewTrigger)
+        return Output(
+            popUpViewTrigger: popUpViewTrigger,
+            list: list,
+            castText: castText,
+            creatorText: creatorText
+        )
     }
+    
+    private func fetchCredits(type: Router.ContentType, contentID: Int, castText: PublishSubject<String>, creatorText: PublishSubject<String>) {
+        NetworkManager.shared.fetchData(
+            with: .credits(type: type, contentId: contentID, language: .korean),
+            as: CreditResponse.self
+        ).subscribe { result in
+            switch result {
+            case .success(let value):
+                print("Credit 통신 성공")
+                let casts = value.cast.prefix(3).map { $0.name }.joined(separator: " ")
+                let creators = value.crew.prefix(3).map { $0.name }.joined(separator: " ")
+                castText.onNext(casts)
+                creatorText.onNext(creators)
+                
+            case .failure(let error):
+                print("Credit 통신 실패", error)
+            }
+        }
+        .disposed(by: disposeBag)
+    }
+
+    private func fetchSimilarMovies(contentID: Int, list: PublishSubject<[Media]>) {
+        NetworkManager.shared.fetchData(
+            with: .similar(type: .movie, contentId: contentID, language: .korean),
+            as: MovieResponse.self
+        ).subscribe { result in
+            switch result {
+            case .success(let value):
+                print("Similar Movie 통신 성공")
+                let mediaList = value.results.map { $0.toMedia() }
+                list.onNext(mediaList)
+                
+            case .failure(let error):
+                print("Similar Movie 통신 실패", error)
+            }
+        }
+        .disposed(by: disposeBag)
+    }
+
+    private func fetchSimilarTVs(contentID: Int, list: PublishSubject<[Media]>) {
+        NetworkManager.shared.fetchData(
+            with: .similar(type: .tv, contentId: contentID, language: .korean),
+            as: TVResponse.self
+        ).subscribe { result in
+            switch result {
+            case .success(let value):
+                print("Similar TV 통신 성공")
+                let mediaList = value.results.map { $0.toMedia() }
+                list.onNext(mediaList)
+                
+            case .failure(let error):
+                print("Similar TV 통신 실패", error)
+            }
+        }
+        .disposed(by: disposeBag)
+    }
+    
 }
