@@ -24,7 +24,7 @@ force_try:
 
 # 한 줄의 최대 길이 제한
 line_length:
-    - 200                   # 200자로 설정
+    - 150                   # 150자로 설정
     
 # 함수의 바디 길이 제한
 function_body_length:
@@ -56,3 +56,9 @@ identifier_name:
 
 # 리포팅 형식 설정 (Xcode 스타일로 설정)
 reporter: "xcode"
+
+# 특정 파일에서 이 규칙을 제외
+excluded:
+    - Popcorn/Source/Network/APIKey.swift       # APIKey.swift 파일 제외
+    - Popcorn/Resource/App/AppDelegate.swift    # AppDelegate.swift 파일 제외
+    - Popcorn/Resource/App/SceneDelegate.swift  # SceneDelegate.swift 파일 제외
