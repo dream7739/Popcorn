@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 final class DetailViewModel: BaseViewModel {
 
@@ -30,60 +31,83 @@ final class DetailViewModel: BaseViewModel {
     struct Input {
         let playButtonTap: PublishSubject<Void>
         let saveButtonTap: PublishSubject<(UIImage?, UIImage?)>
-//        let cellTap: ControlEvent<IndexPath>
     }
     
     struct Output {
 //        let toDetailTrigger: PublishSubject<Media>
-//        let toTrailerTrigger: PublishSubject<Media>
+        let toTrailerTrigger: PublishSubject<Media>
+        let title: PublishSubject<String>
+        let voteAverage: PublishSubject<String>
+        let overView: PublishSubject<String>
+        let backdropImage: PublishSubject<UIImage>
         let popUpViewTrigger: PublishSubject<String>
     }
-    
+    private let content = PublishSubject<(Media?, RealmMedia?)>()
+        
+        func loadInitialData() {
+            content.onNext((media, realmMedia))
+        }
     func transform(input: Input) -> Output {
-        let media = PublishSubject<(Media?, RealmMedia?)>()
+        
         let similars = PublishSubject<[Media]>()
+        let title = PublishSubject<String>()
+        let voteAverage = PublishSubject<String>()
+        let overView = PublishSubject<String>()
+        let backdropImage = PublishSubject<UIImage>()
+        
         let toDetailTrigger = PublishSubject<Media>()
         let toTrailerTrigger = PublishSubject<Media>()
         let popUpViewTrigger = PublishSubject<String>()
-        // 랜덤 아이템 뽑혔을 때 장르 API 통신
-//        mainPoster
-//            .compactMap { $0.first }
-//            .flatMap { media in
-//                NetworkManager.shared.fetchData(
-//                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
-//                    as: GenreResponse.self
-//                )
-//            }
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let response):
-//                    print("장르 통신 성공")
-//                    genres.onNext(response.genres)
-//                case .failure(let error):
-//                    print("장르 통신 실패", error)
-//                }
-//            }
-//            .disposed(by: disposeBag)
-
+        
+        print("✨✨✨✨✨✨✨")
+        
+        
+        content
+            .bind(with: self) { owner, media in
+                if let media = media.0 {
+                    print("1.✨✨✨✨미디어 잇음✨✨✨")
+                    title.onNext(media.title)
+                    print(media.title)
+                    voteAverage.onNext(media.voteAverage.description)
+                    overView.onNext(media.overview)
+                    let url = APIURL.imageURL(media.backdropPath)
+                    url?.downloadImage { image in
+                        guard let image else { return }
+                        backdropImage.onNext(image)
+                        print("2.✨✨✨✨이미지 다운 완료")
+                    }
+                } else if let realmMedia = media.1 {
+                    print("1.✨✨✨✨✨렘미디어 잇음✨✨")
+                    print(realmMedia.title)
+                    title.onNext(realmMedia.title)
+                    voteAverage.onNext(realmMedia.voteAverage.description)
+                    overView.onNext(realmMedia.overview)
+                    
+                    let image = ImageFileManager.shared.loadImageFile(filename: String(realmMedia.id).backdrop )
+                    guard let image else { return }
+                    backdropImage.onNext(image)
+                    print("2.✨✨✨✨렘 이미지 가져옴")
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // 재생 버튼 탭 -> 웹뷰
-        input.playButtonTap.withLatestFrom(media)
+        input.playButtonTap
+            .withLatestFrom(content)
             .subscribe(with: self) { owner, media in
                 if let media = media.0 {
-                    
-                }
-                if let realmMedia = media.1 {
-                    
+                    toTrailerTrigger.onNext(media)
                 }
             }
             .disposed(by: disposeBag)
         
         // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
-            .withLatestFrom(media) { image, media in
+            .withLatestFrom(content) { image, media in
                 (image.0, image.1, media)
             }
             .subscribe(with: self) { owner, value in
-                let (image, backdrop, media) = value
+                let (poster, backdrop, media) = value
                 // 미디어가 있으면
                 if let media = media.0 {
                     // 일단 렘미디어로 바꾸고
@@ -93,17 +117,14 @@ final class DetailViewModel: BaseViewModel {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
                         // 없다면 저장
-                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
+                        owner.repository.addItem(item: realmMedia, image: poster, backdrop: backdrop)
+                        NotificationCenter.default.post(name: .favoriteUpdated, object: self)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                     // 렘미디어가 있다면 (오프라인)
                 } else if let realmMedia = media.1 {
                     if owner.repository.contains(realmMedia.id) {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
-                    } else {
-                        // 이거 실행안되긴 함
-                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
-                        popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                 } else {
                     print("메인 포스터 데이터 없음")
@@ -111,6 +132,11 @@ final class DetailViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(popUpViewTrigger: popUpViewTrigger)
+        return Output(toTrailerTrigger: toTrailerTrigger,
+                      title: title,
+                      voteAverage: voteAverage,
+                      overView: overView,
+                      backdropImage: backdropImage,
+                      popUpViewTrigger: popUpViewTrigger)
     }
 }
