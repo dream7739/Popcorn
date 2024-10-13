@@ -12,8 +12,6 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-// TODO: - cast, similar API 통신
-// TODO: - 통신 데이터로 뷰 그리기
 final class DetailViewController: BaseViewController {
     
     private let playImage = UIImageView().then {
@@ -98,8 +96,7 @@ final class DetailViewController: BaseViewController {
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.isScrollEnabled = false
-        // TODO: - 레이아웃 해결 후 black으로 고치기
-        $0.backgroundColor = .blue
+        $0.backgroundColor = .clear
     }
     
     private let disposeBag = DisposeBag()
@@ -198,11 +195,10 @@ final class DetailViewController: BaseViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
         
-        // TODO: - 높이 동적으로 설정하기
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(similarLabel.snp.bottom)
+            make.top.equalTo(similarLabel.snp.bottom).inset(30)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 80)
+            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 100)
             make.bottom.equalTo(contentView).inset(10)
         }
     }

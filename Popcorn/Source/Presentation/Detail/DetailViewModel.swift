@@ -82,7 +82,7 @@ final class DetailViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
+        // 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
             .withLatestFrom(media) { image, media in
                 (image.0, image.1, media)
