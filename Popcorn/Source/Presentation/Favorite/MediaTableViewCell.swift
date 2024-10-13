@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 import Then
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 final class MediaTableViewCell: UITableViewCell {
     private let thumbImage = UIImageView().then {
@@ -24,6 +26,8 @@ final class MediaTableViewCell: UITableViewCell {
     let playButton = UIButton().then {
         $0.imageBackground(Design.Image.playCircle)
     }
+    
+    var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,6 +67,13 @@ final class MediaTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView).inset(10)
         }
     }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
     
     func configureData(_ data: Media) {
         titleLabel.text = data.title
