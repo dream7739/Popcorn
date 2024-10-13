@@ -71,6 +71,7 @@ final class TrailerViewController: BaseViewController {
     
     override func configureUI() {
         navigationItem.title = "예고편"
+        navigationController?.isNavigationBarHidden = false
     }
     
     private func showErrorAlert(_ error: Error?) {

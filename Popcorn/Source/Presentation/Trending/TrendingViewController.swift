@@ -135,8 +135,9 @@ final class TrendingViewController: BaseViewController {
         output.toDetailTrigger
             .subscribe(with: self) { owner, media in
                 let viewModel = DetailViewModel(media: media)
-                let vc = DetailViewController(viewModel: viewModel)
-                owner.present(vc, animated: true)
+                let detailVC = DetailViewController(viewModel: viewModel)
+                let naviDetailVC = UINavigationController(rootViewController: detailVC)
+                owner.present(naviDetailVC, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -144,7 +145,7 @@ final class TrendingViewController: BaseViewController {
             .subscribe(with: self) { owner, media in
                 let vm = TrailerViewModel(media: media)
                 let vc = TrailerViewController(viewModel: vm)
-                owner.present(vc, animated: true)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         

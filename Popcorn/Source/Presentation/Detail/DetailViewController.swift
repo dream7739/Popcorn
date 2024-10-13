@@ -15,9 +15,9 @@ import Kingfisher
 final class DetailViewController: BaseViewController {
     
     private let backdropImageView = UIImageView().then {
+        $0.backgroundColor = .gray
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.backgroundColor = .gray
     }
     
     private let tvButton = UIButton().then {
@@ -114,6 +114,7 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        navigationController?.isNavigationBarHidden = true
     }
     
     override func configureHierarchy() {
@@ -288,12 +289,12 @@ final class DetailViewController: BaseViewController {
                 owner.present(alert, animated: true)
             }
             .disposed(by: disposeBag)
-
+        
         output.toTrailerTrigger
             .bind(with: self) { owner, media in
                 let trailerVM = TrailerViewModel(media: media)
                 let trailerVC = TrailerViewController(viewModel: trailerVM)
-                owner.present(trailerVC, animated: true)
+                owner.navigationController?.pushViewController(trailerVC, animated: true)
             }
             .disposed(by: disposeBag)
         viewModel.loadInitialData()
