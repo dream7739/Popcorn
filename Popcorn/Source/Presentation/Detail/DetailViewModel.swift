@@ -44,13 +44,12 @@ final class DetailViewModel: BaseViewModel {
         let castText: PublishSubject<String>
         let creatorText: PublishSubject<String>
     }
-    
     private let content = PublishSubject<(Media?, RealmMedia?)>()
-    
+
     func loadInitialData() {
         content.onNext((media, realmMedia))
     }
-    
+
     func transform(input: Input) -> Output {
         
         let similars = PublishSubject<[Media]>()
@@ -71,12 +70,13 @@ final class DetailViewModel: BaseViewModel {
         var contentID = 0
 
         if let media = self.media {
-            type = media.isMovie ? .movie : .tv
-            contentID = media.id
+        type = media.isMovie ? .movie : .tv
+        contentID = media.id
         } else if let realmMedia = self.realmMedia {
-            type = realmMedia.isMovie ? .movie : .tv
-            contentID = realmMedia.id
+        type = realmMedia.isMovie ? .movie : .tv
+        contentID = realmMedia.id
         }
+
 
         fetchCredits(type: type, contentID: contentID, castText: castText, creatorText: creatorText)
         if type == .movie {
