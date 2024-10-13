@@ -85,7 +85,7 @@ final class DetailViewController: BaseViewController {
     private let similarLabel = UILabel().then {
         $0.text = "비슷한 콘텐츠"
         $0.textColor = .white
-        $0.font = Design.Font.title
+        $0.font = Design.Font.subtitle
     }
     
     private lazy var collectionView = UICollectionView(
@@ -242,20 +242,18 @@ final class DetailViewController: BaseViewController {
         
         saveButton.rx.tap
             .bind(with: self) { owner, _ in
-                let image: UIImage? = nil
-                var backdrop: UIImage? = nil
-                
                 if let media = owner.viewModel.media {
-                    backdrop = owner.backdropImageView.image
+                    let backdrop = owner.backdropImageView.image
+                    
                     guard let posterURL = APIURL.imageURL(media.posterPath) else {
-                        input.saveButtonTap.onNext((image, backdrop))
+                        input.saveButtonTap.onNext((nil, backdrop))
                         return
                     }
-                    posterURL.downloadImage { image in
-                        input.saveButtonTap.onNext((image, backdrop))
+                    posterURL.downloadImage { poster in
+                        input.saveButtonTap.onNext((poster, backdrop))
                     }
-                } else if owner.viewModel.realmMedia != nil {
-                    input.saveButtonTap.onNext((image, backdrop))
+                } else if let _ = owner.viewModel.realmMedia {
+                    input.saveButtonTap.onNext((nil, nil))
                 }
             }
             .disposed(by: disposeBag)
@@ -292,11 +290,19 @@ final class DetailViewController: BaseViewController {
         
         output.toTrailerTrigger
             .bind(with: self) { owner, media in
-                let trailerVM = TrailerViewModel(media: media)
-                let trailerVC = TrailerViewController(viewModel: trailerVM)
-                owner.navigationController?.pushViewController(trailerVC, animated: true)
+                let (networkMedia, realmMedia) = media
+                if let networkMedia {
+                    let trailerVM = TrailerViewModel(media: networkMedia)
+                    let trailerVC = TrailerViewController(viewModel: trailerVM)
+                    owner.navigationController?.pushViewController(trailerVC, animated: true)
+                } else if let realmMedia {
+                    let trailerVM = TrailerViewModel(realmMedia: realmMedia)
+                    let trailerVC = TrailerViewController(viewModel: trailerVM)
+                    owner.navigationController?.pushViewController(trailerVC, animated: true)
+                }
             }
             .disposed(by: disposeBag)
+        
         viewModel.loadInitialData()
     }
 }

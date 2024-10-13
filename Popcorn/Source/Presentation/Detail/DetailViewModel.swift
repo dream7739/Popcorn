@@ -11,7 +11,7 @@ import RxCocoa
 import RealmSwift
 
 final class DetailViewModel: BaseViewModel {
-
+    
     private let repository = MediaRepository()
     var disposeBag = DisposeBag()
     
@@ -34,7 +34,7 @@ final class DetailViewModel: BaseViewModel {
     }
     
     struct Output {
-        let toTrailerTrigger: PublishSubject<Media>
+        let toTrailerTrigger: PublishSubject<(Media?, RealmMedia?)>
         let title: PublishSubject<String>
         let voteAverage: PublishSubject<String>
         let overView: PublishSubject<String>
@@ -45,11 +45,11 @@ final class DetailViewModel: BaseViewModel {
         let creatorText: PublishSubject<String>
     }
     private let content = PublishSubject<(Media?, RealmMedia?)>()
-
+    
     func loadInitialData() {
         content.onNext((media, realmMedia))
     }
-
+    
     func transform(input: Input) -> Output {
         
         let similars = PublishSubject<[Media]>()
@@ -59,25 +59,25 @@ final class DetailViewModel: BaseViewModel {
         let backdropImage = PublishSubject<UIImage>()
         
         let toDetailTrigger = PublishSubject<Media>()
-        let toTrailerTrigger = PublishSubject<Media>()
+        let toTrailerTrigger = PublishSubject<(Media?, RealmMedia?)>()
         let popUpViewTrigger = PublishSubject<String>()
-
+        
         let list = PublishSubject<[Media]>()
         let castText = PublishSubject<String>()
         let creatorText = PublishSubject<String>()
-
+        
         var type = Router.ContentType.movie
         var contentID = 0
-
+        
         if let media = self.media {
-        type = media.isMovie ? .movie : .tv
-        contentID = media.id
+            type = media.isMovie ? .movie : .tv
+            contentID = media.id
         } else if let realmMedia = self.realmMedia {
-        type = realmMedia.isMovie ? .movie : .tv
-        contentID = realmMedia.id
+            type = realmMedia.isMovie ? .movie : .tv
+            contentID = realmMedia.id
         }
-
-
+        
+        
         fetchCredits(type: type, contentID: contentID, castText: castText, creatorText: creatorText)
         if type == .movie {
             fetchSimilarMovies(contentID: contentID, list: list)
@@ -113,9 +113,7 @@ final class DetailViewModel: BaseViewModel {
         input.playButtonTap
             .withLatestFrom(content)
             .subscribe(with: self) { owner, media in
-                if let media = media.0 {
-                    toTrailerTrigger.onNext(media)
-                }
+                toTrailerTrigger.onNext(media)
             }
             .disposed(by: disposeBag)
         
@@ -182,7 +180,7 @@ final class DetailViewModel: BaseViewModel {
         }
         .disposed(by: disposeBag)
     }
-
+    
     private func fetchSimilarMovies(contentID: Int, list: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
             with: .similar(type: .movie, contentId: contentID, language: .korean),
@@ -200,7 +198,7 @@ final class DetailViewModel: BaseViewModel {
         }
         .disposed(by: disposeBag)
     }
-
+    
     private func fetchSimilarTVs(contentID: Int, list: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
             with: .similar(type: .tv, contentId: contentID, language: .korean),
