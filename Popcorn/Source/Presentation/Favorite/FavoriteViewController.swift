@@ -9,16 +9,19 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
-import RxCocoa
 
 final class FavoriteViewController: BaseViewController {
     
     let disposeBag = DisposeBag()
     let viewModel = FavoriteViewModel()
     
+    let headerLabel = UILabel().then {
+        $0.text = "영화 시리즈"
+        $0.font = .systemFont(ofSize: 16, weight: .bold)
+        $0.textColor = .white
+    }
     private lazy var favoriteTableView = UITableView().then {
         $0.register(MediaTableViewCell.self, forCellReuseIdentifier: MediaTableViewCell.identifier)
-        $0.register(MediaTableHeaderView.self, forHeaderFooterViewReuseIdentifier: MediaTableHeaderView.identifier)
         $0.rowHeight = 90
         $0.backgroundColor = .black
     }
@@ -29,12 +32,17 @@ final class FavoriteViewController: BaseViewController {
  
     }
     override func configureHierarchy() {
+        view.addSubview(headerLabel)
         view.addSubview(favoriteTableView)
     }
     
     override func configureLayout() {
+        headerLabel.snp.makeConstraints { make in
+            make.top.leading.equalTo(view.safeAreaLayoutGuide)
+        }
         favoriteTableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(headerLabel.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     override func configureUI() {
@@ -44,7 +52,6 @@ final class FavoriteViewController: BaseViewController {
     func bind() {
         
         let input = FavoriteViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asObservable().map { _ in }, 
             itemDeleted: favoriteTableView.rx.modelDeleted(RealmMedia.self)
         )
         
@@ -58,30 +65,5 @@ final class FavoriteViewController: BaseViewController {
                 cell.configureData(media)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-extension Reactive where Base: UIViewController {
-    var viewDidLoad: ControlEvent<Void> {
-        let source = self.methodInvoked(#selector(Base.viewDidLoad)).map { _ in }
-        return ControlEvent(events: source)
-    }
-    
-    var viewWillAppear: ControlEvent<Bool> {
-        let source = self.methodInvoked(#selector(Base.viewWillAppear)).map { $0.first as? Bool ?? false }
-        return ControlEvent(events: source)
-    }
-    var viewDidAppear: ControlEvent<Bool> {
-        let source = self.methodInvoked(#selector(Base.viewDidAppear)).map { $0.first as? Bool ?? false }
-        return ControlEvent(events: source)
-    }
-    
-    var viewWillDisappear: ControlEvent<Bool> {
-        let source = self.methodInvoked(#selector(Base.viewWillDisappear)).map { $0.first as? Bool ?? false }
-        return ControlEvent(events: source)
-    }
-    var viewDidDisappear: ControlEvent<Bool> {
-        let source = self.methodInvoked(#selector(Base.viewDidDisappear)).map { $0.first as? Bool ?? false }
-        return ControlEvent(events: source)
     }
 }
