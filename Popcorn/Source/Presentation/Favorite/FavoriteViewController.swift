@@ -38,7 +38,8 @@ final class FavoriteViewController: BaseViewController {
     
     override func configureLayout() {
         headerLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
         }
         favoriteTableView.snp.makeConstraints { make in
             make.top.equalTo(headerLabel.snp.bottom)
@@ -63,6 +64,22 @@ final class FavoriteViewController: BaseViewController {
                 cellType: MediaTableViewCell.self
             )) { (row, media, cell) in
                 cell.configureData(media)
+                
+                cell.playButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        let trailerVM = TrailerViewModel(realmMedia: media)
+                        let trailerVC = TrailerViewController(viewModel: trailerVM)
+                        owner.navigationController?.pushViewController(trailerVC, animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        favoriteTableView.rx.modelSelected(RealmMedia.self)
+            .bind(with: self) { owner, value in
+                let detailVC = DetailViewController(viewModel: DetailViewModel(realmMedia: value))
+                let detailNav = UINavigationController(rootViewController: detailVC)
+                owner.present(detailNav, animated: true)
             }
             .disposed(by: disposeBag)
     }
