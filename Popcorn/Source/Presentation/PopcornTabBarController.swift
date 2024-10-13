@@ -48,7 +48,7 @@ final class PopcornTabBarController: UITabBarController {
     private func setUpTabBarAppearence() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .darkGray
+        appearance.backgroundColor = .lightBlack
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
         tabBar.tintColor = .white

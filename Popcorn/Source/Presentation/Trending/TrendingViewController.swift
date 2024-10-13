@@ -160,7 +160,6 @@ final class TrendingViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        
     }
     
     override func configureHierarchy() {
