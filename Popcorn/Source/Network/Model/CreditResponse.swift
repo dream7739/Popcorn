@@ -23,7 +23,7 @@ struct Cast: Decodable {
     let original_name: String
     let popularity: Double
     let profile_path: String?
-    let cast_id: Int
+    let cast_id: Int?
     let character: String
     let credit_id: String
     let order: Int

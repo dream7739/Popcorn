@@ -17,6 +17,7 @@ final class DetailViewController: BaseViewController {
     private let backdropImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
+        $0.backgroundColor = .gray
     }
     
     private let tvButton = UIButton().then {
@@ -72,29 +73,32 @@ final class DetailViewController: BaseViewController {
     private let castLabel = UILabel().then {
         $0.textColor = .lightGray
         $0.font = Design.Font.primary
+        $0.numberOfLines = 2
     }
     
     private let creatorLabel = UILabel().then {
         $0.textColor = .lightGray
         $0.font = Design.Font.primary
+        $0.numberOfLines = 2
+    }
+    
+    private let similarLabel = UILabel().then {
+        $0.text = "비슷한 콘텐츠"
+        $0.textColor = .white
+        $0.font = Design.Font.title
     }
     
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .searchLayout()
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         $0.isScrollEnabled = false
+        $0.backgroundColor = .clear
     }
-    
-    // MARK: - 둘 중에 한 값만 사용
-    // 트렌드나 서치에서 들어올 경우 media 값 사용
-    // 내가 찜한 리스트에서 들어올 경우 realmMedia 값 사용
     
     private let disposeBag = DisposeBag()
     let viewModel: DetailViewModel
@@ -126,6 +130,7 @@ final class DetailViewController: BaseViewController {
         contentView.addSubview(castStackView)
         castStackView.addArrangedSubview(castLabel)
         castStackView.addArrangedSubview(creatorLabel)
+        contentView.addSubview(similarLabel)
         contentView.addSubview(collectionView)
     }
     
@@ -186,18 +191,17 @@ final class DetailViewController: BaseViewController {
             make.horizontalEdges.equalTo(titleLabel)
         }
         
+        similarLabel.snp.makeConstraints { make in
+            make.top.equalTo(castStackView.snp.bottom).offset(16)
+            make.horizontalEdges.equalTo(titleLabel)
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(castStackView.snp.bottom).offset(12)
+            make.top.equalTo(similarLabel.snp.bottom).inset(30)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 80)
+            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 100)
             make.bottom.equalTo(contentView).inset(10)
         }
-    }
-    
-    override func configureUI() {
-        backdropImageView.backgroundColor = .gray
-        castLabel.text = "출연: " + mock.cast
-        creatorLabel.text = "크리에이터: " + mock.creator
     }
     
     func bind() {
@@ -213,8 +217,6 @@ final class DetailViewController: BaseViewController {
             .bind(to: backdropImageView.rx.image)
             .disposed(by: disposeBag)
         output.title
-            .debug()
-            .do(onNext: { print("Title received: \($0)") })
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)
         output.voteAverage
@@ -227,11 +229,7 @@ final class DetailViewController: BaseViewController {
         
         closeButton.rx.tap
             .bind(with: self) { owner, _ in
-                if let navigationController = owner.navigationController {
-                    navigationController.popViewController(animated: true)
-                } else {
-                    owner.dismiss(animated: true, completion: nil)
-                }
+                owner.dismiss(animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         
@@ -261,6 +259,25 @@ final class DetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.list
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: MediaCollectionViewCell.identifier,
+                cellType: MediaCollectionViewCell.self)
+            ) { row, media, cell in
+                cell.configureCell(media.posterPath)
+            }
+            .disposed(by: disposeBag)
+        
+        output.castText
+            .map { "출연: \($0)" }
+            .bind(to: castLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.creatorText
+            .map { "크리에이터: \($0)" }
+            .bind(to: creatorLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         output.popUpViewTrigger
             .bind(with: self) { owner, message in
                 let alert = PopupViewController.create()
@@ -282,31 +299,3 @@ final class DetailViewController: BaseViewController {
         viewModel.loadInitialData()
     }
 }
-
-extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MediaCollectionViewCell.identifier,
-            for: indexPath
-        ) as? MediaCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(.checkmark)
-        return cell
-    }
-}
-
-struct DetailMock {
-    let cast: String
-    let creator: String
-}
-
-let mock = DetailMock(
-
-    cast: "톰 홀랜드 마이클 키튼 로버트 다우니 주니어",
-    creator: "Kirk R. Thatcher"
-)
