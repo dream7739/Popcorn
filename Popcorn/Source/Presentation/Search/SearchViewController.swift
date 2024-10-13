@@ -218,7 +218,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let data = viewModel.trendMovieList[indexPath.row]
         let viewModel = DetailViewModel(media: data)
         let detailVC = DetailViewController(viewModel: viewModel)
-        self.present(detailVC, animated: true)
+        let naviDetailVC = UINavigationController(rootViewController: detailVC)
+        self.present(naviDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -255,7 +256,8 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         let data = viewModel.searchMovieList[indexPath.item]
         let viewModel = DetailViewModel(media: data)
         let detailVC = DetailViewController(viewModel: viewModel)
-        self.present(detailVC, animated: true)
+        let naviDetailVC = UINavigationController(rootViewController: detailVC)
+        self.present(naviDetailVC, animated: true)
     }
     
     func collectionView(
