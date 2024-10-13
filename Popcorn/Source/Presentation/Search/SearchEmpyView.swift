@@ -13,7 +13,7 @@ final class SearchEmpyView: BaseView {
     private let descriptionLabel = UILabel().then {
         $0.font = Design.Font.primary
         $0.textColor = .white
-        $0.text = "검색 결과가 없습니다"
+        $0.text = "검색 결과가 없습니다".localized
     }
 
     override func configureHierarchy() {

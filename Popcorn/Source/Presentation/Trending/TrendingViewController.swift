@@ -153,7 +153,7 @@ final class TrendingViewController: BaseViewController {
             .subscribe(with: self) { owner, message in
                 let alert = PopupViewController.create()
                     .addMessage(message)
-                    .addButton(title: "확인") {
+                    .addButton(title: "확인".localized) {
                         owner.dismiss(animated: true)
                     }
                 owner.present(alert, animated: true)

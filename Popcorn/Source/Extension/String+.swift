@@ -11,4 +11,7 @@ extension String {
     var backdrop: String {
         return self + "_backdrop"
     }
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
 }

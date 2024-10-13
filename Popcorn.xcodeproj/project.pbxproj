@@ -29,6 +29,7 @@
 		24EFEA072CB7E4C9007A813C /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA062CB7E4C9007A813C /* Media.swift */; };
 		24EFEA092CB7E7ED007A813C /* PosterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EFEA082CB7E7ED007A813C /* PosterCollectionViewCell.swift */; };
 		846A26822CBC163B003CFD2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA662CB5159A00BAC95A /* LaunchScreen.storyboard */; };
+		846A26852CBC216C003CFD2E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 846A26842CBC216C003CFD2E /* Localizable.xcstrings */; };
 		848D14412CB6D7670043A660 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D143F2CB6D7670043A660 /* NetworkManager.swift */; };
 		848D14422CB6D7670043A660 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14402CB6D7670043A660 /* Router.swift */; };
 		848D14442CB6D9F50043A660 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D14432CB6D9F50043A660 /* APIKey.swift */; };
@@ -42,7 +43,6 @@
 		8832DA5C2CB5159900BAC95A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5B2CB5159900BAC95A /* AppDelegate.swift */; };
 		8832DA5E2CB5159900BAC95A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8832DA5D2CB5159900BAC95A /* SceneDelegate.swift */; };
 		8832DA652CB5159A00BAC95A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA642CB5159A00BAC95A /* Assets.xcassets */; };
-		8832DA682CB5159A00BAC95A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA672CB5159A00BAC95A /* Base */; };
 		8832DA702CB5169300BAC95A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8832DA6F2CB5169300BAC95A /* .gitignore */; };
 		8832DA762CB5192D00BAC95A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA752CB5192D00BAC95A /* Alamofire */; };
 		8832DA792CB5193A00BAC95A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8832DA782CB5193A00BAC95A /* SnapKit */; };
@@ -87,6 +87,8 @@
 		24EFEA032CB7D060007A813C /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		24EFEA062CB7E4C9007A813C /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		24EFEA082CB7E7ED007A813C /* PosterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionViewCell.swift; sourceTree = "<group>"; };
+		846A26832CBC2140003CFD2E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		846A26842CBC216C003CFD2E /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		848D143F2CB6D7670043A660 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Popcorn/Source/Network/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
 		848D14402CB6D7670043A660 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Popcorn/Source/Network/Router.swift; sourceTree = SOURCE_ROOT; };
 		848D14432CB6D9F50043A660 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		8832DA4F2CB5159900BAC95A = {
 			isa = PBXGroup;
 			children = (
+				846A26842CBC216C003CFD2E /* Localizable.xcstrings */,
 				24EFE9BD2CB6559D007A813C /* .swiftlint.yml */,
 				8832DA6F2CB5169300BAC95A /* .gitignore */,
 				8832DA5A2CB5159900BAC95A /* Popcorn */,
@@ -416,11 +419,12 @@
 			};
 			buildConfigurationList = 8832DA532CB5159900BAC95A /* Build configuration list for PBXProject "Popcorn" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 8832DA4F2CB5159900BAC95A;
 			packageReferences = (
@@ -448,10 +452,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				24EFE9BE2CB6559D007A813C /* .swiftlint.yml in Resources */,
+				846A26852CBC216C003CFD2E /* Localizable.xcstrings in Resources */,
 				8832DA652CB5159A00BAC95A /* Assets.xcassets in Resources */,
 				8832DA702CB5169300BAC95A /* .gitignore in Resources */,
 				846A26822CBC163B003CFD2E /* LaunchScreen.storyboard in Resources */,
-				8832DA682CB5159A00BAC95A /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +528,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8832DA672CB5159A00BAC95A /* Base */,
+				846A26832CBC2140003CFD2E /* ko */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -599,6 +605,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -663,6 +670,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -694,6 +702,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

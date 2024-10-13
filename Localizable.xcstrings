@@ -1,0 +1,210 @@
+{
+  "sourceLanguage" : "ko",
+  "strings" : {
+    "검색 결과가 없습니다" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No search results"
+          }
+        }
+      }
+    },
+    "게임, 시리즈, 영화를 검색하세요.." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for games, series, movies.."
+          }
+        }
+      }
+    },
+    "내가 찜한 리스트" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My favorites"
+          }
+        }
+      }
+    },
+    "메인 포스터" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "main poster"
+          }
+        }
+      }
+    },
+    "미디어를 저장했어요 :)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "media saved :)"
+          }
+        }
+      }
+    },
+    "에러" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "error"
+          }
+        }
+      }
+    },
+    "영화 & 시리즈" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "movie & series"
+          }
+        }
+      }
+    },
+    "영화 시리즈" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "movie series"
+          }
+        }
+      }
+    },
+    "예고편" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trailer"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "예고편"
+          }
+        }
+      }
+    },
+    "예고편 없음" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No trailer"
+          }
+        }
+      }
+    },
+    "이미 저장된 미디어에요 :)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This image is already saved. :)"
+          }
+        }
+      }
+    },
+    "재생" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play trailer"
+          }
+        }
+      }
+    },
+    "지금 뜨는 TV 시리즈" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POPULAR TV SERIES"
+          }
+        }
+      }
+    },
+    "지금 뜨는 영화" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TRENDING MOVIE"
+          }
+        }
+      }
+    },
+    "추천 시리즈 & 영화" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended Series & Movies"
+          }
+        }
+      }
+    },
+    "출연:" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cast:"
+          }
+        }
+      }
+    },
+    "크리에이터:" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "creator:"
+          }
+        }
+      }
+    },
+    "확인" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "confirm"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -25,10 +25,10 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         $0.numberOfLines = 2
     }
     let playButton = UIButton().then {
-        $0.whiteBlackRadius("재생", Design.Image.play)
+        $0.whiteBlackRadius("재생".localized, Design.Image.play)
     }
     let saveButton = UIButton().then {
-        $0.blackWhiteRadius("내가 찜한 리스트", Design.Image.plus)
+        $0.blackWhiteRadius("내가 찜한 리스트".localized, Design.Image.plus)
     }
     private let buttonStackView = UIStackView().then {
         $0.axis = .horizontal
