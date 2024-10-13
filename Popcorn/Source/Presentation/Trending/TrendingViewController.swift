@@ -144,7 +144,7 @@ final class TrendingViewController: BaseViewController {
             .subscribe(with: self) { owner, media in
                 let vm = TrailerViewModel(media: media)
                 let vc = TrailerViewController(viewModel: vm)
-                owner.navigationController?.pushViewController(vc, animated: true)
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
         

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 final class DetailViewModel: BaseViewModel {
 
@@ -30,24 +31,38 @@ final class DetailViewModel: BaseViewModel {
     struct Input {
         let playButtonTap: PublishSubject<Void>
         let saveButtonTap: PublishSubject<(UIImage?, UIImage?)>
-//        let cellTap: ControlEvent<IndexPath>
     }
     
     struct Output {
-//        let toDetailTrigger: PublishSubject<Media>
-//        let toTrailerTrigger: PublishSubject<Media>
+        let toTrailerTrigger: PublishSubject<Media>
+        let title: PublishSubject<String>
+        let voteAverage: PublishSubject<String>
+        let overView: PublishSubject<String>
+        let backdropImage: PublishSubject<UIImage>
         let popUpViewTrigger: PublishSubject<String>
         let list: PublishSubject<[Media]>
         let castText: PublishSubject<String>
         let creatorText: PublishSubject<String>
     }
     
+    private let content = PublishSubject<(Media?, RealmMedia?)>()
+    
+    func loadInitialData() {
+        content.onNext((media, realmMedia))
+    }
+    
     func transform(input: Input) -> Output {
-        let media = PublishSubject<(Media?, RealmMedia?)>()
+        
         let similars = PublishSubject<[Media]>()
+        let title = PublishSubject<String>()
+        let voteAverage = PublishSubject<String>()
+        let overView = PublishSubject<String>()
+        let backdropImage = PublishSubject<UIImage>()
+        
         let toDetailTrigger = PublishSubject<Media>()
         let toTrailerTrigger = PublishSubject<Media>()
         let popUpViewTrigger = PublishSubject<String>()
+
         let list = PublishSubject<[Media]>()
         let castText = PublishSubject<String>()
         let creatorText = PublishSubject<String>()
@@ -70,25 +85,47 @@ final class DetailViewModel: BaseViewModel {
             fetchSimilarTVs(contentID: contentID, list: list)
         }
         
+        content
+            .bind(with: self) { owner, media in
+                if let media = media.0 {
+                    title.onNext(media.title)
+                    voteAverage.onNext(media.voteAverage.description)
+                    overView.onNext(media.overview)
+                    let url = APIURL.imageURL(media.backdropPath)
+                    url?.downloadImage { image in
+                        guard let image else { return }
+                        backdropImage.onNext(image)
+                    }
+                } else if let realmMedia = media.1 {
+                    print(realmMedia.title)
+                    title.onNext(realmMedia.title)
+                    voteAverage.onNext(realmMedia.voteAverage.description)
+                    overView.onNext(realmMedia.overview)
+                    
+                    let image = ImageFileManager.shared.loadImageFile(filename: String(realmMedia.id).backdrop )
+                    guard let image else { return }
+                    backdropImage.onNext(image)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // 재생 버튼 탭 -> 웹뷰
-        input.playButtonTap.withLatestFrom(media)
+        input.playButtonTap
+            .withLatestFrom(content)
             .subscribe(with: self) { owner, media in
                 if let media = media.0 {
-                    
-                }
-                if let realmMedia = media.1 {
-                    
+                    toTrailerTrigger.onNext(media)
                 }
             }
             .disposed(by: disposeBag)
         
         // 저장 버튼 탭 -> 렘 추가 + 팝업 뷰
         input.saveButtonTap
-            .withLatestFrom(media) { image, media in
+            .withLatestFrom(content) { image, media in
                 (image.0, image.1, media)
             }
             .subscribe(with: self) { owner, value in
-                let (image, backdrop, media) = value
+                let (poster, backdrop, media) = value
                 // 미디어가 있으면
                 if let media = media.0 {
                     // 일단 렘미디어로 바꾸고
@@ -98,17 +135,14 @@ final class DetailViewModel: BaseViewModel {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
                         // 없다면 저장
-                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
+                        owner.repository.addItem(item: realmMedia, image: poster, backdrop: backdrop)
+                        NotificationCenter.default.post(name: .favoriteUpdated, object: self)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                     // 렘미디어가 있다면 (오프라인)
                 } else if let realmMedia = media.1 {
                     if owner.repository.contains(realmMedia.id) {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
-                    } else {
-                        // 이거 실행안되긴 함
-                        owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
-                        popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                 } else {
                     print("메인 포스터 데이터 없음")
@@ -117,6 +151,11 @@ final class DetailViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
+            toTrailerTrigger: toTrailerTrigger,
+            title: title,
+            voteAverage: voteAverage,
+            overView: overView,
+            backdropImage: backdropImage,
             popUpViewTrigger: popUpViewTrigger,
             list: list,
             castText: castText,
@@ -179,5 +218,4 @@ final class DetailViewModel: BaseViewModel {
         }
         .disposed(by: disposeBag)
     }
-    
 }

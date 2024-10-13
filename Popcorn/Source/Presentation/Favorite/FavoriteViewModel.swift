@@ -18,6 +18,7 @@ final class FavoriteViewModel {
     init(repository: MediaRepository = MediaRepository()) {
         self.repository = repository
         setupNotificationObserver()
+        updateFavoriteList()
     }
     
     private func setupNotificationObserver() {
@@ -35,7 +36,6 @@ final class FavoriteViewModel {
     }
     
     struct Input {
-        let viewWillAppear: Observable<Void>
         let itemDeleted: ControlEvent<RealmMedia>
     }
     
@@ -44,14 +44,6 @@ final class FavoriteViewModel {
     }
     
     func transform(input: Input) -> Output {
-            var list: Observable<[RealmMedia]>
-            
-            list = input.viewWillAppear
-                .flatMapLatest { [weak self] _ -> Driver<[RealmMedia]> in
-                    guard let self else { return Driver.just([]) }
-                    self.updateFavoriteList()
-                    return self.favoriteList.asDriver()
-                }
 
             input.itemDeleted
                 .observe(on: MainScheduler.instance)
@@ -62,7 +54,7 @@ final class FavoriteViewModel {
                 .disposed(by: disposeBag)
             
             return Output(
-                favoriteList: list
+                favoriteList: favoriteList.asObservable()
             )
         }
 }

@@ -14,9 +14,10 @@ import Kingfisher
 
 final class DetailViewController: BaseViewController {
     
-    private let playImage = UIImageView().then {
+    private let backdropImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
+        $0.backgroundColor = .gray
     }
     
     private let tvButton = UIButton().then {
@@ -116,7 +117,7 @@ final class DetailViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        view.addSubview(playImage)
+        view.addSubview(backdropImageView)
         view.addSubview(tvButton)
         view.addSubview(closeButton)
         view.addSubview(scrollView)
@@ -134,25 +135,25 @@ final class DetailViewController: BaseViewController {
     }
     
     override func configureLayout() {
-        playImage.snp.makeConstraints { make in
+        backdropImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(200)
         }
         
         tvButton.snp.makeConstraints { make in
-            make.top.equalTo(playImage).inset(10)
+            make.top.equalTo(backdropImageView).inset(10)
             make.trailing.equalTo(closeButton.snp.leading).offset(-10)
             make.size.equalTo(25)
         }
         
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(tvButton)
-            make.trailing.equalTo(playImage.snp.trailing).inset(10)
+            make.trailing.equalTo(backdropImageView.snp.trailing).inset(10)
             make.size.equalTo(25)
         }
         
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(playImage.snp.bottom)
+            make.top.equalTo(backdropImageView.snp.bottom)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -203,13 +204,6 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    override func configureUI() {
-        playImage.backgroundColor = .gray
-        titleLabel.text = mock.title
-        rateLabel.text = mock.rating.formatted()
-        descriptionLabel.text = mock.description
-    }
-    
     func bind() {
         let playButtonTap = PublishSubject<Void>()
         let saveButtonTap = PublishSubject<(UIImage?, UIImage?)>()
@@ -218,14 +212,40 @@ final class DetailViewController: BaseViewController {
             playButtonTap: playButtonTap,
             saveButtonTap: saveButtonTap)
         let output = viewModel.transform(input: input)
-
+        
+        output.backdropImage
+            .bind(to: backdropImageView.rx.image)
+            .disposed(by: disposeBag)
+        output.title
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.voteAverage
+            .map { $0 }
+            .bind(to: rateLabel.rx.text)
+            .disposed(by: disposeBag)
+        output.overView
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        closeButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.dismiss(animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+        
+        playButton.rx.tap
+            .bind(with: self) { owner, ss in
+                input.playButtonTap.onNext(())
+            }
+            .disposed(by: disposeBag)
+        
         saveButton.rx.tap
             .bind(with: self) { owner, _ in
-                var image: UIImage? = nil
+                let image: UIImage? = nil
                 var backdrop: UIImage? = nil
                 
                 if let media = owner.viewModel.media {
-                    backdrop = owner.playImage.image
+                    backdrop = owner.backdropImageView.image
                     guard let posterURL = APIURL.imageURL(media.posterPath) else {
                         input.saveButtonTap.onNext((image, backdrop))
                         return
@@ -233,7 +253,7 @@ final class DetailViewController: BaseViewController {
                     posterURL.downloadImage { image in
                         input.saveButtonTap.onNext((image, backdrop))
                     }
-                } else if let media = owner.viewModel.realmMedia {
+                } else if owner.viewModel.realmMedia != nil {
                     input.saveButtonTap.onNext((image, backdrop))
                 }
             }
@@ -257,27 +277,25 @@ final class DetailViewController: BaseViewController {
             .map { "크리에이터: \($0)" }
             .bind(to: creatorLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        output.popUpViewTrigger
+            .bind(with: self) { owner, message in
+                let alert = PopupViewController.create()
+                    .addMessage(message)
+                    .addButton(title: "확인") {
+                        owner.dismiss(animated: true)
+                    }
+                owner.present(alert, animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        output.toTrailerTrigger
+            .bind(with: self) { owner, media in
+                let trailerVM = TrailerViewModel(media: media)
+                let trailerVC = TrailerViewController(viewModel: trailerVM)
+                owner.present(trailerVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+        viewModel.loadInitialData()
     }
-    
 }
-
-struct DetailMock {
-    let title: String
-    let rating: Double
-    let description: String
-    let cast: String
-    let creator: String
-}
-
-let mock = DetailMock(
-    title: "스파이더맨: 홈커밍",
-    rating: 7.3,
-    description: """
-                 외톨이 학생 피터 파커는 유전자가 조작된 거미에 물려 초인적인 거미의 능력을 가지게 된다.
-                 자신의 초능력을 즐기던 어느 날, 피터의 삼촌 벤 아저씨가 총에 맞아 죽는다.
-                 피터는 자신의 초능력에 책임감을 느끼기 시작하고,
-                 시민들의 안전을 위해 악당들과 싸우는 히어로 스파이더맨으로 거듭난다.
-                 """,
-    cast: "톰 홀랜드 마이클 키튼 로버트 다우니 주니어",
-    creator: "Kirk R. Thatcher"
-)

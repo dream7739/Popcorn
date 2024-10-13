@@ -107,6 +107,7 @@ final class TrendingViewModel: BaseViewModel {
                         popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
                     } else {
                         owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
+                        NotificationCenter.default.post(name: .favoriteUpdated, object: self)
                         popUpViewTrigger.onNext("미디어를 저장했어요 :)")
                     }
                 } else {
