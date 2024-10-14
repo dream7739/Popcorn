@@ -12,14 +12,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // 네비게이션바 appearance 설정
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.backgroundColor = .black
+        appearance.backgroundColor = .darkGray
+        appearance.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+        appearance.titleTextAttributes = [.foregroundColor : UIColor.white]
+
+        let scrollAppearance = UINavigationBarAppearance()
+        scrollAppearance.configureWithTransparentBackground()
+        scrollAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
+
         UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().barTintColor = .white
+        UINavigationBar.appearance().scrollEdgeAppearance = scrollAppearance
+
         
         return true
     }
