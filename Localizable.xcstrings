@@ -56,6 +56,17 @@
         }
       }
     },
+    "비슷한 콘텐츠" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIMILAR CONTENTS"
+          }
+        }
+      }
+    },
     "에러" : {
       "extractionState" : "manual",
       "localizations" : {

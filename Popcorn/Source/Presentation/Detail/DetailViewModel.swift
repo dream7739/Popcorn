@@ -36,7 +36,7 @@ final class DetailViewModel: BaseViewModel {
     struct Output {
         let toTrailerTrigger: PublishSubject<(Media?, RealmMedia?)>
         let title: PublishSubject<String>
-        let voteAverage: PublishSubject<String>
+        let voteAverage: PublishSubject<Double>
         let overView: PublishSubject<String>
         let backdropImage: PublishSubject<UIImage>
         let popUpViewTrigger: PublishSubject<String>
@@ -53,7 +53,7 @@ final class DetailViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         
         let title = PublishSubject<String>()
-        let voteAverage = PublishSubject<String>()
+        let voteAverage = PublishSubject<Double>()
         let overView = PublishSubject<String>()
         let backdropImage = PublishSubject<UIImage>()
         
@@ -86,7 +86,7 @@ final class DetailViewModel: BaseViewModel {
             .bind(with: self) { owner, media in
                 if let media = media.0 {
                     title.onNext(media.title)
-                    voteAverage.onNext(media.voteAverage.description)
+                    voteAverage.onNext(media.voteAverage)
                     overView.onNext(media.overview)
                     let url = APIURL.imageURL(media.backdropPath)
                     url?.downloadImage { image in
@@ -96,7 +96,7 @@ final class DetailViewModel: BaseViewModel {
                 } else if let realmMedia = media.1 {
                     print(realmMedia.title)
                     title.onNext(realmMedia.title)
-                    voteAverage.onNext(realmMedia.voteAverage.description)
+                    voteAverage.onNext(realmMedia.voteAverage)
                     overView.onNext(realmMedia.overview)
                     
                     let image = ImageFileManager.shared.loadImageFile(filename: String(realmMedia.id).backdrop )
