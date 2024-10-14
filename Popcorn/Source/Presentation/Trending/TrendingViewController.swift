@@ -71,6 +71,7 @@ final class TrendingViewController: BaseViewController {
         )
         let output = viewModel.transform(input: input)
         
+        // TODO: 상단 메인 포스터 탭 시 디테일 이동
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<TrendSection> { dataSource, collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: MediaCollectionViewCell.identifier,
@@ -159,6 +160,12 @@ final class TrendingViewController: BaseViewController {
                 owner.present(alert, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        searchBarButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.tabBarController?.selectedIndex = 1
+            }
+            .disposed(by: disposeBag)
 
     }
     
@@ -168,7 +175,8 @@ final class TrendingViewController: BaseViewController {
     
     override func configureLayout() {
         collectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     

@@ -13,17 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .darkGray
-        appearance.backgroundEffect = UIBlurEffect(style: .systemThickMaterial)
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .black.withAlphaComponent(0.5)
         appearance.titleTextAttributes = [.foregroundColor : UIColor.white]
 
-        let scrollAppearance = UINavigationBarAppearance()
-        scrollAppearance.configureWithTransparentBackground()
-        scrollAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
+//        let scrollAppearance = UINavigationBarAppearance()
+//        scrollAppearance.configureWithTransparentBackground()
+//        appearance.backgroundColor = .black.withAlphaComponent(0.5)
+//        scrollAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
 
         UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = scrollAppearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = scrollAppearance
 
         
         return true

@@ -116,6 +116,11 @@ final class SearchViewController: BaseViewController {
     
     override func configureUI() {
         searchTextField.layer.cornerRadius = 5
+        navigationItem.title = "검색".localized
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 

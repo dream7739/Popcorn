@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "검색" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SEARCH"
+          }
+        }
+      }
+    },
     "검색 결과가 없습니다" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -150,6 +161,17 @@
         }
       }
     },
+    "저장" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
     "지금 뜨는 TV 시리즈" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -183,24 +205,24 @@
         }
       }
     },
-    "출연:" : {
+    "출연: " : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "cast:"
+            "value" : "cast: "
           }
         }
       }
     },
-    "크리에이터:" : {
+    "크리에이터: " : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "creator:"
+            "value" : "creator: "
           }
         }
       }

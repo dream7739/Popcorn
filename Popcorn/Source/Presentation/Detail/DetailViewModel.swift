@@ -168,8 +168,12 @@ final class DetailViewModel: BaseViewModel {
                 print("Credit 통신 성공")
                 let casts = value.cast.prefix(3).map { $0.name }.joined(separator: " ")
                 let creators = value.crew.prefix(3).map { $0.name }.joined(separator: " ")
-                castText.onNext(casts)
-                creatorText.onNext(creators)
+                if !casts.isEmpty {
+                    castText.onNext(casts)
+                }
+                if !creators.isEmpty {
+                    creatorText.onNext(creators)                    
+                }
                 
             case .failure(let error):
                 print("Credit 통신 실패", error)

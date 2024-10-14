@@ -114,7 +114,18 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.snp.makeConstraints { make in
+            make.height.equalTo(collectionView.contentSize.height)
+        }
     }
     
     override func configureHierarchy() {
@@ -200,7 +211,6 @@ final class DetailViewController: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(similarLabel.snp.bottom).inset(30)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(UICollectionViewLayout.searchLayout().itemSize.height * 7 + 100)
             make.bottom.equalTo(contentView).inset(10)
         }
     }
@@ -267,13 +277,21 @@ final class DetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.list
+            .subscribe(with: self) { owner, value in
+                if value.isEmpty {
+                    owner.similarLabel.text = ""
+                }
+            }
+            .disposed(by: disposeBag)
+        
         output.castText
-            .map { "출연: \($0)".localized }
+            .map { "출연: ".localized + $0 }
             .bind(to: castLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.creatorText
-            .map { "크리에이터: \($0)".localized }
+            .map { "크리에이터: ".localized + $0 }
             .bind(to: creatorLabel.rx.text)
             .disposed(by: disposeBag)
         

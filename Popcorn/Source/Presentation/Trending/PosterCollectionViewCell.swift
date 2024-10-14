@@ -87,5 +87,10 @@ final class PosterCollectionHeaderView: UICollectionReusableView {
         guard let media else { return }
         posterImageView.setImageView(media.posterPath)
         genreLabel.text = genreText
+        genreLabel.text = genreText
+        genreLabel.layer.shadowColor = UIColor.black.cgColor
+        genreLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        genreLabel.layer.shadowOpacity = 0.6
+        genreLabel.layer.shadowRadius = 1
     }
 }
