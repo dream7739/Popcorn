@@ -21,6 +21,7 @@ final class MediaTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
         $0.font = Design.Font.primary
         $0.textColor = .white
+        $0.numberOfLines = 2
     }
     
     let playButton = UIButton().then {
@@ -58,7 +59,7 @@ final class MediaTableViewCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.leading.equalTo(thumbImage.snp.trailing).offset(8)
-            make.trailing.greaterThanOrEqualTo(playButton.snp.leading).inset(8)
+            make.trailing.equalTo(playButton.snp.leading).offset(-8)
         }
         
         playButton.snp.makeConstraints { make in
@@ -68,12 +69,10 @@ final class MediaTableViewCell: UITableViewCell {
         }
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
     }
-    
     
     func configureData(_ data: Media) {
         titleLabel.text = data.title
