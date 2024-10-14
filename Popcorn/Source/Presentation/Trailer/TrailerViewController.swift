@@ -76,11 +76,11 @@ final class TrailerViewController: BaseViewController {
     
     private func showErrorAlert(_ error: Error?) {
         let message = error?.localizedDescription ?? "예고편 없음".localized
-        let alert = UIAlertController(title: "에러".localized, message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "확인".localized, style: .default) { [weak self] _ in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        alert.addAction(alertAction)
+        let alert = PopupViewController.create()
+            .addTitle(message.localized)
+            .addButton(title: "확인".localized) {
+                self.navigationController?.popViewController(animated: true)
+            }
         present(alert, animated: true)
     }
 }

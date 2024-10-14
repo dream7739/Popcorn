@@ -262,7 +262,7 @@ final class DetailViewController: BaseViewController {
                     posterURL.downloadImage { poster in
                         input.saveButtonTap.onNext((poster, backdrop))
                     }
-                } else if let _ = owner.viewModel.realmMedia {
+                } else if owner.viewModel.realmMedia != nil {
                     input.saveButtonTap.onNext((nil, nil))
                 }
             }

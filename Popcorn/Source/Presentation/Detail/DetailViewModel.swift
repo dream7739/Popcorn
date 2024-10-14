@@ -94,7 +94,6 @@ final class DetailViewModel: BaseViewModel {
                         backdropImage.onNext(image)
                     }
                 } else if let realmMedia = media.1 {
-                    print(realmMedia.title)
                     title.onNext(realmMedia.title)
                     voteAverage.onNext(realmMedia.voteAverage)
                     overView.onNext(realmMedia.overview)

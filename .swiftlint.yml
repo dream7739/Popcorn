@@ -13,10 +13,6 @@ opt_in_rules:
     - empty_count               # .count == 0 대신 .isEmpty 권장하는 규칙
     - redundant_nil_coalescing  # 기본값으로 nil 설정된 경우 불필요한 ?? 사용 방지
 
-# analyzer 명령에서만 실행되는 규칙들
-analyzer_rules:
-    - explicit_self          # self 명시적으로 사용하도록 하는 규칙
-
 # 규칙 설정 (각각의 규칙에 대해 경고와 에러 기준 설정)
 force_cast: warning         # 강제 캐스팅 사용 시 경고
 force_try:
@@ -28,7 +24,7 @@ line_length:
     
 # 함수의 바디 길이 제한
 function_body_length:
-    warning: 80
+    warning: 100
     
 # 타입의 바디 길이 제한 (경고와 에러 기준)
 type_body_length:
@@ -37,8 +33,8 @@ type_body_length:
 
 # 파일 길이 제한
 file_length:
-    warning: 500            # 500줄 이상이면 경고
-    error: 1200             # 1200줄 이상이면 에러
+    warning: 350            # 350줄 이상이면 경고
+    error: 600              # 600줄 이상이면 에러
 
 # 타입 네이밍 규칙 (최소, 최대 길이 설정 및 예외 이름)
 type_name:
@@ -60,5 +56,3 @@ reporter: "xcode"
 # 특정 파일에서 이 규칙을 제외
 excluded:
     - Popcorn/Source/Network/APIKey.swift       # APIKey.swift 파일 제외
-    - Popcorn/Resource/App/AppDelegate.swift    # AppDelegate.swift 파일 제외
-    - Popcorn/Resource/App/SceneDelegate.swift  # SceneDelegate.swift 파일 제외

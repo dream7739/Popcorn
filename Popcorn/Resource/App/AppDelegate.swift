@@ -16,22 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.configureWithDefaultBackground()
         appearance.backgroundColor = .black.withAlphaComponent(0.5)
         appearance.titleTextAttributes = [.foregroundColor : UIColor.white]
-
-//        let scrollAppearance = UINavigationBarAppearance()
-//        scrollAppearance.configureWithTransparentBackground()
-//        appearance.backgroundColor = .black.withAlphaComponent(0.5)
-//        scrollAppearance.titleTextAttributes = [.foregroundColor : UIColor.white]
-
         UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = scrollAppearance
-
-        
         return true
     }
     
     // MARK: UISceneSession Lifecycle
     
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
