@@ -16,7 +16,7 @@ final class FavoriteViewController: BaseViewController {
     let viewModel = FavoriteViewModel()
     
     let headerLabel = UILabel().then {
-        $0.text = "영화 시리즈"
+        $0.text = "영화 시리즈".localized
         $0.font = .systemFont(ofSize: 16, weight: .bold)
         $0.textColor = .white
     }
@@ -47,7 +47,7 @@ final class FavoriteViewController: BaseViewController {
         }
     }
     override func configureUI() {
-        navigationItem.title = "내가 찜한 리스트"
+        navigationItem.title = "내가 찜한 리스트".localized
     }
     
     func bind() {

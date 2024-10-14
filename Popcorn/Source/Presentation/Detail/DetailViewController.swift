@@ -51,11 +51,11 @@ final class DetailViewController: BaseViewController {
     }
     
     private let playButton = UIButton().then {
-        $0.whiteBlackRadius("재생", Design.Image.play)
+        $0.whiteBlackRadius("재생".localized, Design.Image.play)
     }
     
     private let saveButton = UIButton().then {
-        $0.blackWhiteRadius("저장", Design.Image.download)
+        $0.blackWhiteRadius("저장".localized, Design.Image.download)
     }
     
     private let descriptionLabel = UILabel().then {
@@ -83,7 +83,7 @@ final class DetailViewController: BaseViewController {
     }
     
     private let similarLabel = UILabel().then {
-        $0.text = "비슷한 콘텐츠"
+        $0.text = "비슷한 콘텐츠".localized
         $0.textColor = .white
         $0.font = Design.Font.subtitle
     }
@@ -221,7 +221,7 @@ final class DetailViewController: BaseViewController {
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)
         output.voteAverage
-            .map { $0 }
+            .map { String(format: "%.1f", $0)  }
             .bind(to: rateLabel.rx.text)
             .disposed(by: disposeBag)
         output.overView
@@ -268,12 +268,12 @@ final class DetailViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.castText
-            .map { "출연: \($0)" }
+            .map { "출연: \($0)".localized }
             .bind(to: castLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.creatorText
-            .map { "크리에이터: \($0)" }
+            .map { "크리에이터: \($0)".localized }
             .bind(to: creatorLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -281,7 +281,7 @@ final class DetailViewController: BaseViewController {
             .bind(with: self) { owner, message in
                 let alert = PopupViewController.create()
                     .addMessage(message)
-                    .addButton(title: "확인") {
+                    .addButton(title: "확인".localized) {
                         owner.dismiss(animated: true)
                     }
                 owner.present(alert, animated: true)
@@ -302,7 +302,6 @@ final class DetailViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
-        
         viewModel.loadInitialData()
     }
 }

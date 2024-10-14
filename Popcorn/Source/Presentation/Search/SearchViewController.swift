@@ -20,7 +20,7 @@ final class SearchViewController: BaseViewController {
         $0.clipsToBounds = true
         $0.textColor = .lightGray
         $0.font = Design.Font.primary
-        $0.attributedPlaceholder = NSAttributedString(string: "게임, 시리즈, 영화를 검색하세요..", attributes: [.foregroundColor: UIColor.lightGray])
+        $0.attributedPlaceholder = NSAttributedString(string: "게임, 시리즈, 영화를 검색하세요..".localized, attributes: [.foregroundColor: UIColor.lightGray])
         $0.backgroundColor = .darkGray
         
     }
@@ -210,7 +210,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         ) as? MediaTableHeaderView else {
             return UITableViewHeaderFooterView()
         }
-        headerView.setHeaderTitle("추천 시리즈 & 영화")
+        headerView.setHeaderTitle("추천 시리즈 & 영화".localized)
         return headerView
     }
     
@@ -272,7 +272,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         ) as? TrendCollectionHeaderView else {
             return UICollectionReusableView()
         }
-        header.configureHeader("영화 & 시리즈")
+        header.configureHeader("영화 & 시리즈".localized)
         header.configureLeftPadding()
         return header
     }

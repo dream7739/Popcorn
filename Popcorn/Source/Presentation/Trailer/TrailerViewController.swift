@@ -70,14 +70,14 @@ final class TrailerViewController: BaseViewController {
     }
     
     override func configureUI() {
-        navigationItem.title = "예고편"
+        navigationItem.title = "예고편".localized
         navigationController?.isNavigationBarHidden = false
     }
     
     private func showErrorAlert(_ error: Error?) {
-        let message = error?.localizedDescription ?? "예고편 없음"
-        let alert = UIAlertController(title: "에러", message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+        let message = error?.localizedDescription ?? "예고편 없음".localized
+        let alert = UIAlertController(title: "에러".localized, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "확인".localized, style: .default) { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
         alert.addAction(alertAction)

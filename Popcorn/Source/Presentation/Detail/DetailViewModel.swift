@@ -52,13 +52,11 @@ final class DetailViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         
-        let similars = PublishSubject<[Media]>()
         let title = PublishSubject<String>()
         let voteAverage = PublishSubject<String>()
         let overView = PublishSubject<String>()
         let backdropImage = PublishSubject<UIImage>()
         
-        let toDetailTrigger = PublishSubject<Media>()
         let toTrailerTrigger = PublishSubject<(Media?, RealmMedia?)>()
         let popUpViewTrigger = PublishSubject<String>()
         
@@ -76,7 +74,6 @@ final class DetailViewModel: BaseViewModel {
             type = realmMedia.isMovie ? .movie : .tv
             contentID = realmMedia.id
         }
-        
         
         fetchCredits(type: type, contentID: contentID, castText: castText, creatorText: creatorText)
         if type == .movie {
@@ -130,17 +127,17 @@ final class DetailViewModel: BaseViewModel {
                     let realmMedia = media.toRealmMedia()
                     // 미디어가 렘에 잇다면 메세지
                     if owner.repository.contains(media.id) {
-                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
+                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)".localized)
                     } else {
                         // 없다면 저장
                         owner.repository.addItem(item: realmMedia, image: poster, backdrop: backdrop)
                         NotificationCenter.default.post(name: .favoriteUpdated, object: self)
-                        popUpViewTrigger.onNext("미디어를 저장했어요 :)")
+                        popUpViewTrigger.onNext("미디어를 저장했어요 :)".localized)
                     }
                     // 렘미디어가 있다면 (오프라인)
                 } else if let realmMedia = media.1 {
                     if owner.repository.contains(realmMedia.id) {
-                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
+                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)".localized)
                     }
                 } else {
                     print("메인 포스터 데이터 없음")
@@ -163,7 +160,7 @@ final class DetailViewModel: BaseViewModel {
     
     private func fetchCredits(type: Router.ContentType, contentID: Int, castText: PublishSubject<String>, creatorText: PublishSubject<String>) {
         NetworkManager.shared.fetchData(
-            with: .credits(type: type, contentId: contentID, language: .korean),
+            with: .credits(type: type, contentId: contentID),
             as: CreditResponse.self
         ).subscribe { result in
             switch result {
@@ -183,7 +180,7 @@ final class DetailViewModel: BaseViewModel {
     
     private func fetchSimilarMovies(contentID: Int, list: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
-            with: .similar(type: .movie, contentId: contentID, language: .korean),
+            with: .similar(type: .movie, contentId: contentID),
             as: MovieResponse.self
         ).subscribe { result in
             switch result {
@@ -201,7 +198,7 @@ final class DetailViewModel: BaseViewModel {
     
     private func fetchSimilarTVs(contentID: Int, list: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
-            with: .similar(type: .tv, contentId: contentID, language: .korean),
+            with: .similar(type: .tv, contentId: contentID),
             as: TVResponse.self
         ).subscribe { result in
             switch result {

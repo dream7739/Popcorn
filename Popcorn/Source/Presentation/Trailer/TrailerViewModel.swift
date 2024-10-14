@@ -64,7 +64,7 @@ final class TrailerViewModel: BaseViewModel {
     // TODO: - 한국어로 하면 예고편 없는 경우 많음..
     private func fetchVideo(type: Router.ContentType, contentId: Int, errorAlert: PublishSubject<Void>, loadURL: PublishSubject<URLRequest>) {
         NetworkManager.shared.fetchData(
-            with: .video(type: type, contentId: contentId, language: .korean),
+            with: .video(type: type, contentId: contentId),
             as: VideoResponse.self
         )
         .subscribe(with: self) { owner, result in

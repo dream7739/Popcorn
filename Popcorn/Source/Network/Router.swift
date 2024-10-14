@@ -10,7 +10,7 @@ import Foundation
 
 enum Router: URLRequestConvertible {
     
-    case search(type: ContentType, query: String, page: Int)
+    case search(type: ContentType, query: String, page: Int, language: Language? = nil)
     case trending(type: ContentType, language: Language? = nil)
     case credits(type: ContentType, contentId: Int, language: Language? = nil)
     case similar(type: ContentType, contentId: Int, language: Language? = nil)
@@ -25,6 +25,11 @@ enum Router: URLRequestConvertible {
     enum Language: String {
         case korean = "ko-KR"
         case english = "en-US" // default
+        
+        static func current() -> Language {
+            let languageCode = Locale.current.languageCode ?? "ko"
+            return languageCode.lowercased().hasPrefix("ko") ? .korean : .english
+        }
     }
     
     // MARK: URL components -
@@ -43,7 +48,7 @@ enum Router: URLRequestConvertible {
     
     private var path: String {
         switch self {
-        case .search(let type, _, _):
+        case .search(let type, _, _, _):
             return "search/\(type.rawValue)"
         case .trending(let type, _):
             return "trending/\(type.rawValue)/day"
@@ -60,10 +65,10 @@ enum Router: URLRequestConvertible {
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .search(let type, let query, let page):
+        case .search(_, let query, let page, let language):
             return [
                 URLQueryItem(name: "query", value: query),
-                URLQueryItem(name: "language", value: "ko-KR"),
+                URLQueryItem(name: "language", value: language?.rawValue ?? Language.current().rawValue),
                 URLQueryItem(name: "page", value: "\(page)")
             ]
         default:
@@ -80,8 +85,8 @@ enum Router: URLRequestConvertible {
                 .genre(_, let language),
                 .video(_, _, let language),
                 .similar(_, _, let language):
-            return ["language": "ko-KR"]
-//            return ["language": language?.rawValue ?? ""]
+//            return ["language": "ko-KR"]
+            return ["language": language?.rawValue ?? Language.current().rawValue]
         }
     }
 }

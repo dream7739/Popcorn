@@ -104,11 +104,11 @@ final class TrendingViewModel: BaseViewModel {
                 if let media = sections[0].items.first {
                     let realmMedia = media.toRealmMedia()
                     if owner.repository.contains(media.id) {
-                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)")
+                        popUpViewTrigger.onNext("이미 저장된 미디어에요 :)".localized)
                     } else {
                         owner.repository.addItem(item: realmMedia, image: image, backdrop: backdrop)
                         NotificationCenter.default.post(name: .favoriteUpdated, object: self)
-                        popUpViewTrigger.onNext("미디어를 저장했어요 :)")
+                        popUpViewTrigger.onNext("미디어를 저장했어요 :)".localized)
                     }
                 } else {
                     print("메인 포스터 데이터 없음")
@@ -128,7 +128,7 @@ final class TrendingViewModel: BaseViewModel {
 extension TrendingViewModel {
     private func fetchTrendingMovies(_ subject: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
-            with: .trending(type: .movie, language: .korean),
+            with: .trending(type: .movie),
             as: MovieResponse.self
         )
         .subscribe { result in
@@ -145,7 +145,7 @@ extension TrendingViewModel {
     
     private func fetchTrendingTVs(_ subject: PublishSubject<[Media]>) {
         NetworkManager.shared.fetchData(
-            with: .trending(type: .tv, language: .korean),
+            with: .trending(type: .tv),
             as: TVResponse.self
         )
         .subscribe { result in
@@ -165,7 +165,7 @@ extension TrendingViewModel {
             .compactMap { $0.first }
             .flatMap { media in
                 NetworkManager.shared.fetchData(
-                    with: .genre(type: media.isMovie ? .movie : .tv, language: .korean),
+                    with: .genre(type: media.isMovie ? .movie : .tv),
                     as: GenreResponse.self
                 )
             }
@@ -189,9 +189,9 @@ extension TrendingViewModel {
         let genreText = main.first?.genreIDs.map { genreDict[$0] ?? "" }.joined(separator: " ")
         
         return [
-            TrendSection(model: genreText ?? "", items: main),
-            TrendSection(model: Section.movie.rawValue, items: movies),
-            TrendSection(model: Section.tv.rawValue, items: tvShows)
+            TrendSection(model: genreText?.localized ?? "", items: main),
+            TrendSection(model: Section.movie.rawValue.localized, items: movies),
+            TrendSection(model: Section.tv.rawValue.localized, items: tvShows)
         ]
     }
 }
