@@ -1,5 +1,7 @@
 # Popcorn
 TMDB API를 활용한 영화, 시리즈 열람할 수 있는 앱
+![트렌드](https://github.com/user-attachments/assets/8945b651-8220-441d-aa95-45a5e4f3a1eb) | ![검색](https://github.com/user-attachments/assets/41c20064-d23d-42f8-9e66-cbc96c8ffcb1) | ![찜](https://github.com/user-attachments/assets/fadc6088-ebc3-4629-88d3-e320bfa05489) | ![상세](https://github.com/user-attachments/assets/946367be-e481-4897-9f15-194f940cc1770-40a9-9b30-8362c9572d8e)
+---|---| ---| ---|
 
 ## 프로젝트 환경
 - 인원: 3인
